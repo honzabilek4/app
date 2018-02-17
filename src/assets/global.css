@@ -1,0 +1,127 @@
+:root {
+  --black: #060606;
+  --darkest-gray: #333;
+  --darker-gray: #333;
+  --dark-gray: #777;
+  --gray: #999;
+  --light-gray: #ccc;
+  --lighter-gray: #eee;
+  --lightest-gray: #e1e1e1;
+  --white: #fff;
+
+  --primary: #3498db;
+  --secondary: #9c27b0;
+  --success: #96ca54;
+  --warning: #ffc107;
+  --danger: #f44336;
+
+  --border-radius: 4px;
+  --box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.8);
+
+  --transition: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-in: cubic-bezier(0, 0, 0.2, 1);
+  --transition-out: cubic-bezier(0.4, 0, 1, 1);
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto-light.woff2') format('woff2'),
+    url('./fonts/roboto-light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto-regular.woff2') format('woff2'),
+    url('./fonts/roboto-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto-regular.woff2') format('woff2'),
+    url('./fonts/roboto-regular.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto-bold.woff2') format('woff2'),
+    url('./fonts/roboto-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/roboto-bold.woff2') format('woff2'),
+    url('./fonts/roboto-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  src: url('./fonts/material-icons.woff2') format('woff2'),
+    url('./fonts/material-icons.woff') format('woff');
+  font-display: block;
+}
+
+* {
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  color: var(--gray);
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+  vertical-align: middle;
+}
