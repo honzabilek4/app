@@ -5,6 +5,7 @@ import App from './App.vue';
 import router from './router';
 import { i18n } from './lang/';
 import store from './store/';
+import api from './api';
 
 Vue.config.productionTip = false;
 
@@ -15,4 +16,5 @@ new Vue({
   router,
   i18n,
   store,
+  api,
 });
