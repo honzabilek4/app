@@ -1,5 +1,5 @@
 <template>
-  <h1>Directus 7</h1>
+  <router-view></router-view>
 </template>
 
 <script>
