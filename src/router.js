@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from './api';
+import store from './store';
 import Home from './routes/Home.vue';
 import Login from './routes/Login.vue';
 
@@ -37,6 +38,8 @@ router.beforeEach((to, from, next) => {
   if (loggedIn) {
     return next();
   }
+
+  store.dispatch('logout', { redirect: false });
 
   return next({
     path: '/login',
