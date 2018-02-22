@@ -47,7 +47,6 @@ button {
   height: 100%;
   position: relative;
   border-radius: 0;
-  font-size: 1.2rem;
   cursor: pointer;
 
   i {

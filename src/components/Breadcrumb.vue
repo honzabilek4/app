@@ -48,7 +48,7 @@ div {
 }
 
 span:not(.current) {
-  margin-right: 0.2em;
+  margin-right: 15px;
 }
 
 .current {
@@ -66,7 +66,7 @@ a {
 }
 
 i {
-  font-size: 0.92em;
+  font-size: 12px;
   color: var(--darker-gray);
 }
 </style>

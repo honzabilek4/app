@@ -63,7 +63,6 @@
 }
 
 main {
-  background-color: #f9f9f9;
   min-width: 100%;
   min-height: 100%;
   padding-top: var(--header-height);

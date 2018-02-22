@@ -1,15 +1,7 @@
 import router from '../../../router';
 
-export function login({ commit }) {
-  commit('login');
-}
-
 export function loginSuccess({ commit }, { accessToken, url }) {
   commit('loginSuccess', { accessToken, url });
-}
-
-export function loginFailed({ commit }, error) {
-  commit('loginFailed', error);
 }
 
 export function refreshSuccess({ commit }, { accessToken, url }) {

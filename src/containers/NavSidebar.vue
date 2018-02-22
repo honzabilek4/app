@@ -68,8 +68,8 @@ aside .close {
   left: -999px;
 
   &:focus {
-    top: var(--normal);
-    left: var(--normal);
+    top: 13px;
+    left: 13px;
   }
 }
 

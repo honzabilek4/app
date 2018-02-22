@@ -36,7 +36,7 @@
   border: none;
   border-radius: 0;
   padding: 0;
-  margin: 0 var(--normal);
+  margin: 0 13px;
   cursor: pointer;
   transition: opacity 140ms var(--transition);
 
@@ -45,7 +45,7 @@
   }
 
   i {
-    font-size: var(--larger);
+    font-size: 12px;
   }
 }
 
@@ -69,7 +69,7 @@
   h1 {
     flex-grow: 1;
     color: var(--white);
-    padding: 0 var(--normal);
+    padding: 0 13px;
   }
 
   @media (min-width: 50em) {

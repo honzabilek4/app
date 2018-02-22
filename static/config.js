@@ -1,7 +1,12 @@
+/* eslint-disable */
+
 (function directusConfig() {
   const config = {
-    apiUrl: [],
+    api: {
+      'http://api.directus.com/api/': 'Directus 7'
+    },
+    allowOtherAPI: false
   };
 
-  window.__DirectusConfig__ = config; // eslint-disable-line
+  window.__DirectusConfig__ = config;
 }());

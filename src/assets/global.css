@@ -5,8 +5,8 @@
   --dark-gray: #777;
   --gray: #999;
   --light-gray: #ccc;
-  --lighter-gray: #eee;
-  --lightest-gray: #e1e1e1;
+  --lighter-gray: #e1e1e1;
+  --lightest-gray: #eee;
   --white: #fff;
 
   --primary: #3498db;
@@ -15,6 +15,12 @@
   --warning: #ffc107;
   --danger: #f44336;
 
+  --primary-dark: #217dbb;
+  --secondary-dark: #771e86;
+  --success-dark: #7db338;
+  --warning-dark: #d39e00;
+  --danger-dark: #ba160a;
+
   --border-radius: 4px;
   --box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.8);
 
@@ -22,15 +28,14 @@
   --transition-in: cubic-bezier(0, 0, 0.2, 1);
   --transition-out: cubic-bezier(0.4, 0, 1, 1);
 
-  --largest: 2.827em;
-  --larger: 1.999em;
-  --large: 1.414em;
-  --normal: 1em;
-  --small: 0.707em;
-  --smaller: 0.5em;
-  --smallest: 0.354em;
+  --fast: 125ms;
+  --medium: 200ms;
+  --slow: 300ms;
 
   --scale: 1.414;
+
+  --input-border-width: 2px;
+  --input-height: 3.077em;
 
   --nav-sidebar-width: 15.4rem;
   --header-height: 4.62rem;
@@ -76,6 +81,7 @@
   font-size: inherit;
   font-family: inherit;
   line-height: inherit;
+  font-weight: inherit;
   color: inherit;
   margin: 0;
   box-sizing: border-box;
@@ -97,13 +103,14 @@ body {
   font-weight: 500;
   line-height: 1.15;
   color: var(--dark-gray);
+  background-color: #f9f9f9;
 }
 
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: var(--large);
+  font-size: 20px;
   display: inline-block;
   line-height: 1;
   text-transform: none;

@@ -31,10 +31,16 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
-      serviceWorkerLoader: `<script>${fs.readFileSync(path.join(
-        __dirname,
-        './service-worker-dev.js',
-      ), 'utf-8')}</script>`,
+      serviceWorkerLoader: `
+<script>
+  ${fs.readFileSync(
+    path.join(
+      __dirname,
+      './service-worker-dev.js' // eslint-disable-line
+    ),
+    'utf-8' // eslint-disable-line
+  )}
+</script>`,
     }),
     new FriendlyErrorsPlugin(),
   ],
