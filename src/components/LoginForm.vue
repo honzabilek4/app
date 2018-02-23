@@ -1,24 +1,29 @@
 <template>
   <form @submit.prevent="submit">
-    <invisible-label v-if="apiUrls.length === 0 || apiUrls.length > 1" htmlFor="url">{{ $t('api_url') }}</invisible-label>
-    <form-input
-      icon="cloud"
-      type="url"
-      :placeholder="$t('api_url')"
-      v-if="apiUrls.length === 0"
-      name="url"
-      class="input"
-      id="url"
-      v-model="url"
-    />
+
+    <div v-if="apiUrls.length === 0">
+      <invisible-label htmlFor="url">{{ $t('api_url') }}</invisible-label>
+      <form-input
+        icon="cloud"
+        type="url"
+        :placeholder="$t('api_url')"
+        name="url"
+        class="input"
+        id="url"
+        v-model="url"
+      />
+    </div>
+
     <form-select
+      v-if="(apiUrls.length === 1 && allowOther === true) || apiUrls.length > 1"
       v-model="url"
       class="input"
       id="url"
       icon="cloud"
-      v-if="apiUrls.length > 1"
       :other="allowOther"
       :options="apiConfig"
+      :custom="allowOther"
+      type="url"
     />
 
     <invisible-label htmlFor="email">{{ $t('email_address') }}</invisible-label>

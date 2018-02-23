@@ -32,6 +32,7 @@
     </select>
     <input
       v-if="otherActive"
+      :type="type"
       :value="customValue"
       @input="changeCustom"
       :id="id"
@@ -57,6 +58,7 @@
 
       other: Boolean,
       icon: String,
+      type: String,
       options: Object,
     },
     data() {
