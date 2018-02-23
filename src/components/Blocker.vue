@@ -22,6 +22,7 @@
   top: 0;
   background-color: var(--darker-gray);
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .fade-enter-active {

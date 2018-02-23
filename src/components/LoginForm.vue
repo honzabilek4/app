@@ -18,6 +18,7 @@
       v-if="(apiUrls.length === 1 && allowOther === true) || apiUrls.length > 1"
       v-model="url"
       class="input"
+      :placeholder="$t('api_url')"
       id="url"
       icon="cloud"
       :other="allowOther"

@@ -36,7 +36,7 @@
   border: none;
   border-radius: 0;
   padding: 0;
-  margin: 0 13px;
+  margin: 0 20px;
   cursor: pointer;
   transition: opacity 140ms var(--transition);
 
@@ -45,7 +45,7 @@
   }
 
   i {
-    font-size: 12px;
+    font-size: 21px;
   }
 }
 

@@ -10,6 +10,8 @@ import store from './store/';
 import api from './api';
 import helpers from './helpers';
 
+import './helpers/handle-focus';
+
 Vue.config.productionTip = false;
 
 Vue.use(PortalVue);

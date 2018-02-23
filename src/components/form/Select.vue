@@ -38,6 +38,7 @@
       :id="id"
       autofocus
       ref="input"
+      :placeholder="placeholder"
     />
     <div>
       <i v-if="icon" class="material-icons">{{ icon }}</i>
@@ -60,6 +61,7 @@
       icon: String,
       type: String,
       options: Object,
+      placeholder: String,
     },
     data() {
       return {
@@ -105,6 +107,7 @@ div {
     height: var(--input-height);
     border: var(--input-border-width) solid var(--lighter-gray);
     transition: var(--fast) var(--transition);
+    transition-property: color, border-color;
   }
 
   & > div {
@@ -125,6 +128,14 @@ div {
     width: calc(100% - 40px);
     border-left: 0;
     border-right: 0;
+
+    &::placeholder {
+      color: var(--light-gray);
+    }
+
+    &:-webkit-autofill {
+      box-shadow: inset 0 0 0 1000px var(--white) !important;
+    }
   }
 
   select:focus ~ div,

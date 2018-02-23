@@ -106,6 +106,10 @@ body {
   background-color: #f9f9f9;
 }
 
+body:not(.user-is-tabbing) * {
+  outline: 0;
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

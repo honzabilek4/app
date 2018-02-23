@@ -66,6 +66,7 @@ input {
   padding: 10px;
   line-height: 1;
   transition: var(--fast) var(--transition);
+  transition-property: color, border-color;
 
   &::placeholder {
     color: var(--light-gray);
@@ -80,6 +81,23 @@ input {
   &:focus + i {
     color: var(--primary);
   }
+
+  &:-webkit-autofill {
+    box-shadow: inset 0 0 0 1000px var(--white) !important;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover
+  textarea:-webkit-autofill:focus {
+    border: var(--input-border-width) solid var(--ligher-gray);
+    background-color: var(--white);
+    box-shadow: inset 0 0 0 2000px var(--white);
+  }
+
 }
 
 .icon input {
