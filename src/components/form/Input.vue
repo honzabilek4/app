@@ -64,9 +64,10 @@ input {
   border-radius: var(--border-radius);
   color: var(--gray);
   padding: 10px;
-  line-height: 1;
+  line-height: 1.5;
   transition: var(--fast) var(--transition);
   transition-property: color, border-color;
+  height: var(--input-height);
 
   &::placeholder {
     color: var(--light-gray);
@@ -84,6 +85,8 @@ input {
 
   &:-webkit-autofill {
     box-shadow: inset 0 0 0 1000px var(--white) !important;
+    color: var(--dark-gray) !important;
+    -webkit-text-fill-color: var(--dark-gray) !important;
   }
 
   input:-webkit-autofill,
@@ -93,7 +96,7 @@ input {
   textarea:-webkit-autofill,
   textarea:-webkit-autofill:hover
   textarea:-webkit-autofill:focus {
-    border: var(--input-border-width) solid var(--ligher-gray);
+    border: var(--input-border-width) solid var(--lighter-gray);
     background-color: var(--white);
     box-shadow: inset 0 0 0 2000px var(--white);
   }
