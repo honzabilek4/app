@@ -53,21 +53,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
-  display: flex;
-  align-items: center;
-}
-
-span {
-  height: 24px;
-}
-
-span:not(.current) {
-  margin-right: 5px;
-}
-
 .current {
   color: var(--white);
+  cursor: default;
 }
 
 a {
@@ -81,7 +69,9 @@ a {
 }
 
 i {
-  font-size: 20px;
   color: var(--darker-gray);
+  margin-right: 8px;
+  width: 20px;
+  user-select: none;
 }
 </style>

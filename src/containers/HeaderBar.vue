@@ -48,16 +48,12 @@ export default {
   border: none;
   border-radius: 0;
   padding: 0;
-  margin: 0 20px;
+  margin-right: 20px;
   cursor: pointer;
   transition: opacity 140ms var(--transition);
 
   &:hover {
     opacity: 0.6;
-  }
-
-  i {
-    font-size: 21px;
   }
 }
 
@@ -73,11 +69,13 @@ export default {
   display: flex;
   align-items: center;
   z-index: 5;
+  padding-left: 20px;
 
   h1 {
     flex-grow: 1;
     color: var(--white);
-    padding: 0 13px;
+    margin-right: 20px;
+    height: 20px;
   }
 
   @media (min-width: 50em) {

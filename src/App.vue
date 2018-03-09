@@ -5,41 +5,40 @@
   />
 
   <div
-    v-else-if="hydrating"
-    class="root loading"
-  >
-    <transition name="fade"/>
-    <div class="blocker"/>
-    <header-bar />
-    <nav-sidebar />
-    <main>
-      <spinner/>
-    </main>
-    <portal to="header-title"><span/></portal>
-  </div>
-
-  <div
     v-else
     class="root"
   >
-
-    <header-bar
-      :show-info-button="infoSidebarHasContent"
-      @toggleNav="toggleNav"
-      @toggleInfo="toggleInfo"
-    />
-    <nav-sidebar
-      :active="navActive"
-      @toggleNav="toggleNav"
-    />
-    <main :class="{ infoActive }">
-      <router-view class="page-root" />
-      <info-sidebar
-        v-if="infoSidebarHasContent"
-        :active="infoActive"
+    <div
+      v-if="!hydrating"
+      class="root"
+    >
+      <header-bar
+        :show-info-button="infoSidebarHasContent"
+        @toggleNav="toggleNav"
         @toggleInfo="toggleInfo"
       />
-    </main>
+      <nav-sidebar
+        :active="navActive"
+        @toggleNav="toggleNav"
+      />
+      <main :class="{ infoActive }">
+        <router-view class="page-root" />
+        <info-sidebar
+          v-if="infoSidebarHasContent"
+          :active="infoActive"
+          @toggleInfo="toggleInfo"
+        />
+      </main>
+    </div>
+
+    <transition name="fade">
+      <div
+        v-if="hydrating"
+        class="loader"
+      >
+        <spinner class="spinner" />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -119,13 +118,28 @@ main {
   }
 }
 
-.loading {
-  opacity: 0.5;
+.loader {
+  background-color: #f9f9f9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+
+  .spinner {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+  }
 }
 
-.loading main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity var(--medium) var(--transition-in);
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

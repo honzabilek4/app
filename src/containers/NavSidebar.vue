@@ -57,13 +57,13 @@ aside {
   height: var(--header-height);
 
   img {
-    height: 80%;
+    width: 66px;
   }
 }
 
 .content {
   background-color: var(--white);
-  box-shadow: 1px 0 0 -0px var(--lighter-gray);
+  box-shadow: 1px 0 0 -0px var(--lightest-gray);
   min-height: calc(100% - var(--header-height));
 }
 

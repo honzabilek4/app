@@ -37,7 +37,7 @@ aside {
   width: 100%;
   max-width: var(--info-sidebar-width);
   background-color: var(--white);
-  border-left: 1px solid var(--lighter-gray);
+  border-left: 1px solid var(--lightest-gray);
   padding: 20px;
 }
 

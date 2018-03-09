@@ -1,7 +1,7 @@
 import store from './index';
 
 export default function hydrateStore() {
-  Promise.all([
+  return Promise.all([
     store.dispatch('getCollections'),
     store.dispatch('getMe'),
     store.dispatch('getSettings'),

@@ -33,6 +33,11 @@ export default {
   components: {
     LoginForm,
   },
+  data() {
+    return {
+      loading: false,
+    };
+  },
   computed: {
     version() {
       return `${this.$t('version')} ${version}`;
@@ -43,12 +48,10 @@ export default {
     error() {
       return this.$store.state.auth.error;
     },
-    loading() {
-      return this.$store.state.auth.loading;
-    },
   },
   methods: {
     login(credentials) {
+      this.loading = true;
       this.$store.dispatch('login', credentials)
         .then(() => {
           if (this.$route.params.redirect) {
@@ -57,8 +60,12 @@ export default {
         })
         .then(() => this.$api.getMe({ fields: 'last_page' }))
         .then(res => res.data.last_page)
-        .then(lastPage => this.$router.push(lastPage || '/'))
+        .then((lastPage) => {
+          this.loading = false;
+          this.$router.push(lastPage || '/');
+        })
         .catch((err) => {
+          this.loading = false;
           console.error(err);
           this.$router.push('/');
         });

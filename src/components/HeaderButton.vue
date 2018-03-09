@@ -64,7 +64,7 @@ button {
   }
 
   &:hover span,
-  &:focus span {
+  .user-is-tabbing &:focus span {
     opacity: 0.6;
     transform: translateY(0);
     transition: 100ms var(--transition-in);

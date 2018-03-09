@@ -156,7 +156,7 @@ input {
 }
 
 .icon input {
-  padding-left: 35px;
+  padding-left: 33px;
 }
 
 i {
@@ -165,5 +165,6 @@ i {
   top: 50%;
   color: var(--light-gray);
   transform: translateY(-50%);
+  font-size: 18px;
 }
 </style>
