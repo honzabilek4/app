@@ -1,29 +1,30 @@
-import Directus from 'directus-sdk-javascript/remote';
-import Vue from 'vue';
-
+import SDK, { getPayload } from 'directus-sdk-javascript/remote';
 import store from './store';
 
-const API = new Directus({
-  accessToken: store.state.auth.accessToken,
-  url: store.state.auth.url,
-});
+const client = new SDK();
 
-API.install = function install(Vue) { // eslint-disable-line no-shadow
-  Vue.prototype.$api = API;
+const storedToken = store.state.auth.token;
+const storedUrl = store.state.auth.url;
+const payload = storedToken ? getPayload(storedToken) : null;
+
+if (payload && storedUrl) {
+  const timeDiff = payload.exp.getTime() - Date.now();
+  if (timeDiff > 10000) {
+    client.url = storedUrl;
+    client.token = storedToken;
+  } else {
+    store.dispatch('clearAuth');
+  }
+}
+
+client.onAutoRefreshSuccess = function refresh(info) {
+  store.dispatch('refresh', info);
 };
 
-API.on('login:success', () => store.dispatch('loginSuccess', {
-  accessToken: API.accessToken,
-  url: API.url,
-}));
+client.onAutoRefreshError = function logout(error) {
+  store.dispatch('logout', error);
+};
 
-API.on('refresh:success', () => store.dispatch('refreshSuccess', {
-  accessToken: API.accessToken,
-  url: API.url,
-}));
+client.startInterval();
 
-API.on('logout', () => store.dispatch('logout'));
-
-Vue.use(API);
-
-export default API;
+export default client;

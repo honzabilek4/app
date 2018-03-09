@@ -3,35 +3,36 @@
     :style="{
       color: `var(--${color})`,
     }"
-    @click="$emit('click', $event)"
     :class="bg || 'no-bg'"
+    @click="$emit('click', $event)"
   >
-    <i class="material-icons">{{icon}}</i>
+    <i class="material-icons">{{ icon }}</i>
     <span class="style-btn"><slot /></span>
   </button>
 </template>
 
 <script>
-  export default {
-    props: {
-      icon: {
-        type: String,
-        required: true,
-      },
-      color: {
-        type: String,
-        default: 'white',
-        validator: value => ['white', 'black'].includes(value),
-      },
-      bg: {
-        type: [String, Boolean],
-        validator: value => {
-          if (value === false) return true;
-          return ['primary', 'secondary', 'warning', 'danger'].includes(value);
-        },
+export default {
+  props: {
+    icon: {
+      type: String,
+      required: true,
+    },
+    color: {
+      type: String,
+      default: 'white',
+      validator: value => ['white', 'black'].includes(value),
+    },
+    bg: {
+      type: [String, Boolean],
+      default: false,
+      validator: (value) => {
+        if (value === false) return true;
+        return ['primary', 'secondary', 'warning', 'danger'].includes(value);
       },
     },
-  }
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -59,7 +60,7 @@ button {
     opacity: 0;
     transform: translateY(5px);
     transition: 100ms var(--transition-out);
-    font-size: var(--small);
+    font-size: 10px;
   }
 
   &:hover span,

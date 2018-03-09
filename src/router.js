@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from './api';
-import store from './store';
-import Home from './routes/Home.vue';
+import Collections from './routes/Collections.vue';
+import ItemListing from './routes/ItemListing.vue';
 import Login from './routes/Login.vue';
 
 Vue.use(Router);
@@ -12,13 +12,22 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: Home,
+      redirect: '/collections',
+    },
+    {
+      path: '/collections',
+      component: Collections,
+    },
+    {
+      path: '/collections/:collection',
+      props: true,
+      component: ItemListing,
     },
     {
       path: '/login',
       component: Login,
       meta: {
-        public: true,
+        publicRoute: true,
       },
       beforeEnter(to, from, next) {
         if (api.loggedIn) return next(false);
@@ -31,7 +40,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const { loggedIn } = api;
 
-  if (to.matched.some(record => record.meta.public)) {
+  if (to.matched.some(record => record.meta.publicRoute)) {
     return next();
   }
 
@@ -39,9 +48,7 @@ router.beforeEach((to, from, next) => {
     return next();
   }
 
-  store.dispatch('logout', { redirect: false });
-
-  if (to.fullPath === '/') {
+  if (!loggedIn && to.fullPath === '/') {
     return next({ path: '/login' });
   }
 

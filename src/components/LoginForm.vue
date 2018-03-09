@@ -2,100 +2,103 @@
   <form @submit.prevent="submit">
 
     <div v-if="apiUrls.length === 0">
-      <invisible-label htmlFor="url">{{ $t('api_url') }}</invisible-label>
+      <invisible-label html-for="url">{{ $t('api_url') }}</invisible-label>
       <form-input
-        icon="cloud"
-        type="url"
-        :placeholder="$t('api_url')"
-        name="url"
-        class="input"
         id="url"
         v-model="url"
+        :placeholder="$t('api_url')"
+        icon="cloud"
+        type="url"
+        name="url"
+        class="input"
       />
     </div>
 
     <form-select
       v-if="(apiUrls.length === 1 && allowOther === true) || apiUrls.length > 1"
-      v-model="url"
-      class="input"
-      :placeholder="$t('api_url')"
       id="url"
-      icon="cloud"
+      v-model="url"
+      :placeholder="$t('api_url')"
       :other="allowOther"
       :options="apiConfig"
       :custom="allowOther"
+      icon="cloud"
+      class="input"
       type="url"
     />
 
-    <invisible-label htmlFor="email">{{ $t('email_address') }}</invisible-label>
+    <invisible-label html-for="email">{{ $t('email_address') }}</invisible-label>
     <form-input
-      icon="person"
-      :placeholder="$t('email')"
       id="email"
+      v-model="email"
+      :placeholder="$t('email')"
+      icon="person"
       class="input"
       type="email"
       name="email"
-      v-model="email"
     />
 
-    <invisible-label htmlFor="password">{{ $t('password') }}</invisible-label>
+    <invisible-label html-for="password">{{ $t('password') }}</invisible-label>
     <form-input
-      icon="lock"
       id="password"
+      v-model="password"
       :placeholder="$t('password')"
+      icon="lock"
       type="password"
       name="password"
       class="input"
-      v-model="password"
     />
 
     <form-button
-      type="submit"
       :fullwidth="true"
       :disabled="disabled"
       :loading="loading"
+      type="submit"
     >{{ $t('login') }}</form-button>
   </form>
 </template>
 
 <script>
-  import InvisibleLabel from '../components/form/InvisibleLabel.vue';
+import InvisibleLabel from '../components/form/InvisibleLabel.vue';
 
-  export default {
-    props: {
-      loading: Boolean,
+export default {
+  components: {
+    InvisibleLabel,
+  },
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
     },
-    computed: {
-      disabled() {
-        return !Boolean(this.email.length && this.password.length && this.url.length);
-      },
-      apiConfig() {
-        return window.__DirectusConfig__.api;
-      },
-      apiUrls() {
-        return Object.values(this.apiConfig);
-      },
-      allowOther() {
-        return window.__DirectusConfig__.allowOtherAPI;
-      },
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      url: Object.keys(window.__DirectusConfig__.api)[0] || '', // eslint-disable-line
+    };
+  },
+  computed: {
+    disabled() {
+      return !(this.email.length && this.password.length && this.url.length);
     },
-    components: {
-      InvisibleLabel,
+    apiConfig() {
+      return window.__DirectusConfig__.api; // eslint-disable-line
     },
-    data() {
-      return {
-        email: '',
-        password: '',
-        url: Object.keys(window.__DirectusConfig__.api)[0] || '',
-      };
+    apiUrls() {
+      return Object.values(this.apiConfig);
     },
-    methods: {
-      submit() {
-        const { email, password, url } = this;
-        this.$emit('submit', { email, password, url });
-      },
+    allowOther() {
+      return window.__DirectusConfig__.allowOtherAPI; // eslint-disable-line
     },
-  };
+  },
+  methods: {
+    submit() {
+      const { email, password, url } = this;
+      this.$emit('submit', { email, password, url });
+    },
+  },
+};
 </script>
 
 <style scoped>

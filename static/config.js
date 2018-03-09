@@ -3,7 +3,7 @@
 (function directusConfig() {
   const config = {
     api: {
-      'http://api.directus.com/api/': 'Directus 7'
+      'https://demo-api.getdirectus.com': 'Directus Demo API'
     },
     allowOtherAPI: false
   };

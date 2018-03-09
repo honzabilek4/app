@@ -1,22 +1,39 @@
 import router from '../../../router';
+import hydrateStore from '../../hydrate';
+import api from '../../../api';
 
-export function loginSuccess({ commit }, { accessToken, url }) {
-  commit('loginSuccess', { accessToken, url });
+export function login({ commit }, credentials) {
+  commit('LOGIN_PENDING');
+
+  return new Promise((resolve, reject) => {
+    api.login({
+      ...credentials,
+      persist: true,
+    })
+      .then(info => commit('LOGIN_SUCCESS', info))
+      .then(hydrateStore)
+      .then(resolve)
+      .catch((error) => {
+        commit('LOGIN_FAILED', error);
+        reject();
+      });
+  });
 }
 
-export function refreshSuccess({ commit }, { accessToken, url }) {
-  commit('refreshSuccess', { accessToken, url });
+export function refresh({ commit }, { token, url }) {
+  commit('REFRESH_TOKEN', { token, url });
 }
 
-export function logout({ commit }, opt) {
-  const defaults = {
-    redirect: true,
-  };
+export function logout({ commit }, error) {
+  api.logout();
+  router.push('/login');
+  commit('LOGOUT', error);
+}
 
-  const options = Object.assign({}, defaults, opt);
+export function removeAuthError({ commit }) {
+  commit('REMOVE_AUTH_ERROR');
+}
 
-  if (options.redirect) {
-    router.push('/login');
-  }
-  commit('logout');
+export function clearAuth({ commit }) {
+  commit('LOGOUT');
 }

@@ -1,13 +1,17 @@
 <template>
   <div :class="{ icon }">
     <select
-      :id="otherActive ? null : id"
-      @change="change($event.target.value)"
-      :value="value"
       v-if="other"
+      :id="otherActive ? null : id"
+      :value="value"
+      @change="change($event.target.value)"
     >
       <optgroup :label="$t('values')">
-        <option :value="value" v-for="(key, value) in options">
+        <option
+          v-for="(key, value) in options"
+          :key="key"
+          :value="value"
+        >
           {{ key }}
         </option>
       </optgroup>
@@ -21,27 +25,33 @@
       </optgroup>
     </select>
     <select
-      :id="otherActive ? null : id"
-      @change="change($event.target.value)"
-      :value="value"
       v-else
+      :id="otherActive ? null : id"
+      :value="value"
+      @change="change($event.target.value)"
     >
-      <option :value="value" v-for="(key, value) in options">
+      <option
+        v-for="(key, value) in options"
+        :key="key"
+        :value="value"
+      >
         {{ key }}
       </option>
     </select>
     <input
       v-if="otherActive"
+      ref="input"
       :type="type"
       :value="customValue"
-      @input="changeCustom"
       :id="id"
-      autofocus
-      ref="input"
       :placeholder="placeholder"
-    />
+      autofocus
+      @input="changeCustom"
+    >
     <div>
-      <i v-if="icon" class="material-icons">{{ icon }}</i>
+      <i
+        v-if="icon"
+        class="material-icons">{{ icon }}</i>
       {{ options[value] }}
     </div>
     <i class="material-icons chevron">arrow_drop_down</i>
@@ -49,43 +59,73 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      disabled: Boolean,
-      name: String,
-      id: String,
-      required: Boolean,
-      value: String,
-
-      other: Boolean,
-      icon: String,
+export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    name: {
       type: String,
-      options: Object,
-      placeholder: String,
+      default: '',
     },
-    data() {
-      return {
-        otherActive: false,
-        customValue: '',
-      };
+    id: {
+      type: String,
+      default: '',
     },
-    methods: {
-      change(value) {
-        if (value === this.customValue || value === '__other') {
-          this.$emit('input', this.customValue);
-          this.otherActive = true;
-          return;
-        }
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    value: {
+      type: String,
+      default: '',
+    },
 
-        this.otherActive = false;
-        this.$emit('input', value);
-      },
-      changeCustom(event) {
-        this.customValue = event.target.value;
-        this.$emit('input', this.customValue);
-      },
+    other: {
+      type: Boolean,
+      default: false,
     },
-  }
+    icon: {
+      type: String,
+      default: '',
+    },
+    type: {
+      type: String,
+      default: '',
+    },
+    options: {
+      type: Object,
+      default: () => ({}),
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      otherActive: false,
+      customValue: '',
+    };
+  },
+  methods: {
+    change(value) {
+      if (value === this.customValue || value === '__other') {
+        this.$emit('input', this.customValue);
+        this.otherActive = true;
+        return;
+      }
+
+      this.otherActive = false;
+      this.$emit('input', value);
+    },
+    changeCustom(event) {
+      this.customValue = event.target.value;
+      this.$emit('input', this.customValue);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,16 +1,27 @@
 <template>
   <transition name="fade">
-    <div v-if="active" class="blocker" @click="$emit('click')" :style="{ zIndex }"/>
+    <div
+      v-if="active"
+      :style="{ zIndex }"
+      class="blocker"
+      @click="$emit('click')"
+    />
   </transition>
 </template>
 
 <script>
-  export default {
-    props: {
-      zIndex: Number,
-      active: Boolean,
+export default {
+  props: {
+    zIndex: {
+      type: Number,
+      default: 0,
     },
-  };
+    active: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
 </script>
 
 <style scoped>

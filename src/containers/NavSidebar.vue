@@ -1,29 +1,39 @@
 <template>
   <div>
-    <blocker :zIndex="15" :active="active" @click="$emit('toggleNav', false)" />
+    <blocker
+      :z-index="15"
+      :active="active"
+      @click="$emit('toggleNav', false)"
+    />
     <aside :class="{ active }">
-      <button v-if="active" class="close" @click="$emit('toggleNav', false)">Close nav</button>
+      <button
+        v-if="active"
+        class="close"
+        @click="$emit('toggleNav', false)">Close nav</button>
       <div class="logo">
-        <img src="@/assets/logo.svg" alt="Directus Logo" />
+        <img
+          src="@/assets/logo.svg"
+          alt="Directus Logo" >
       </div>
-      <div class="content">
-
-      </div>
+      <div class="content"/>
     </aside>
   </div>
 </template>
 
 <script>
-  import Blocker from '../components/Blocker.vue';
+import Blocker from '../components/Blocker.vue';
 
-  export default {
-    props: {
-      active: Boolean,
+export default {
+  components: {
+    Blocker,
+  },
+  props: {
+    active: {
+      type: Boolean,
+      default: false,
     },
-    components: {
-      Blocker,
-    },
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>

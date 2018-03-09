@@ -1,62 +1,73 @@
 <template>
   <div class="login">
     <login-form
-      @submit="login"
       :loading="loading"
       class="form"
-    ></login-form>
+      @submit="login"
+    />
     <transition name="slide">
-      <div class="notice" v-if="error" :class="errorType">
+      <div
+        v-if="error"
+        :class="errorType"
+        class="notice"
+      >
         <i class="material-icons">{{ errorType }}</i>
         {{ $t(`errors[${error.code}]`) }}
-        <button @click="closeError" class="close">Close error</button>
+        <button
+          class="close"
+          @click="closeError"
+        >Close error</button>
       </div>
     </transition>
-    <small :title="version" class="style-4">{{ $t('powered_by_directus') }}</small>
+    <small
+      :title="version"
+      class="style-4">{{ $t('powered_by_directus') }}</small>
   </div>
 </template>
 
 <script>
-  import { version } from '../../package.json';
-  import LoginForm from '../components/LoginForm.vue';
+import { version } from '../../package.json';
+import LoginForm from '../components/LoginForm.vue';
 
-  export default {
-    computed: {
-      version() {
-        return this.$t('version') + ' ' + version;
-      },
-      errorType() {
-        return this.error.code === -1 ? 'error' : 'warning';
-      },
+export default {
+  components: {
+    LoginForm,
+  },
+  computed: {
+    version() {
+      return `${this.$t('version')} ${version}`;
     },
-    components: {
-      LoginForm,
+    errorType() {
+      return this.error.code === -1 ? 'error' : 'warning';
     },
-    data() {
-      return {
-        loading: false,
-        error: null,
-      };
+    error() {
+      return this.$store.state.auth.error;
     },
-    methods: {
-      login(credentials) {
-        this.loading = true;
-        this.$api.login(credentials)
-          .then(() => {
-            this.loading = false;
-            const redirectRoute = this.$route.params.redirect;
-            this.$router.push(redirectRoute || '/');
-          })
-          .catch(error => {
-            this.loading = false;
-            this.error = error;
-          });
-      },
-      closeError() {
-        this.error = null;
-      },
+    loading() {
+      return this.$store.state.auth.loading;
     },
-  }
+  },
+  methods: {
+    login(credentials) {
+      this.$store.dispatch('login', credentials)
+        .then(() => {
+          if (this.$route.params.redirect) {
+            this.$router.push(this.$route.params.redirect);
+          }
+        })
+        .then(() => this.$api.getMe({ fields: 'last_page' }))
+        .then(res => res.data.last_page)
+        .then(lastPage => this.$router.push(lastPage || '/'))
+        .catch((err) => {
+          console.error(err);
+          this.$router.push('/');
+        });
+    },
+    closeError() {
+      this.$store.dispatch('removeAuthError');
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

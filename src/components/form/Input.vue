@@ -1,8 +1,11 @@
 <template>
-  <div :class="{
-    icon,
-  }">
+  <div
+    :class="{
+      icon,
+    }"
+  >
     <input
+      ref="input"
       :type="type"
       :autocomplete="autocomplete"
       :max="max"
@@ -17,40 +20,89 @@
       :value="value"
       :id="id"
       @input="$emit('input', $event.target.value)"
-      ref="input"
-    />
-    <i v-if="icon" class="material-icons">{{ icon }}</i>
+    >
+    <i
+      v-if="icon"
+      class="material-icons">{{ icon }}</i>
     <span v-if="charactercount">{{ charsRemaining }}</span>
   </div>
 </template>
 
 <script>
-  export default {
-    computed: {
-      charsRemaining() {
-        return this.maxlength - this.value.lenght;
-      },
-    },
-    props: {
+export default {
+  props: {
+    type: {
       type: String,
-      autocomplete: String,
-      max: Number,
-      maxlength: Number,
-      min: Number,
-      minlength: Number,
-      name: String,
-      placeholder: String,
-      readonly: Boolean,
-      required: Boolean,
-      spellcheck: Boolean,
-      id: String,
-      value: null,
+      default: 'text',
+    },
+    autocomplete: {
+      type: String,
+      default: 'on',
+    },
+    max: {
+      type: [Number, Boolean],
+      default: false,
+    },
+    maxlength: {
+      type: [Number, Boolean],
+      default: false,
+    },
+    min: {
+      type: [Number, Boolean],
+      default: false,
+    },
+    minlength: {
+      type: [Number, Boolean],
+      default: false,
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    spellcheck: {
+      type: Boolean,
+      default: true,
+    },
+    id: {
+      type: String,
+      default: '',
+    },
+    value: {
+      type: null,
+      default: '',
+    },
 
-      icon: String,
-      valid: Boolean,
-      charactercount: Boolean,
-    }
-  }
+    icon: {
+      type: String,
+      default: '',
+    },
+    valid: {
+      type: Boolean,
+      default: true,
+    },
+    charactercount: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    charsRemaining() {
+      return this.maxlength - this.value.lenght;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

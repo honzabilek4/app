@@ -110,6 +110,11 @@ body:not(.user-is-tabbing) * {
   outline: 0;
 }
 
+button {
+  /* Yeah. Sue me */
+  cursor: pointer;
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

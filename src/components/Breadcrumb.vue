@@ -1,44 +1,55 @@
 <template>
   <div>
-    <span v-for="(link, index) in _links">
-      <span v-if="link.path === $route.path" class="current">{{ link.name }}</span>
-      <router-link v-else :to="link.path">{{ link.name }}</router-link>
-      <i class="material-icons" v-if="index !== _links.length - 1">chevron_right</i>
+    <span
+      v-for="(link, index) in _links"
+      :key="index"
+    >
+      <span
+        v-if="link.path === $route.path"
+        class="current">{{ link.name }}</span>
+      <router-link
+        v-else
+        :to="link.path">{{ link.name }}</router-link>
+      <i
+        v-if="index !== _links.length - 1"
+        class="material-icons"
+      >chevron_right</i>
     </span>
   </div>
 </template>
 
 <script>
-  export default {
-    props: {
-      links: {
-        type: Array,
-      },
+export default {
+  props: {
+    links: {
+      type: Array,
+      default: () => ([]),
     },
-    computed: {
-      _links() {
-        if (this.links) return this.links;
+  },
+  computed: {
+    _links() {
+      if (this.links) return this.links;
 
-        const routeParts = this.$route.path.split('/');
-        routeParts.shift();
+      const routeParts = this.$route.path.split('/');
+      routeParts.shift();
 
-        return routeParts.map((part, i) => {
-          let url = '';
+      return routeParts.map((part, i) => {
+        let url = '';
 
-          for (let x = 0; x < i; x++) {
-            url += `/${routeParts[x]}`;
-          }
+        for (let x = 0; x < i; x++) { // eslint-disable-line
+          url += `/${routeParts[x]}`;
+        }
 
-          url += `/${part}`;
+        url += `/${part}`;
 
-          return {
-            name: this.$helpers.formatName(part),
-            path: url,
-          };
-        });
-      }
+        return {
+          name: this.$helpers.formatName(part),
+          path: url,
+        };
+      });
     },
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -47,8 +58,12 @@ div {
   align-items: center;
 }
 
+span {
+  height: 24px;
+}
+
 span:not(.current) {
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
 .current {
@@ -66,7 +81,7 @@ a {
 }
 
 i {
-  font-size: 12px;
+  font-size: 20px;
   color: var(--darker-gray);
 }
 </style>

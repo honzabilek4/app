@@ -9,11 +9,14 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      htmlFor: String,
+export default {
+  props: {
+    htmlFor: {
+      type: String,
+      default: '',
     },
-  }
+  },
+};
 </script>
 
 <style scoped>

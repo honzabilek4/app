@@ -1,38 +1,59 @@
 <template>
   <button
     :class="[bg || 'no-bg', { fullwidth, loading }, color]"
-    class="style-btn"
     :type="type"
     :disabled="disabled || loading"
+    class="style-btn"
   >
-    <i v-if="icon && !loading" class="material-icons">{{ icon }}</i>
-    <spinner v-if="loading" size="13" :lineSize="2" lineForegroundColor="#fff" lineBackgroundColor="var(--primary)" class="spinner" />
+    <i
+      v-if="icon && !loading"
+      class="material-icons">{{ icon }}</i>
+    <spinner
+      v-if="loading"
+      :line-size="2"
+      size="13"
+      line-foreground-color="#fff"
+      line-background-color="var(--primary)"
+      class="spinner" />
     <slot />
   </button>
 </template>
 
 <script>
-  export default {
-    props: {
-      fullwidth: Boolean,
-      icon: String,
+export default {
+  props: {
+    fullwidth: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
       type: String,
-      disabled: Boolean,
-      loading: Boolean,
-      color: {
-        type: String,
-        default: 'white',
-        validator: value => ['white', 'black'].includes(value),
-      },
-      bg: {
-        type: String,
-        default: 'primary',
-        validator: value => {
-          return ['primary', 'secondary', 'warning', 'danger'].includes(value);
-        },
-      },
-    }
-  }
+      default: '',
+    },
+    type: {
+      type: String,
+      default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    color: {
+      type: String,
+      default: 'white',
+      validator: value => ['white', 'black'].includes(value),
+    },
+    bg: {
+      type: String,
+      default: 'primary',
+      validator: value => ['primary', 'secondary', 'warning', 'danger'].includes(value),
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

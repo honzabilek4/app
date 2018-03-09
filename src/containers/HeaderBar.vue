@@ -1,33 +1,45 @@
 <template>
   <header class="main-header">
-    <button class="nav-toggle" @click="$emit('toggleNav', true)"><i class="material-icons">menu</i></button>
+    <button
+      class="nav-toggle"
+      @click="$emit('toggleNav', true)"><i class="material-icons">menu</i></button>
 
     <h1 class="style-1">
-      <portal-target name="header-title" slim>
+      <portal-target
+        name="header-title"
+        slim
+      >
         <breadcrumb />
       </portal-target>
     </h1>
 
+    <portal-target
+      name="header-custom"
+      class="custom"
+      slim />
+
     <header-button
       v-if="showInfoButton"
-      @click="$emit('toggleInfo')"
       icon="info"
+      @click="$emit('toggleInfo')"
     >
       Info
     </header-button>
-    <portal-target name="header-buttons" class="buttons" />
+    <portal-target
+      name="header-buttons"
+      class="buttons" />
   </header>
 </template>
 
 <script>
-  export default {
-    props: {
-      showInfoButton: {
-        type: Boolean,
-        default: false,
-      },
+export default {
+  props: {
+    showInfoButton: {
+      type: Boolean,
+      default: false,
     },
-  }
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -62,10 +74,6 @@
   align-items: center;
   z-index: 5;
 
-  div {
-    height: 100%;
-  }
-
   h1 {
     flex-grow: 1;
     color: var(--white);
@@ -83,5 +91,10 @@
 
 .buttons {
   display: flex;
+  height: 100%;
+}
+
+.custom {
+  margin: 0 20px;
 }
 </style>
