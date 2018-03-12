@@ -4,12 +4,18 @@
       :active="active"
       @click="$emit('toggleInfo', false)"/>
     <aside :class="{ active }">
+      <portal-target
+        v-if="hasSystemContent"
+        name="info-sidebar-system"
+        class="system"
+      />
       <portal-target name="info-sidebar" />
     </aside>
   </div>
 </template>
 
 <script>
+import { Wormhole } from 'portal-vue';
 import Blocker from './Blocker.vue';
 
 export default {
@@ -20,6 +26,11 @@ export default {
     active: {
       type: Boolean,
       default: false,
+    },
+  },
+  computed: {
+    hasSystemContent() {
+      return Wormhole.hasContentFor('info-sidebar-system');
     },
   },
 };
@@ -50,5 +61,11 @@ aside.active {
   .blocker {
     display: none;
   }
+}
+
+.system {
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--lightest-gray);
+  margin-bottom: 30px;
 }
 </style>
