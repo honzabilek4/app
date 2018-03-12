@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from './api';
+import store from './store';
 import Collections from './routes/Collections.vue';
 import ItemListing from './routes/ItemListing.vue';
 import Login from './routes/Login.vue';
@@ -32,6 +33,12 @@ const router = new Router({
       beforeEnter(to, from, next) {
         if (api.loggedIn) return next(false);
         return next();
+      },
+    },
+    {
+      path: '/logout',
+      beforeEnter() {
+        store.dispatch('logout');
       },
     },
   ],
