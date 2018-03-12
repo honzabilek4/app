@@ -40,6 +40,16 @@
         bg="primary">{{ $t('new') }}</header-button>
     </portal>
 
+    <portal to="info-sidebar-system">
+      <label for="listing">{{ $t('view_type') }}</label>
+      <form-select
+        id="listing"
+        :options="listingNames"
+        :value="listing"
+        name="listing"
+      />
+    </portal>
+
     <portal to="info-sidebar">
       <component
         v-if="hydrating === false"
@@ -129,6 +139,15 @@ export default {
     },
     listing() {
       return (this.listingPreferences && this.listingPreferences.view_type) || 'tabular';
+    },
+    listingNames() {
+      if (!this.$store.state.extensions.listings.data) return {};
+
+      const translatedNames = {};
+      Object.keys(this.$store.state.extensions.listings.data).forEach((id) => {
+        translatedNames[id] = this.$t(`ls-${id}-${this.$store.state.extensions.listings.data[id].name}`);
+      });
+      return translatedNames;
     },
   },
   watch: {

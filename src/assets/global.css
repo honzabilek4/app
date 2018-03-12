@@ -35,7 +35,7 @@
   --scale: 1.414;
 
   --input-border-width: 2px;
-  --input-height: 3.077em;
+  --input-height: 3.077rem;
 
   --nav-sidebar-width: 15.4rem;
   --header-height: 4.62rem;
@@ -147,7 +147,8 @@ button {
   font-weight: 500;
 }
 
-.style-3 {
+.style-3,
+label {
   color: var(--dark-gray);
   font-size: 0.85em;
   line-height: 1.18;

@@ -68,7 +68,7 @@ export default {
       return this.$route.meta.publicRoute || false;
     },
     infoSidebarHasContent() {
-      return Wormhole.hasContentFor('info-sidebar');
+      return Wormhole.hasContentFor('info-sidebar') || Wormhole.hasContentFor('info-sidebar-system');
     },
     subHeaderHasContent() {
       return Wormhole.hasContentFor('sub-header');

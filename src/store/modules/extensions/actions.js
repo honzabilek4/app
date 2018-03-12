@@ -19,8 +19,8 @@ export function getInterfaces({ commit }) {
     })
     .then((interfaces) => {
       interfaces.forEach((inter) => {
-        if (inter.translation) {
-          forEach(inter.translation, (messages, locale) => {
+        if (inter.translations) {
+          forEach(inter.translations, (messages, locale) => {
             i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `in-${inter.id}-${key}`));
           });
         }
@@ -41,8 +41,8 @@ export function getListings({ commit }) {
     })
     .then((listings) => {
       listings.forEach((listing) => {
-        if (listing.translation) {
-          forEach(listing.translation, (messages, locale) => {
+        if (listing.translations) {
+          forEach(listing.translations, (messages, locale) => {
             i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `ls-${listing.id}-${key}`));
           });
         }
@@ -63,8 +63,8 @@ export function getPages({ commit }) {
     })
     .then((pages) => {
       pages.forEach((page) => {
-        if (page.translation) {
-          forEach(page.translation, (messages, locale) => {
+        if (page.translations) {
+          forEach(page.translations, (messages, locale) => {
             i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `pg-${page.id}-${key}`));
           });
         }

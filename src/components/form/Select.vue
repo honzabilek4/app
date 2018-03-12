@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ icon }">
+  <div
+    :class="{ icon }"
+    class="select"
+  >
     <select
       v-if="other"
       :id="otherActive ? null : id"
@@ -11,17 +14,13 @@
           v-for="(key, value) in options"
           :key="key"
           :value="value"
-        >
-          {{ key }}
-        </option>
+        >{{ key }}</option>
       </optgroup>
       <optgroup :label="$t('other')">
         <option
           :value="customValue || '__other'"
           :selected="otherActive"
-        >
-          {{ customValue.length ? customValue : $t('enter_value') }}
-        </option>
+        >{{ customValue.length ? customValue : $t('enter_value') }}</option>
       </optgroup>
     </select>
     <select
@@ -34,9 +33,7 @@
         v-for="(key, value) in options"
         :key="key"
         :value="value"
-      >
-        {{ key }}
-      </option>
+      >{{ key }}</option>
     </select>
     <input
       v-if="otherActive"
@@ -48,7 +45,7 @@
       autofocus
       @input="changeCustom"
     >
-    <div>
+    <div class="value">
       <i
         v-if="icon"
         class="material-icons">{{ icon }}</i>
@@ -73,10 +70,6 @@ export default {
       type: String,
       default: '',
     },
-    required: {
-      type: Boolean,
-      default: false,
-    },
     value: {
       type: String,
       default: '',
@@ -96,7 +89,7 @@ export default {
     },
     options: {
       type: Object,
-      default: () => ({}),
+      required: true,
     },
     placeholder: {
       type: String,
@@ -129,8 +122,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
+.select {
   position: relative;
+  margin: 10px 0;
 
   select {
     position: absolute;
@@ -142,7 +136,7 @@ div {
     cursor: pointer;
   }
 
-  & > div, input {
+  .value, input {
     background-color: var(--white);
     height: var(--input-height);
     border: var(--input-border-width) solid var(--lighter-gray);
@@ -150,7 +144,7 @@ div {
     transition-property: color, border-color;
   }
 
-  & > div {
+  .value {
     z-index: -1;
     width: 100%;
     display: flex;
@@ -201,9 +195,9 @@ div {
     right: 10px;
   }
 
-  .icon {
-    & > div {
-      padding-left: 35px;
+  &.icon {
+    .value {
+      padding-left: 40px;
     }
 
     input {

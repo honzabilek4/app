@@ -68,4 +68,5 @@ export default {
   value: 'Value',
   values: 'Values',
   version: 'Version',
+  view_type: 'View type',
 };
