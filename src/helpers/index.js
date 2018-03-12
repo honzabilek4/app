@@ -1,8 +1,12 @@
 import Vue from 'vue';
 import formatName from './format-name';
+import gravatar from './gravatar';
+import registerExtension from './register-extension';
 
 const helpers = {
   formatName,
+  gravatar,
+  registerExtension,
 };
 
 const helpersPlugin = {

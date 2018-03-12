@@ -1,17 +1,9 @@
 import Vue from 'vue';
 import api from '../api';
 import prefixes from './prefixes';
+import loadExtension from './load-extension';
 import AsyncError from '../components/extensions/Error.vue';
 import AsyncLoading from '../components/extensions/Loading.vue';
-
-function loadAndEval(path) {
-  return new Promise((resolve, reject) => {
-    api.request('get', path, {}, {}, true)
-      .then(eval) // eslint-disable-line
-      .then(resolve)
-      .catch(reject);
-  });
-}
 
 /**
  * Register an extension if it hasn't been registered yet
@@ -54,7 +46,7 @@ export default function (type, info) {
   components.forEach((component) => {
     if (!registeredComponents.includes(component.name)) {
       Vue.component(component.name, () => ({
-        component: loadAndEval(`/${component.path}`),
+        component: loadExtension(`${api.url}/${component.path}`),
         error: AsyncError,
         loading: AsyncLoading,
       }));
