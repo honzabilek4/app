@@ -22,7 +22,10 @@
         @toggleNav="toggleNav"
       />
       <main :class="{ infoActive }">
-        <router-view class="page-root" />
+        <div class="page-root">
+          <sub-header v-if="subHeaderHasContent" />
+          <router-view />
+        </div>
         <info-sidebar
           v-if="infoSidebarHasContent"
           :active="infoActive"
@@ -45,13 +48,14 @@
 <script>
 import { Wormhole } from 'portal-vue';
 import HeaderBar from './containers/HeaderBar.vue';
+import SubHeader from './components/SubHeader.vue';
 import NavSidebar from './containers/NavSidebar.vue';
 import InfoSidebar from './components/InfoSidebar.vue';
 
 export default {
   name: 'Directus',
   components: {
-    HeaderBar, NavSidebar, InfoSidebar,
+    HeaderBar, NavSidebar, InfoSidebar, SubHeader,
   },
   data() {
     return {
@@ -65,6 +69,9 @@ export default {
     },
     infoSidebarHasContent() {
       return Wormhole.hasContentFor('info-sidebar');
+    },
+    subHeaderHasContent() {
+      return Wormhole.hasContentFor('sub-header');
     },
     hydrating() {
       return this.$store.state.hydrating;

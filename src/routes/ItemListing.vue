@@ -138,6 +138,8 @@ export default {
     listingPreferences: {
       deep: true,
       handler(newVal, oldVal) {
+        if (this.$lodash.isEmpty(oldVal)) return;
+
         const changedKeys = Object.keys(diff(oldVal, newVal));
         if (
           changedKeys.includes('search_query') ||
@@ -162,6 +164,7 @@ export default {
       ])
         .then(() => {
           this.hydrating = false;
+          this.getItems();
           registerExtension('listing', this.$store.state.extensions.listings.data[this.listing]);
         })
         .catch(console.error);
