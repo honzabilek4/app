@@ -8,6 +8,8 @@ import FormButton from './components/form/Button.vue';
 import FormSelect from './components/form/Select.vue';
 import FormCheckbox from './components/form/Checkbox.vue';
 import Avatar from './components/Avatar.vue';
+import Modal from './components/Modal.vue';
+import Blocker from './components/Blocker.vue';
 
 Vue.component('header-button', HeaderButton);
 Vue.component('breadcrumb', Breadcrumb);
@@ -17,3 +19,5 @@ Vue.component('form-select', FormSelect);
 Vue.component('form-checkbox', FormCheckbox);
 Vue.component('spinner', Spinner);
 Vue.component('avatar', Avatar);
+Vue.component('modal', Modal);
+Vue.component('blocker', Blocker);

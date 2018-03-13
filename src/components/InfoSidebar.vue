@@ -1,7 +1,7 @@
 <template>
   <div>
     <blocker
-      :active="active"
+      v-if="active"
       @click="$emit('toggleInfo', false)"/>
     <aside :class="{ active }">
       <portal-target

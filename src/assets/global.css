@@ -22,7 +22,7 @@
   --danger-dark: #ba160a;
 
   --border-radius: 3px;
-  --box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.8);
+  --box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 
   --transition: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-in: cubic-bezier(0, 0, 0.2, 1);
@@ -116,6 +116,10 @@ body:not(.user-is-tabbing) * {
 button {
   /* Yeah. Sue me */
   cursor: pointer;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
 }
 
 .material-icons {

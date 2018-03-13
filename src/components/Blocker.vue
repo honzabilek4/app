@@ -1,7 +1,6 @@
 <template>
   <transition name="fade">
     <div
-      v-if="active"
       :style="{ zIndex }"
       class="blocker"
       @click="$emit('click')"
@@ -15,10 +14,6 @@ export default {
     zIndex: {
       type: Number,
       default: 0,
-    },
-    active: {
-      type: Boolean,
-      default: false,
     },
   },
 };
@@ -37,11 +32,11 @@ export default {
 }
 
 .fade-enter-active {
-  transition: 250ms var(--transition-in);
+  transition: var(--slow) var(--transition-in);
 }
 
 .fade-leave-active {
-  transition: 200ms var(--transition-out);
+  transition: var(--medium) var(--transition-out);
 }
 
 .fade-enter, .fade-leave-to {

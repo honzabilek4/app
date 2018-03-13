@@ -4,6 +4,7 @@
     :type="type"
     :disabled="disabled || loading"
     class="style-btn"
+    @click="$emit('click')"
   >
     <i
       v-if="icon && !loading"
@@ -93,6 +94,7 @@ button {
   align-items: center;
   justify-content: center;
   height: var(--input-height);
+  padding: 0 20px;
 
   &:disabled:not(.loading) {
     background-color: var(--lightest-gray);

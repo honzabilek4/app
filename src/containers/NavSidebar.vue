@@ -1,8 +1,8 @@
 <template>
   <div>
     <blocker
+      v-if="active"
       :z-index="15"
-      :active="active"
       @click="$emit('toggleNav', false)"
     />
     <aside :class="{ active }">
