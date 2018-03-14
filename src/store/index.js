@@ -35,7 +35,7 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       key: 'directus',
-      paths: ['auth.token', 'auth.url'],
+      paths: ['auth.token', 'auth.url', 'auth.projectName'],
     }),
   ],
 });

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueMQ from 'vue-mq';
 import PortalVue from 'portal-vue';
 import lodash from 'lodash';
 
@@ -21,6 +22,14 @@ Object.defineProperty(Vue.prototype, '$lodash', { value: lodash });
 Object.defineProperty(Vue.prototype, '$api', { value: api });
 
 Vue.use(PortalVue);
+Vue.use(VueMQ, {
+  breakpoints: {
+    small: 800,
+    medium: 1000,
+    large: 1200,
+    extraLarge: Infinity,
+  },
+});
 
 /* eslint-disable no-new */
 new Vue({

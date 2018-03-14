@@ -1,6 +1,9 @@
 import router from '../../../router';
 import hydrateStore from '../../hydrate';
 import api from '../../../api';
+import extractHostname from '../../../helpers/extract-hostname';
+
+const config = window.__DirectusConfig__; // eslint-disable-line
 
 export function login({ commit }, credentials) {
   commit('LOGIN_PENDING');
@@ -10,7 +13,10 @@ export function login({ commit }, credentials) {
       ...credentials,
       persist: true,
     })
-      .then(info => commit('LOGIN_SUCCESS', info))
+      .then(info => commit('LOGIN_SUCCESS', {
+        ...info,
+        projectName: config.api[info.url] || extractHostname(info.url),
+      }))
       .then(hydrateStore)
       .then(resolve)
       .catch((error) => {

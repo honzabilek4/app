@@ -17,8 +17,13 @@
         @toggleNav="toggleNav"
         @toggleInfo="toggleInfo"
       />
+      <blocker
+        v-if="navActive && $mq === 'small'"
+        :z-index="25"
+        @click="toggleNav(false)"
+      />
       <nav-sidebar
-        :active="navActive"
+        v-show="navActive || $mq !== 'small'"
         @toggleNav="toggleNav"
       />
       <main :class="{ infoActive }">
@@ -26,10 +31,16 @@
           <sub-header v-if="subHeaderHasContent" />
           <router-view />
         </div>
+        <blocker
+          v-if="infoSidebarHasContent &&
+            ((infoActive && $mq === 'small') || (infoActive && $mq === 'medium'))
+          "
+          :z-index="5"
+          @click="toggleInfo(false)"
+        />
         <info-sidebar
-          v-if="infoSidebarHasContent"
-          :active="infoActive"
-          @toggleInfo="toggleInfo"
+          v-show="infoSidebarHasContent && infoActive"
+          @close="toggleInfo(false)"
         />
       </main>
     </div>
@@ -116,10 +127,10 @@ main {
     display: flex;
     align-items: stretch;
     padding-right: 0;
-    transition: padding-right var(--slow) var(--transition-out);
+    transition: padding-right var(--medium) var(--transition-out);
 
     &.infoActive {
-      transition: padding-right var(--medium) var(--transition-in);
+      transition: padding-right var(--slow) var(--transition-in);
       padding-right: var(--info-sidebar-width);
     }
   }

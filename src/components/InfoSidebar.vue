@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <blocker
-      v-if="active"
-      @click="$emit('toggleInfo', false)"/>
-    <aside :class="{ active }">
+  <transition name="info">
+    <aside>
       <portal-target
         v-if="hasSystemContent"
         name="info-sidebar-system"
@@ -11,16 +8,16 @@
       />
       <portal-target name="info-sidebar" />
     </aside>
-  </div>
+  </transition>
 </template>
 
 <script>
 import { Wormhole } from 'portal-vue';
-import Blocker from './Blocker.vue';
+import FocusLock from 'vue-focus-lock';
 
 export default {
   components: {
-    Blocker,
+    FocusLock,
   },
   props: {
     active: {
@@ -32,6 +29,9 @@ export default {
     hasSystemContent() {
       return Wormhole.hasContentFor('info-sidebar-system');
     },
+    overlay() {
+      return this.$mq === 'small' || this.$mq === 'medium';
+    },
   },
 };
 </script>
@@ -42,30 +42,31 @@ aside {
   right: 0;
   bottom: 0;
   height: calc(100% - var(--header-height));
-  transform: translateX(100%);
-  z-index: 5;
+  z-index: 10;
   transition: var(--slow) var(--transition-out);
   width: 100%;
   max-width: var(--info-sidebar-width);
   background-color: var(--white);
   border-left: 1px solid var(--lightest-gray);
   padding: 20px;
-}
 
-aside.active {
-  transform: translateX(0);
-  transition: var(--medium) var(--transition-in);
-}
-
-@media (min-width: 62.5em) {
-  .blocker {
-    display: none;
+  & .system {
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--lightest-gray);
+    margin-bottom: 30px;
   }
 }
 
-.system {
-  padding-bottom: 30px;
-  border-bottom: 1px solid var(--lightest-gray);
-  margin-bottom: 30px;
+.info-enter-active {
+  transition: var(--slow) var(--transition-in);
+}
+
+.info-leave-active {
+  transition: var(--medium) var(--transition-out);
+}
+
+.info-enter,
+.info-leave-to {
+  transform: translateX(100%);
 }
 </style>

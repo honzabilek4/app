@@ -23,6 +23,7 @@ export default {
   batch_edit: 'Batch edit',
   between: 'Between',
   cancel: 'Cancel',
+  change_project: 'Change Project',
   choose_one: 'Choose one',
   collections: 'Collections',
   contains: 'Contains',

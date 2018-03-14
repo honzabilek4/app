@@ -8,12 +8,14 @@ export function LOGIN_SUCCESS(state, info) {
   state.token = info.token;
   state.env = info.env;
   state.url = info.url;
+  state.projectName = info.projectName;
 }
 
 export function LOGIN_FAILED(state, error) {
   state.token = null;
   state.url = null;
   state.env = null;
+  state.projectName = null;
   state.loading = false;
   state.error = error;
 }
@@ -22,6 +24,7 @@ export function LOGOUT(state, error) {
   state.token = null;
   state.url = null;
   state.env = null;
+  state.projectName = null;
   state.loading = false;
   state.error = error;
 }

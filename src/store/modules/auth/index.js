@@ -7,6 +7,7 @@ const state = {
   env: '_',
   error: null,
   loading: false,
+  projectName: null,
 };
 
 export default {

@@ -39,6 +39,7 @@ module.exports = {
         'state' // Vuex
       ]
     }],
-    'import/no-extraneous-dependencies': 'warn'
+    'import/no-extraneous-dependencies': 'warn',
+    'prefer-destructuring': 0
   }
 }

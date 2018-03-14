@@ -68,7 +68,7 @@ export default {
   color: white;
   display: flex;
   align-items: center;
-  z-index: 5;
+  z-index: 20;
   padding-left: 20px;
 
   h1 {

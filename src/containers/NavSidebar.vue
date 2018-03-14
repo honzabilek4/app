@@ -1,127 +1,139 @@
 <template>
-  <div>
-    <blocker
-      v-if="active"
-      :z-index="15"
-      @click="$emit('toggleNav', false)"
-    />
-    <aside :class="{ active }">
-      <button
-        v-if="active"
-        class="close"
-        @click="$emit('toggleNav', false)">Close nav</button>
-      <section class="logo">
-        <img
-          src="@/assets/logo.svg"
-          alt="Directus Logo" >
-      </section>
-      <section
-        :class="{userMenuActive: userMenuActive}"
-        class="content"
+  <transition name="nav">
+    <aside>
+      <modal
+        v-if="projectSwitcherActive"
+        :title="$t('change_project')"
+        @close="projectSwitcherActive = false"
       >
-        <h3 class="style-4">{{ $t('collections') }}</h3>
-        <nav>
-          <ul>
-            <li
-              v-for="name in collectionNames"
-              :key="name"
-            >
-              <router-link :to="`/collections/${name}`"><svg viewBox="0 0 15 16">
-                <!-- eslint-disable max-len -->
-                <path
-                  d="M.422 12.598l6.773 3.114a.696.696 0 0 0 .61 0l6.771-3.114a.676.676 0 0 0 .424-.66V3.844a.726.726 0 0 0-.013-.13v-.039a.727.727 0 0 0-.029-.093l-.01-.03a.726.726 0 0 0-.059-.11l-.016-.023a.727.727 0 0 0-.064-.077l-.035-.023a.726.726 0 0 0-.08-.066l-.02-.014a.727.727 0 0 0-.098-.055L7.803.07a.696.696 0 0 0-.61 0L.423 3.184a.726.726 0 0 0-.098.055l-.02.014a.727.727 0 0 0-.08.066L.2 3.344a.727.727 0 0 0-.064.077l-.016.023a.726.726 0 0 0-.058.11l-.02.028a.727.727 0 0 0-.03.093v.038A.726.726 0 0 0 0 3.844v8.094c0 .31.14.53.422.66zm1.031-7.617l5.319 2.45v6.493l-5.319-2.451V4.98zm6.774 8.942V7.43l5.318-2.45v6.493l-5.318 2.449zM7.499 1.525l5.035 2.32-5.035 2.318-5.034-2.319 5.034-2.319z" />
-                  <!-- eslint-enable max-len -->
-              </svg>{{ $t(`cn-${name}`) }}</router-link>
-            </li>
-          </ul>
-        </nav>
-      </section>
-      <section
-        :class="{userMenuActive: userMenuActive}"
-        class="user-menu"
-        @mouseenter="toggleUserMenu(true)"
-        @mouseleave="toggleUserMenu(false, 1000)"
-      >
-        <header>
-          <button @click="toggleUserMenu()">
-            <avatar
-              :src="avatarURL"
-              :alt="fullName"
-              :indicator="true"
-              class="avatar"
-            />
-            <span>{{ fullName }}</span>
-            <i class="material-icons">more_vert</i>
+        Project changer form
+      </modal>
+      <focus-lock :disabled="!overlay">
+        <button
+          v-if="$mq === 'small'"
+          class="close"
+          @click="$emit('toggleNav', false)">Close nav</button>
+        <section class="logo">
+          <img
+            src="@/assets/logo.svg"
+            alt="Directus Logo" >
+        </section>
+        <section
+          :class="{userMenuActive: userMenuActive}"
+          class="content"
+        >
+          <button
+            class="project-switcher"
+            @click="projectSwitcherActive = true"
+          >
+            <i class="material-icons signal">signal_wifi_4_bar</i>
+            <span>{{ $store.state.auth.projectName }}</span>
+            <i class="material-icons chevron">arrow_drop_down</i>
           </button>
-        </header>
-        <div class="links">
+          <h3 class="style-4">{{ $t('collections') }}</h3>
           <nav>
             <ul>
-              <li>
-                <router-link to="/settings">
-                  <i class="material-icons">settings</i>
-                  {{ $t('admin_settings') }}
-                </router-link>
-              </li>
-              <li>
-                <a href="https://getdirectus.com">
-                  <i class="material-icons">help</i>
-                  {{ $t('help_and_docs') }}
-                </a>
+              <li
+                v-for="name in collectionNames"
+                :key="name"
+              >
+                <router-link :to="`/collections/${name}`"><svg viewBox="0 0 15 16">
+                  <!-- eslint-disable max-len -->
+                  <path
+                    d="M.422 12.598l6.773 3.114a.696.696 0 0 0 .61 0l6.771-3.114a.676.676 0 0 0 .424-.66V3.844a.726.726 0 0 0-.013-.13v-.039a.727.727 0 0 0-.029-.093l-.01-.03a.726.726 0 0 0-.059-.11l-.016-.023a.727.727 0 0 0-.064-.077l-.035-.023a.726.726 0 0 0-.08-.066l-.02-.014a.727.727 0 0 0-.098-.055L7.803.07a.696.696 0 0 0-.61 0L.423 3.184a.726.726 0 0 0-.098.055l-.02.014a.727.727 0 0 0-.08.066L.2 3.344a.727.727 0 0 0-.064.077l-.016.023a.726.726 0 0 0-.058.11l-.02.028a.727.727 0 0 0-.03.093v.038A.726.726 0 0 0 0 3.844v8.094c0 .31.14.53.422.66zm1.031-7.617l5.319 2.45v6.493l-5.319-2.451V4.98zm6.774 8.942V7.43l5.318-2.45v6.493l-5.318 2.449zM7.499 1.525l5.035 2.32-5.035 2.318-5.034-2.319 5.034-2.319z" />
+                    <!-- eslint-enable max-len -->
+                </svg>{{ $t(`cn-${name}`) }}</router-link>
               </li>
             </ul>
           </nav>
-          <nav>
-            <ul>
-              <li>
-                <router-link to="/files">
-                  <i class="material-icons">collections</i>
-                  {{ $t('file_library') }}
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/users">
-                  <i class="material-icons">person</i>
-                  {{ $t('user_directory') }}
-                </router-link>
-              </li>
-            </ul>
-          </nav>
-          <nav>
-            <ul>
-              <li>
-                <router-link to="/activity">
-                  <i class="material-icons">notifications</i>
-                  {{ $t('activity') }}
-                </router-link>
-              </li>
-              <li>
-                <router-link :to="`/users/${currentUserID}`">
-                  <i class="material-icons">person</i>
-                  {{ $t('my_profile') }}
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/logout">
-                  <i class="material-icons">exit_to_app</i>
-                  {{ $t('sign_out') }}
-                </router-link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
+        </section>
+        <section
+          :class="{userMenuActive: userMenuActive}"
+          class="user-menu"
+          @mouseenter="toggleUserMenu(true)"
+          @mouseleave="toggleUserMenu(false, 500)"
+        >
+          <header>
+            <button @click="toggleUserMenu()">
+              <avatar
+                :src="avatarURL"
+                :alt="fullName"
+                :indicator="true"
+                class="avatar"
+              />
+              <span>{{ fullName }}</span>
+              <i class="material-icons">more_vert</i>
+            </button>
+          </header>
+          <div class="links">
+            <nav>
+              <ul>
+                <li class="warning">
+                  <router-link to="/settings">
+                    <i class="material-icons">settings</i>
+                    {{ $t('admin_settings') }}
+                  </router-link>
+                </li>
+                <li>
+                  <a href="https://getdirectus.com">
+                    <i class="material-icons">help</i>
+                    {{ $t('help_and_docs') }}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <nav>
+              <ul>
+                <li>
+                  <router-link to="/files">
+                    <i class="material-icons">collections</i>
+                    {{ $t('file_library') }}
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/users">
+                    <i class="material-icons">person</i>
+                    {{ $t('user_directory') }}
+                  </router-link>
+                </li>
+              </ul>
+            </nav>
+            <nav>
+              <ul>
+                <li>
+                  <router-link to="/activity">
+                    <i class="material-icons">notifications</i>
+                    {{ $t('activity') }}
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="`/users/${currentUserID}`">
+                    <i class="material-icons">person</i>
+                    {{ $t('my_profile') }}
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/logout">
+                    <i class="material-icons">exit_to_app</i>
+                    {{ $t('sign_out') }}
+                  </router-link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </section>
+      </focus-lock>
     </aside>
-  </div>
+  </transition>
 </template>
 
 <script>
+import FocusLock from 'vue-focus-lock';
 import createGravatarLink from '../helpers/gravatar';
-import Blocker from '../components/Blocker.vue';
 
 export default {
   components: {
-    Blocker,
+    FocusLock,
   },
   props: {
     active: {
@@ -133,6 +145,7 @@ export default {
     return {
       userMenuActive: false,
       timeout: null,
+      projectSwitcherActive: false,
     };
   },
   computed: {
@@ -167,6 +180,9 @@ export default {
       return this.$store.state.me.data &&
        this.$store.state.me.data.id;
     },
+    overlay() {
+      return this.$mq === 'small';
+    },
   },
   methods: {
     toggleUserMenu(active = !this.userMenuActive, delay = false) {
@@ -193,13 +209,11 @@ aside {
   top: 0;
   left: 0;
   height: 100%;
-  transform: translateX(-100%);
-  z-index: 15;
+  z-index: 30;
   transition: var(--slow) var(--transition-out);
 
-  &.active {
-    transform: translateX(0);
-    transition: 200ms var(--transition-in);
+  > div {
+    height: 100%;
   }
 
   & .close {
@@ -207,18 +221,9 @@ aside {
     z-index: 15;
     left: -999px;
 
-    &:focus {
+    .user-is-tabbing &:focus {
       top: 13px;
       left: 13px;
-    }
-  }
-
-  @media (min-width: 50em) {
-    transition: none;
-    transform: translateX(0);
-
-    .blocker, .close {
-      display: none;
     }
   }
 }
@@ -263,6 +268,10 @@ a {
   position: relative;
 }
 
+a, i, svg {
+  transition: var(--fast) var(--transition);
+}
+
 a:hover,
 .router-link-active {
   color: var(--primary);
@@ -276,7 +285,7 @@ a:hover,
   content: '';
   position: absolute;
   height: 100%;
-  width: 2px;
+  width: 3px;
   background-color: var(--primary);
   left: -20px;
   top: 0;
@@ -290,15 +299,7 @@ ul {
 nav:not(:last-of-type) {
   padding-bottom: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid var(--lighter-gray);
-}
-
-button {
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background-color: transparent;
-  color: inherit;
+  border-bottom: 1px solid var(--lightest-gray);
 }
 
 .content,
@@ -307,10 +308,39 @@ button {
   background-color: var(--white);
   box-shadow: 1px 0 0 -0px var(--lightest-gray);
   padding: 20px;
+  padding-top: 0;
+}
+
+.user-menu {
+  position: relative;
+  max-height: 100vh;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .content {
   height: calc(100% - var(--header-height) - var(--header-height));
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.project-switcher {
+  height: var(--header-height);
+  width: 100%;
+  border-bottom: 1px solid var(--lightest-gray);
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  margin-bottom: 20px;
+
+  i {
+    color: var(--primary);
+  }
+
+  span {
+    flex-grow: 1;
+    line-height: 24px;
+  }
 }
 
 .user-menu {
@@ -318,7 +348,7 @@ button {
   left: 0;
   bottom: 0;
   width: 100%;
-  transform: translateY(calc(100% - var(--header-height) - 20px));
+  transform: translateY(calc(100% - var(--header-height)));
   transition: transform var(--medium) var(--transition-out);
   will-change: transform;
 
@@ -330,11 +360,14 @@ button {
   }
 
   header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    background-color: var(--white);
     padding: 10px 0;
-    border-top: 1px solid var(--lighter-gray);
-    border-bottom: 1px solid var(--lighter-gray);
+    border-top: 1px solid var(--lightest-gray);
+    border-bottom: 1px solid var(--lightest-gray);
     margin-bottom: 10px;
+    z-index: +1;
 
     .avatar {
       margin-right: 10px;
@@ -348,7 +381,39 @@ button {
     i {
       position: absolute;
       right: -10px;
+      color: inherit;
     }
+  }
+  .warning {
+    a, i {
+      color: var(--warning);
+    }
+  }
+
+  .warning:hover {
+    a, i {
+      color: var(--warning-dark);
+    }
+  }
+}
+
+.nav-enter-active {
+  transition: var(--slow) var(--transition-in);
+}
+
+.nav-leave-active {
+  transition: var(--medium) var(--transition-out);
+}
+
+.nav-enter,
+.nav-leave-to {
+  transform: translateX(-100%);
+}
+
+@media (min-width: 800px) {
+  .nav-enter,
+  .nav-leave-to {
+    transform: translateX(0);
   }
 }
 </style>
