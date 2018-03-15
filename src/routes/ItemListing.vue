@@ -1,5 +1,7 @@
 <template>
   <div>
+    <loader v-if="hydrating" />
+
     <portal to="header-title">
       <breadcrumb
         :links="[

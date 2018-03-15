@@ -64,14 +64,10 @@
       </modal>
     </div>
 
-    <transition name="fade">
-      <div
-        v-if="hydrating"
-        class="loader"
-      >
-        <spinner class="spinner" />
-      </div>
-    </transition>
+    <loader
+      v-if="hydrating"
+      :full-page="true"
+    />
   </div>
 </template>
 
@@ -163,30 +159,5 @@ main {
       padding-right: var(--info-sidebar-width);
     }
   }
-}
-
-.loader {
-  background-color: #f9f9f9;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 50;
-
-  .spinner {
-    position: absolute;
-    left: 50%;
-    top: 45%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity var(--medium) var(--transition-in);
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
 }
 </style>

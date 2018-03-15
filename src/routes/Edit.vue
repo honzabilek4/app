@@ -1,5 +1,9 @@
 <template>
-  <div class="edit">
+  <div
+    class="edit"
+  >
+    <loader v-if="hydrating" />
+
     <portal to="header-title">
       <breadcrumb
         :links="[
@@ -267,6 +271,9 @@ export default {
 <style lang="scss" scoped>
 .edit {
   padding: 30px 20px;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .field {
