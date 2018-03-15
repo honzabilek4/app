@@ -29,6 +29,8 @@
     <portal to="header-buttons">
       <header-button
         v-if="selection.length > 1"
+        :disabled="true"
+        title="This feature hasn't been build yet"
         icon="mode_edit"
         bg="warning">{{ $t('batch_edit') }}</header-button>
       <header-button
@@ -37,7 +39,9 @@
         bg="danger">{{ $t('delete') }}</header-button>
       <header-button
         icon="add"
-        bg="primary">{{ $t('new') }}</header-button>
+        bg="primary"
+        @click="add"
+      >{{ $t('new') }}</header-button>
     </portal>
 
     <portal to="info-sidebar-system">
@@ -84,7 +88,7 @@
 
 <script>
 import { diff } from 'deep-object-diff';
-import registerExtension from '../helpers/register-extension';
+import { registerListing } from '../helpers/register-extension';
 import SearchFilter from '../components/SearchFilter.vue';
 import formatFilters from '../helpers/format-filters';
 import prefixes from '../helpers/prefixes';
@@ -184,7 +188,7 @@ export default {
         .then(() => {
           this.hydrating = false;
           this.getItems();
-          registerExtension('listing', this.$store.state.extensions.listings.data[this.listing]);
+          registerListing(this.listing);
         })
         .catch(console.error);
     },
@@ -227,6 +231,9 @@ export default {
           [field]: val,
         },
       });
+    },
+    add() {
+      this.$router.push(`/collections/${this.collection}/+`);
     },
   },
 };

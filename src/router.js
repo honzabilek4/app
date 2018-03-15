@@ -4,6 +4,7 @@ import api from './api';
 import store from './store';
 import Collections from './routes/Collections.vue';
 import ItemListing from './routes/ItemListing.vue';
+import Edit from './routes/Edit.vue';
 import Login from './routes/Login.vue';
 
 Vue.use(Router);
@@ -23,6 +24,11 @@ const router = new Router({
       path: '/collections/:collection',
       props: true,
       component: ItemListing,
+    },
+    {
+      path: '/collections/:collection/:primaryKey',
+      props: true,
+      component: Edit,
     },
     {
       path: '/login',
@@ -46,23 +52,42 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const { loggedIn } = api;
+  const publicRoute = to.matched.some(record => record.meta.publicRoute);
 
-  if (to.matched.some(record => record.meta.publicRoute)) {
-    return next();
+  if (loggedIn === false && publicRoute === false) {
+    if (to.fullPath === '/') {
+      return next({ path: '/login' });
+    }
+
+    return next({
+      path: '/login',
+      query: { redirect: to.fullPath },
+    });
   }
 
-  if (loggedIn) {
-    return next();
+  const editing = store.getters.editing;
+
+  if (editing && publicRoute === false) {
+    const { collection, primaryKey } = store.state.edits;
+    const path = `/collections/${collection}/${primaryKey}`;
+
+    if (path !== to.fullPath) {
+      if (
+        to.query.collection !== collection ||
+        to.query.primaryKey !== primaryKey ||
+        to.query.editing !== true
+      ) {
+        next({
+          path: to.path,
+          query: {
+            collection, primaryKey, editing: true,
+          },
+        });
+      }
+    }
   }
 
-  if (!loggedIn && to.fullPath === '/') {
-    return next({ path: '/login' });
-  }
-
-  return next({
-    path: '/login',
-    query: { redirect: to.fullPath },
-  });
+  return next();
 });
 
 export default router;

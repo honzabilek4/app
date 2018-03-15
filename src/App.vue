@@ -43,6 +43,25 @@
           @close="toggleInfo(false)"
         />
       </main>
+
+      <modal
+        v-if="unsavedChanges"
+        :action-required="true"
+        :title="$t('unsaved_changes')"
+      >
+        <p>
+          {{ $t('unsaved_changes_copy') }}
+        </p>
+        <template slot="footer">
+          <form-button
+            bg="danger"
+            @click="discardChanges"
+          >{{ $t('discard_changes') }}</form-button>
+          <form-button
+            @click="keepEditing"
+          >{{ $t('keep_editing') }}</form-button>
+        </template>
+      </modal>
     </div>
 
     <transition name="fade">
@@ -87,6 +106,9 @@ export default {
     hydrating() {
       return this.$store.state.hydrating;
     },
+    unsavedChanges() {
+      return this.$route.query.editing === true;
+    },
   },
   methods: {
     toggleNav(visible = !this.navActive) {
@@ -94,6 +116,13 @@ export default {
     },
     toggleInfo(visible = !this.infoActive) {
       this.infoActive = visible;
+    },
+    keepEditing() {
+      this.$router.push(`/collections/${this.$route.query.collection}/${this.$route.query.primaryKey}`);
+    },
+    discardChanges() {
+      this.$store.dispatch('discardChanges');
+      this.$router.push(this.$route.path);
     },
   },
 };

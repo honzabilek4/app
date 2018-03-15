@@ -38,16 +38,16 @@
               </div>
               <div class="footer">
                 <slot name="footer">
-                  <div class="default-buttons">
-                    <button
-                      v-if="!actionRequired"
-                      @click="$emit('close')"
-                    >{{ cancel || $t('cancel') }}</button>
-                    <form-button
-                      class="confirm"
-                      @click="$emit('confirm')"
-                    >{{ ok || $t('ok') }}</form-button>
-                  </div>
+                  <button
+                    v-if="!actionRequired"
+                    @click="$emit('close')"
+                  >{{ cancel || $t('cancel') }}</button>
+                  <form-button
+                    :bg="okBg"
+                    :color="okColor"
+                    class="confirm"
+                    @click="$emit('confirm')"
+                  >{{ ok || $t('ok') }}</form-button>
                 </slot>
               </div>
             </div>
@@ -82,6 +82,14 @@ export default {
     ok: {
       type: String,
       default: '',
+    },
+    okBg: {
+      type: String,
+      default: 'primary',
+    },
+    okColor: {
+      type: String,
+      default: 'white',
     },
   },
   mounted() {
@@ -149,7 +157,7 @@ export default {
   }
 
   header,
-  .default-buttons {
+  .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -167,10 +175,6 @@ export default {
 
   .footer {
     border-top: 1px solid var(--lightest-gray);
-  }
-
-  .confirm {
-    background-color: var(--primary);
   }
 
   button:not(.confirm) {

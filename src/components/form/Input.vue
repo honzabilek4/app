@@ -108,6 +108,8 @@ export default {
 <style lang="scss" scoped>
 div {
   position: relative;
+  max-width: 400px;
+  margin: 10px 0;
 }
 
 input {

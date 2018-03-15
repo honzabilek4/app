@@ -9,6 +9,7 @@ import settings from './modules/settings';
 import fields from './modules/fields';
 import listingPreferences from './modules/listing-preferences';
 import extensions from './modules/extensions';
+import edits from './modules/edits';
 
 import * as mutations from './mutations';
 
@@ -31,11 +32,19 @@ const store = new Vuex.Store({
     fields,
     listingPreferences,
     extensions,
+    edits,
   },
   plugins: [
     createPersistedState({
       key: 'directus',
-      paths: ['auth.token', 'auth.url', 'auth.projectName'],
+      paths: [
+        'auth.token',
+        'auth.url',
+        'auth.projectName',
+        'edits.collection',
+        'edits.primaryKey',
+        'edits.values',
+      ],
     }),
   ],
 });

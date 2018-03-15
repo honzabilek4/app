@@ -1,5 +1,5 @@
 <template>
   <div>
-    ERROR
+    LOADING
   </div>
 </template>

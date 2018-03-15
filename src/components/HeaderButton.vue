@@ -4,9 +4,19 @@
       color: `var(--${color})`,
     }"
     :class="bg || 'no-bg'"
+    :disabled="disabled"
     @click="$emit('click', $event)"
   >
-    <i class="material-icons">{{ icon }}</i>
+    <i
+      v-if="!loading"
+      class="material-icons"
+    >{{ icon }}</i>
+    <spinner
+      v-else
+      :size="24"
+      line-fg-color="white"
+      line-bg-color="transparent"
+    />
     <span class="style-btn"><slot /></span>
   </button>
 </template>
@@ -30,6 +40,14 @@ export default {
         if (value === false) return true;
         return ['primary', 'secondary', 'warning', 'danger'].includes(value);
       },
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
 };
@@ -63,7 +81,7 @@ button {
     font-size: 10px;
   }
 
-  &:hover span,
+  &:hover:not([disabled]) span,
   .user-is-tabbing &:focus span {
     opacity: 0.6;
     transform: translateY(0);
@@ -81,4 +99,13 @@ button.secondary { background-color: var(--secondary); }
 button.warning { background-color: var(--warning); }
 button.danger { background-color: var(--danger); }
 button.no-bg { border-left: 1px solid #444444; }
+
+button[disabled] {
+  background-color: var(--darker-gray);
+  color: var(--dark-gray);
+  cursor: not-allowed;
+  i {
+    color: var(--gray);
+  }
+}
 </style>

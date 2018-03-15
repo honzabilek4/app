@@ -125,6 +125,7 @@ export default {
 .select {
   position: relative;
   margin: 10px 0;
+  max-width: 400px;
 
   select {
     position: absolute;
