@@ -28,9 +28,15 @@
       <header-button
         :disabled="!editing"
         :loading="saving"
+        :options="{
+          saveAndStay: $t('save_and_stay'),
+          saveAndAdd: $t('save_and_add'),
+          saveAsCopy: $t('save_as_copy'),
+        }"
         icon="check"
         bg="primary"
         @click="saveAndLeave"
+        @input="saveSpecial"
       >{{ $t('save') }}</header-button>
     </portal>
 
@@ -140,6 +146,12 @@ export default {
     newItem() {
       return this.primaryKey === '+';
     },
+    primaryKeyField() {
+      return this.$lodash.find(
+        this.fields,
+        { interface: 'primary-key' },
+      ).field;
+    },
   },
   beforeRouteLeave(to, from, next) {
     if (this.editing) {
@@ -150,7 +162,7 @@ export default {
     return next();
   },
   watch: {
-    collection() {
+    $route() {
       this.hydrate();
     },
   },
@@ -194,6 +206,18 @@ export default {
         })
         .catch(console.error);
     },
+    saveSpecial(method) {
+      this[method]();
+    },
+    saveAndStay() {
+      this.saving = true;
+      this.$store.dispatch('save')
+        .then(() => {
+          this.saving = false;
+          this.hydrate();
+        })
+        .catch(console.error);
+    },
     saveAndLeave() {
       this.saving = true;
       this.$store.dispatch('save')
@@ -201,6 +225,28 @@ export default {
           this.saving = false;
         })
         .then(() => this.$router.push(`/collections/${this.collection}`))
+        .catch(console.error);
+    },
+    saveAndAdd() {
+      this.saving = true;
+      this.$store.dispatch('save')
+        .then(() => {
+          this.saving = false;
+        })
+        .then(() => this.$router.push(`/collections/${this.collection}/+`))
+        .catch(console.error);
+    },
+    saveAsCopy() {
+      this.saving = true;
+      this.$store.dispatch('save', {
+        primaryKey: '+',
+        values: this.values,
+      })
+        .then((res) => {
+          this.saving = false;
+          return res.data[this.primaryKeyField];
+        })
+        .then(pk => this.$router.push(`/collections/${this.collection}/${pk}`))
         .catch(console.error);
     },
     keepEditing() {

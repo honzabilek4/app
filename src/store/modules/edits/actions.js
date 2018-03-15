@@ -17,17 +17,22 @@ export function stageValue({ commit, state }, { field, value }) {
   return commit('STAGE_VALUE', { field, value });
 }
 
-export function save({ commit, state }) {
+export function save({ commit, state }, overrides) {
   function commitCreated(res) {
     commit('ITEM_CREATED');
     return res;
   }
 
-  if (state.primaryKey === '+') {
-    return api.createItem(state.collection, state.values)
+  const info = {
+    ...state,
+    ...overrides,
+  };
+
+  if (info.primaryKey === '+') {
+    return api.createItem(info.collection, info.values)
       .then(commitCreated);
   }
 
-  return api.updateItem(state.collection, state.primaryKey, state.values)
+  return api.updateItem(info.collection, info.primaryKey, info.values)
     .then(commitCreated);
 }

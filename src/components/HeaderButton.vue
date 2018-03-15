@@ -1,24 +1,52 @@
 <template>
-  <button
-    :style="{
-      color: `var(--${color})`,
-    }"
-    :class="bg || 'no-bg'"
-    :disabled="disabled"
-    @click="$emit('click', $event)"
-  >
-    <i
-      v-if="!loading"
-      class="material-icons"
-    >{{ icon }}</i>
-    <spinner
-      v-else
-      :size="24"
-      line-fg-color="white"
-      line-bg-color="transparent"
-    />
-    <span class="style-btn"><slot /></span>
-  </button>
+  <div class="wrapper">
+    <div
+      v-if="Object.keys(options).length > 0"
+      class="options"
+    >
+      <select
+        :disabled="disabled"
+        v-model="choice"
+        @change="emitChange"
+      >
+        <option
+          disabled
+          selected
+          value=""
+        >
+          {{ $t('more_options') }}
+        </option>
+        <option
+          v-for="(display, value) in options"
+          :value="value"
+          :key="value"
+        >
+          {{ display }}
+        </option>
+      </select>
+      <i class="material-icons">more_horiz</i>
+    </div>
+    <button
+      :style="{
+        color: `var(--${color})`,
+      }"
+      :class="bg || 'no-bg'"
+      :disabled="disabled"
+      @click="$emit('click', $event)"
+    >
+      <i
+        v-if="!loading"
+        class="material-icons"
+      >{{ icon }}</i>
+      <spinner
+        v-else
+        :size="24"
+        line-fg-color="white"
+        line-bg-color="transparent"
+      />
+      <span class="style-btn"><slot /></span>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -49,11 +77,32 @@ export default {
       type: Boolean,
       default: false,
     },
+    options: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  data() {
+    return {
+      choice: null,
+    };
+  },
+  methods: {
+    emitChange(event) {
+      this.$emit('input', event.target.value);
+      this.choice = null;
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.wrapper {
+  position: relative;
+  height: var(--header-height);
+  width: var(--header-height);
+}
+
 button {
   background-color: transparent;
   appearance: none;
@@ -62,9 +111,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--header-height);
   height: 100%;
-  position: relative;
+  width: 100%;
   border-radius: 0;
   cursor: pointer;
 
@@ -88,7 +136,7 @@ button {
     transition: 100ms var(--transition-in);
   }
 
-  &:active i {
+  &:not([disabled]):active i {
     transform: scale(0.8);
     opacity: 0.8;
   }
@@ -106,6 +154,47 @@ button[disabled] {
   cursor: not-allowed;
   i {
     color: var(--gray);
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30%;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: +1;
+
+  i {
+    opacity: 0.6;
+    transition: opacity var(--fast) var(--transition);
+  }
+
+  select {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: +2;
+
+    &:hover:not([disabled]) + i {
+      opacity: 1;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+
+      & + i {
+        opacity: 0.1;
+      }
+    }
   }
 }
 </style>
