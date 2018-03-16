@@ -63,6 +63,8 @@ export default {
   no_related_entries: 'Has no related entries',
   not_between: 'Not between',
   not_contains: 'Does\'t contain',
+  page_not_found: 'Page Not Found',
+  page_not_found_body: 'The page you are looking for doesn\t seem to exist.',
   not_empty: 'Is not empty',
   not_equal_to: 'Not equal to',
   not_in_list: 'Not one of these',
