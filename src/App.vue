@@ -64,6 +64,11 @@
       </modal>
     </div>
 
+    <notifications
+      position="bottom right"
+      classes="directus-notification"
+    />
+
     <loader
       v-if="hydrating"
       :full-page="true"

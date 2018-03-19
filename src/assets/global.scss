@@ -179,3 +179,40 @@ label {
   font-weight: 700;
   text-transform: uppercase;
 }
+
+.notifications {
+  width: 100% !important;
+  max-width: 400px !important;
+}
+
+.directus-notification {
+  padding: 20px;
+  margin: 0 10px 10px;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+
+  color: #ffffff;
+  background: var(--primary);
+  border-left: 5px solid var(--primary-dark);
+
+  .notification-title {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+  }
+
+  &.warn {
+    background: var(--warning);
+    border-left-color: var(--warning-dark);
+  }
+
+  &.error {
+    background: var(--danger);
+    border-left-color: var(--danger-dark);
+  }
+
+  &.success {
+    background: var(--success);
+    border-left-color: var(--success-dark);
+  }
+}

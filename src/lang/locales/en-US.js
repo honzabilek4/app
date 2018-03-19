@@ -81,6 +81,8 @@ export default {
   save_and_stay: 'Save and Stay',
   save_as_copy: 'Save as Copy',
   search: 'Search',
+  something_went_wrong: 'Something went wrong..',
+  something_went_wrong_body: 'We\'re having some trouble processing your request.. Please try again by refreshing this page. If the problem persist, please contact your system administrator.',
   sign_out: 'Sign Out',
   unsaved_changes: 'Unsaved Changes',
   unsaved_changes_copy: 'It seems like you have some unsaved changes. Would you like to keep editing or discard the changes you made?',

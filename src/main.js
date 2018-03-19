@@ -2,8 +2,9 @@ import Vue from 'vue';
 import VueMQ from 'vue-mq';
 import PortalVue from 'portal-vue';
 import lodash from 'lodash';
+import Notifications from 'vue-notification';
 
-import './assets/global.css';
+import './assets/global.scss';
 import './globals';
 import App from './App.vue';
 
@@ -30,6 +31,7 @@ Vue.use(VueMQ, {
     extraLarge: Infinity,
   },
 });
+Vue.use(Notifications);
 
 /* eslint-disable no-new */
 new Vue({
