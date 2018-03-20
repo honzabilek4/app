@@ -5,7 +5,7 @@ import { i18n } from '../../../lang/';
 // NOTE: These functions are indeed pretty similar, but it wouldn't surprise me if some of these
 //   will be getting more exceptions in the future.
 
-// NOTE: The translations are prefixed with the above type prefix plus the identifier of the
+// NOTE: The.translation are prefixed with the above type prefix plus the identifier of the
 //   extensions:
 // in-checkboxes-choices
 
@@ -19,8 +19,8 @@ export function getInterfaces({ commit }) {
     })
     .then((interfaces) => {
       interfaces.forEach((inter) => {
-        if (inter.translations) {
-          forEach(inter.translations, (messages, locale) => {
+        if (inter.translation) {
+          forEach(inter.translation, (messages, locale) => {
             i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `in-${inter.id}-${key}`));
           });
         }
@@ -41,8 +41,8 @@ export function getListings({ commit }) {
     })
     .then((listings) => {
       listings.forEach((listing) => {
-        if (listing.translations) {
-          forEach(listing.translations, (messages, locale) => {
+        if (listing.translation) {
+          forEach(listing.translation, (messages, locale) => {
             i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `ls-${listing.id}-${key}`));
           });
         }
@@ -63,8 +63,8 @@ export function getPages({ commit }) {
     })
     .then((pages) => {
       pages.forEach((page) => {
-        if (page.translations) {
-          forEach(page.translations, (messages, locale) => {
+        if (page.translation) {
+          forEach(page.translation, (messages, locale) => {
             i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `pg-${page.id}-${key}`));
           });
         }

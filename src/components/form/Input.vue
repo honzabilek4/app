@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     charsRemaining() {
-      return this.maxlength - this.value.lenght;
+      return this.maxlength - this.value.length;
     },
   },
 };
@@ -108,11 +108,13 @@ export default {
 <style lang="scss" scoped>
 div {
   position: relative;
-  max-width: 400px;
   margin: 10px 0;
+  display: flex;
+  align-items: center;
 }
 
 input {
+  flex-grow: 1;
   width: 100%;
   border: var(--input-border-width) solid var(--lighter-gray);
   border-radius: var(--border-radius);
@@ -155,6 +157,18 @@ input {
     box-shadow: inset 0 0 0 2000px var(--white);
   }
 
+}
+
+span {
+  margin: 0 10px;
+  opacity: 0;
+  transition: var(--fast) var(--transition);
+  flex-shrink: 0;
+  flex-basis: 30px;
+}
+
+input:focus + span {
+  opacity: 1;
 }
 
 .icon input {

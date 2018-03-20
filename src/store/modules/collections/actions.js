@@ -18,7 +18,7 @@ export function getCollections({ commit }) { // eslint-disable-line
           });
         } else {
           forEach(availableLanguages, (locale) => {
-            i18n.mergeLocaleMessage(locale, { [`fn-${collection.collection}`]: formatName(collection.collection) });
+            i18n.mergeLocaleMessage(locale, { [`cn-${collection.collection}`]: formatName(collection.collection) });
           });
         }
       });

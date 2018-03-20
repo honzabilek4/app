@@ -3,6 +3,9 @@ import VueI18n from 'vue-i18n';
 
 import enUS, { dateTimeFormats } from './locales/en-US';
 
+// Register timeago component
+import './timeago';
+
 Vue.use(VueI18n);
 
 export const i18n = new VueI18n({
