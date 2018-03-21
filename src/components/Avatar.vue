@@ -1,24 +1,21 @@
 <template>
-  <div>
+  <div class="avatar">
     <img
       :src="src"
       :alt="alt"
-      :style="{
-        borderColor: `var(--${color})`
-      }"
-    >
+      :style="{ borderColor: `var(--${color})` }">
     <div
       v-if="indicator"
       :style="{
         backgroundColor: `var(--${color})`
       }"
-      class="indicator"
-    />
+      class="indicator"/>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'avatar',
   props: {
     src: {
       type: String,

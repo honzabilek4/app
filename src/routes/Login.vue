@@ -3,20 +3,17 @@
     <login-form
       :loading="loading"
       class="form"
-      @submit="login"
-    />
+      @submit="login" />
     <transition name="slide">
       <div
         v-if="error"
         :class="errorType"
-        class="notice"
-      >
+        class="notice">
         <i class="material-icons">{{ errorType }}</i>
         {{ $t(`errors[${error.code}]`) }}
         <button
           class="close"
-          @click="closeError"
-        >Close error</button>
+          @click="closeError">Close error</button>
       </div>
     </transition>
     <small
@@ -30,6 +27,7 @@ import { version } from '../../package.json';
 import LoginForm from '../components/LoginForm.vue';
 
 export default {
+  name: 'login',
   components: {
     LoginForm,
   },
@@ -66,7 +64,7 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          console.error(err);
+          console.error(err); // eslint-disable-line no-console
           this.$router.push('/');
         });
     },

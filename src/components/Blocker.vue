@@ -3,13 +3,13 @@
     <div
       :style="{ zIndex }"
       class="blocker"
-      @click="$emit('click')"
-    />
+      @click="$emit('click')"/>
   </transition>
 </template>
 
 <script>
 export default {
+  name: 'blocker',
   props: {
     zIndex: {
       type: Number,

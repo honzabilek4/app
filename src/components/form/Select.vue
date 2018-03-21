@@ -1,14 +1,12 @@
 <template>
   <div
     :class="{ icon }"
-    class="select"
-  >
+    class="form-select">
     <select
       v-if="other"
       :id="otherActive ? null : id"
       :value="value"
-      @change="change($event.target.value)"
-    >
+      @change="change($event.target.value)">
       <optgroup :label="$t('values')">
         <option
           v-for="(key, value) in options"
@@ -27,8 +25,7 @@
       v-else
       :id="otherActive ? null : id"
       :value="value"
-      @change="change($event.target.value)"
-    >
+      @change="change($event.target.value)">
       <option
         v-for="(key, value) in options"
         :key="key"
@@ -43,8 +40,7 @@
       :id="id"
       :placeholder="placeholder"
       autofocus
-      @input="changeCustom"
-    >
+      @input="changeCustom">
     <div class="value">
       <i
         v-if="icon"
@@ -57,6 +53,7 @@
 
 <script>
 export default {
+  name: 'form-select',
   props: {
     disabled: {
       type: Boolean,
@@ -122,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.select {
+.form-select {
   position: relative;
   margin: 10px 0;
   max-width: 400px;

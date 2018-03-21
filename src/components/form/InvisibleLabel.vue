@@ -5,15 +5,18 @@
 </docs>
 
 <template>
-  <label :for="htmlFor"><slot /></label>
+  <label
+    :for="htmlFor"
+    class="invisible-label"><slot /></label>
 </template>
 
 <script>
 export default {
+  name: 'invisible-label',
   props: {
     htmlFor: {
       type: String,
-      default: '',
+      required: true,
     },
   },
 };

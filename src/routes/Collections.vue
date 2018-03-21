@@ -1,13 +1,12 @@
 <template>
-  <div>
+  <div class="collections">
     <portal to="header-title">
       {{ $t('collections') }}
     </portal>
     <ul>
       <li
         v-for="name in collectionNames"
-        :key="name"
-      >
+        :key="name">
         <router-link :to="`/collections/${name}`">{{ $t(`cn-${name}`) }}</router-link>
       </li>
     </ul>
@@ -16,6 +15,7 @@
 
 <script>
 export default {
+  name: 'collections',
   computed: {
     loading() {
       return this.$store.state.collections.loading;

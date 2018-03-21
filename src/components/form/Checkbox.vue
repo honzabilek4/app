@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="form-checkbox">
     <input
       :id="id"
       :checked="shouldBeChecked"
@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: 'form-checkbox',
   model: {
     prop: 'modelValue',
     event: 'change',

@@ -1,26 +1,22 @@
 <template>
-  <div class="wrapper">
+  <div class="header-button">
     <div
       v-if="Object.keys(options).length > 0"
-      class="options"
-    >
+      class="options">
       <select
         :disabled="disabled"
         v-model="choice"
-        @change="emitChange"
-      >
+        @change="emitChange">
         <option
           disabled
           selected
-          value=""
-        >
+          value="">
           {{ $t('more_options') }}
         </option>
         <option
           v-for="(display, value) in options"
           :value="value"
-          :key="value"
-        >
+          :key="value">
           {{ display }}
         </option>
       </select>
@@ -32,18 +28,15 @@
       }"
       :class="bg || 'no-bg'"
       :disabled="disabled"
-      @click="$emit('click', $event)"
-    >
+      @click="$emit('click', $event)">
       <i
         v-if="!loading"
-        class="material-icons"
-      >{{ icon }}</i>
+        class="material-icons">{{ icon }}</i>
       <spinner
         v-else
         :size="24"
         line-fg-color="white"
-        line-bg-color="transparent"
-      />
+        line-bg-color="transparent"/>
       <span class="style-btn"><slot /></span>
     </button>
   </div>
@@ -51,6 +44,7 @@
 
 <script>
 export default {
+  name: 'header-button',
   props: {
     icon: {
       type: String,
@@ -97,7 +91,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.header-button {
   position: relative;
   height: var(--header-height);
   width: var(--header-height);

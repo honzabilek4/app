@@ -6,7 +6,7 @@ import Collections from './routes/Collections.vue';
 import ItemListing from './routes/ItemListing.vue';
 import Edit from './routes/Edit.vue';
 import Login from './routes/Login.vue';
-import notFound from './routes/notFound.vue';
+import NotFound from './routes/NotFound.vue';
 
 Vue.use(Router);
 
@@ -50,7 +50,7 @@ const router = new Router({
     },
     {
       path: '*',
-      component: notFound,
+      component: NotFound,
     },
   ],
 });

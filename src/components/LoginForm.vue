@@ -1,5 +1,7 @@
 <template>
-  <form @submit.prevent="submit">
+  <form
+    class="login-form"
+    @submit.prevent="submit">
 
     <div v-if="apiUrls.length === 0">
       <invisible-label html-for="url">{{ $t('api_url') }}</invisible-label>
@@ -10,8 +12,7 @@
         icon="cloud"
         type="url"
         name="url"
-        class="input"
-      />
+        class="input" />
     </div>
 
     <form-select
@@ -24,8 +25,7 @@
       :custom="allowOther"
       icon="cloud"
       class="input"
-      type="url"
-    />
+      type="url" />
 
     <invisible-label html-for="email">{{ $t('email_address') }}</invisible-label>
     <form-input
@@ -35,8 +35,7 @@
       icon="person"
       class="input"
       type="email"
-      name="email"
-    />
+      name="email" />
 
     <invisible-label html-for="password">{{ $t('password') }}</invisible-label>
     <form-input
@@ -46,15 +45,13 @@
       icon="lock"
       type="password"
       name="password"
-      class="input"
-    />
+      class="input" />
 
     <form-button
       :fullwidth="true"
       :disabled="disabled"
       :loading="loading"
-      type="submit"
-    >{{ $t('login') }}</form-button>
+      type="submit">{{ $t('login') }}</form-button>
   </form>
 </template>
 
@@ -62,6 +59,7 @@
 import InvisibleLabel from '../components/form/InvisibleLabel.vue';
 
 export default {
+  name: 'login-form',
   components: {
     InvisibleLabel,
   },

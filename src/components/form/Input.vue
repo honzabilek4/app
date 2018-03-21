@@ -1,9 +1,7 @@
 <template>
   <div
-    :class="{
-      icon,
-    }"
-  >
+    :class="{icon}"
+    class="form-input">
     <input
       ref="input"
       :type="type"
@@ -19,8 +17,7 @@
       :spellcheck="spellcheck"
       :value="value"
       :id="id"
-      @input="$emit('input', $event.target.value)"
-    >
+      @input="$emit('input', $event.target.value)">
     <i
       v-if="icon"
       class="material-icons">{{ icon }}</i>
@@ -30,6 +27,7 @@
 
 <script>
 export default {
+  name: 'form-input',
   props: {
     type: {
       type: String,

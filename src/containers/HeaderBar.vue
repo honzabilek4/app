@@ -1,5 +1,5 @@
 <template>
-  <header class="main-header">
+  <header class="header-bar">
     <button
       class="nav-toggle"
       @click="$emit('toggleNav', true)"><i class="material-icons">menu</i></button>
@@ -7,8 +7,7 @@
     <h1 class="style-1">
       <portal-target
         name="header-title"
-        slim
-      >
+        slim>
         <breadcrumb />
       </portal-target>
     </h1>
@@ -21,8 +20,7 @@
     <header-button
       v-if="showInfoButton"
       icon="info"
-      @click="$emit('toggleInfo')"
-    >
+      @click="$emit('toggleInfo')">
       Info
     </header-button>
     <portal-target
@@ -33,6 +31,7 @@
 
 <script>
 export default {
+  name: 'header-bar',
   props: {
     showInfoButton: {
       type: Boolean,
@@ -57,7 +56,7 @@ export default {
   }
 }
 
-.main-header {
+.header-bar {
   background-color: black;
   background-color: var(--darkest-gray);
   position: fixed;

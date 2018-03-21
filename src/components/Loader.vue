@@ -2,13 +2,11 @@
   <transition name="fade">
     <div
       :class="{'full-page': fullPage}"
-      class="loader"
-    >
+      class="loader">
       <transition name="fade">
         <spinner
           v-show="active"
-          class="spinner"
-        />
+          class="spinner" />
       </transition>
     </div>
   </transition>
@@ -16,6 +14,7 @@
 
 <script>
 export default {
+  name: 'loader',
   props: {
     fullPage: {
       type: Boolean,

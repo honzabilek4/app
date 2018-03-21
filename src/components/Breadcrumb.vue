@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="breadcrumb">
     <span
       v-for="(link, index) in _links"
-      :key="index"
-    >
+      :key="index">
       <span
         v-if="link.path === $route.path"
         class="current">{{ link.name }}</span>
@@ -12,14 +11,14 @@
         :to="link.path">{{ link.name }}</router-link>
       <i
         v-if="index !== _links.length - 1"
-        class="material-icons"
-      >chevron_right</i>
+        class="material-icons">chevron_right</i>
     </span>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'breadcrumb',
   props: {
     links: {
       type: Array,

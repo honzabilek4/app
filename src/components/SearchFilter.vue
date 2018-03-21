@@ -1,8 +1,7 @@
 <template>
   <div
     :class="{ active }"
-    class="search-filter"
-  >
+    class="search-filter">
     <div class="search">
       <invisible-label html-for="search">{{ $t('search') }}</invisible-label>
       <i class="material-icons">search</i>
@@ -12,51 +11,44 @@
         :value="searchQuery"
         type="text"
         name="search"
-        @input="searchInput"
-      >
+        @input="searchInput">
       <button @click="toggleForm($event.target.value)">
         <i class="material-icons">filter_list</i>
       </button>
     </div>
     <form
       v-if="active"
-      @submit.prevent
-    >
+      @submit.prevent>
       <fieldset
         v-for="(filter, index) in filters"
-        :key="index"
-      >
+        :key="index">
         <div>
           <label>
             {{ $t('field') }}
             <select
               :value="filter.field"
-              @change="updateFilter(index, 'field', $event.target.value)"
-            >
+              @change="updateFilter(index, 'field', $event.target.value)">
               <option
                 disabled
                 selected>{{ $t('choose_one') }}</option>
               <option
                 v-for="(key, value) in fields"
                 :value="value"
-                :key="key"
-              >{{ key }}</option>
+                :key="key">{{ key }}</option>
             </select>
           </label>
           <label>
             {{ $t('operator') }}
             <select
               :value="filter.operator"
-              @change="updateFilter(index, 'operator', $event.target.value)"
-            >
+              @change="updateFilter(index, 'operator', $event.target.value)">
               <option
                 disabled
                 selected>{{ $t('choose_one') }}</option>
               <option
                 v-for="(key, value) in operators"
                 :key="key"
-                :value="value"
-              >
+                :value="value">
                 {{ $t(key) }}
               </option>
             </select>
@@ -66,8 +58,7 @@
             <input
               :value="filter.value"
               type="text"
-              @input="updateFilter(index, 'value', $event.target.value)"
-            >
+              @input="updateFilter(index, 'value', $event.target.value)">
           </label>
           <button @click="deleteFilter(index)">Delete</button>
         </div>
@@ -81,6 +72,7 @@
 import InvisibleLabel from '../components/form/InvisibleLabel.vue';
 
 export default {
+  name: 'search-filter',
   components: {
     InvisibleLabel,
   },

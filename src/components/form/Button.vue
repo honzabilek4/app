@@ -3,9 +3,8 @@
     :class="[bg || 'no-bg', { fullwidth, loading }, color]"
     :type="type"
     :disabled="disabled || loading"
-    class="style-btn"
-    @click="$emit('click')"
-  >
+    class="form-button style-btn"
+    @click="$emit('click')">
     <i
       v-if="icon && !loading"
       class="material-icons">{{ icon }}</i>
@@ -22,6 +21,7 @@
 
 <script>
 export default {
+  name: 'form-button',
   props: {
     fullwidth: {
       type: Boolean,

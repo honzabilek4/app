@@ -1,11 +1,10 @@
 <template>
   <transition name="info">
-    <aside>
+    <aside class="info-sidebar">
       <portal-target
         v-if="hasSystemContent"
         name="info-sidebar-system"
-        class="system"
-      />
+        class="system" />
       <portal-target name="info-sidebar" />
     </aside>
   </transition>
@@ -16,6 +15,7 @@ import { Wormhole } from 'portal-vue';
 import FocusLock from 'vue-focus-lock';
 
 export default {
+  name: 'info-sidebar',
   components: {
     FocusLock,
   },
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-aside {
+.info-sidebar {
   position: fixed;
   right: 0;
   bottom: 0;

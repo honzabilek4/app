@@ -40,6 +40,7 @@ module.exports = {
       ]
     }],
     'import/no-extraneous-dependencies': 'warn',
-    'prefer-destructuring': 0
+    'prefer-destructuring': 0,
+    'vue/name-property-casing': ['error', 'kebab-case']
   }
 }

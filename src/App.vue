@@ -1,31 +1,25 @@
 <template>
   <router-view
     v-if="publicRoute"
-    class="root"
-  />
+    class="directus" />
 
   <div
     v-else
-    class="root"
-  >
+    class="directus">
     <div
       v-if="!hydrating"
-      class="root"
-    >
+      class="directus">
       <header-bar
         :show-info-button="infoSidebarHasContent"
         @toggleNav="toggleNav"
-        @toggleInfo="toggleInfo"
-      />
+        @toggleInfo="toggleInfo" />
       <blocker
         v-if="navActive && $mq === 'small'"
         :z-index="25"
-        @click="toggleNav(false)"
-      />
+        @click="toggleNav(false)" />
       <nav-sidebar
         v-show="navActive || $mq !== 'small'"
-        @toggleNav="toggleNav"
-      />
+        @toggleNav="toggleNav" />
       <main :class="{ infoActive }">
         <div class="page-root">
           <sub-header v-if="subHeaderHasContent" />
@@ -36,43 +30,36 @@
             ((infoActive && $mq === 'small') || (infoActive && $mq === 'medium'))
           "
           :z-index="5"
-          @click="toggleInfo(false)"
-        />
+          @click="toggleInfo(false)" />
         <info-sidebar
           v-show="infoSidebarHasContent && infoActive"
-          @close="toggleInfo(false)"
-        />
+          @close="toggleInfo(false)" />
       </main>
 
       <modal
         v-if="unsavedChanges"
         :action-required="true"
-        :title="$t('unsaved_changes')"
-      >
+        :title="$t('unsaved_changes')">
         <p>
           {{ $t('unsaved_changes_copy') }}
         </p>
         <template slot="footer">
           <form-button
             bg="danger"
-            @click="discardChanges"
-          >{{ $t('discard_changes') }}</form-button>
+            @click="discardChanges">{{ $t('discard_changes') }}</form-button>
           <form-button
-            @click="keepEditing"
-          >{{ $t('keep_editing') }}</form-button>
+            @click="keepEditing">{{ $t('keep_editing') }}</form-button>
         </template>
       </modal>
     </div>
 
     <notifications
       position="bottom right"
-      classes="directus-notification"
-    />
+      classes="directus-notification" />
 
     <loader
       v-if="hydrating"
-      :full-page="true"
-    />
+      :full-page="true" />
   </div>
 </template>
 
@@ -84,7 +71,7 @@ import NavSidebar from './containers/NavSidebar.vue';
 import InfoSidebar from './components/InfoSidebar.vue';
 
 export default {
-  name: 'Directus',
+  name: 'directus',
   components: {
     HeaderBar, NavSidebar, InfoSidebar, SubHeader,
   },
@@ -130,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.root, .page-root {
+.directus, .page-root {
   height: 100%;
 }
 

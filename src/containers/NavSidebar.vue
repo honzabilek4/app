@@ -1,11 +1,10 @@
 <template>
   <transition name="nav">
-    <aside>
+    <aside class="nav-sidebar">
       <modal
         v-if="projectSwitcherActive"
         :title="$t('change_project')"
-        @close="projectSwitcherActive = false"
-      >
+        @close="projectSwitcherActive = false">
         Project changer form
       </modal>
       <focus-lock :disabled="!overlay">
@@ -16,16 +15,14 @@
         <section class="logo">
           <img
             src="@/assets/logo.svg"
-            alt="Directus Logo" >
+            alt="Directus Logo">
         </section>
         <section
           :class="{userMenuActive: userMenuActive}"
-          class="content"
-        >
+          class="content">
           <button
             class="project-switcher"
-            @click="projectSwitcherActive = true"
-          >
+            @click="projectSwitcherActive = true">
             <i class="material-icons signal">signal_wifi_4_bar</i>
             <span>{{ $store.state.auth.projectName }}</span>
             <i class="material-icons chevron">arrow_drop_down</i>
@@ -35,8 +32,7 @@
             <ul>
               <li
                 v-for="name in collectionNames"
-                :key="name"
-              >
+                :key="name">
                 <router-link :to="`/collections/${name}`"><svg viewBox="0 0 15 16">
                   <!-- eslint-disable max-len -->
                   <path
@@ -51,16 +47,14 @@
           :class="{userMenuActive: userMenuActive}"
           class="user-menu"
           @mouseenter="toggleUserMenu(true)"
-          @mouseleave="toggleUserMenu(false, 500)"
-        >
+          @mouseleave="toggleUserMenu(false, 500)">
           <header>
             <button @click="toggleUserMenu()">
               <avatar
                 :src="avatarURL"
                 :alt="fullName"
                 :indicator="true"
-                class="avatar"
-              />
+                class="avatar" />
               <span>{{ fullName }}</span>
               <i class="material-icons">more_vert</i>
             </button>
@@ -132,6 +126,7 @@ import FocusLock from 'vue-focus-lock';
 import createGravatarLink from '../helpers/gravatar';
 
 export default {
+  name: 'nav-sidebar',
   components: {
     FocusLock,
   },

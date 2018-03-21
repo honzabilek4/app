@@ -1,12 +1,13 @@
 <template>
   <form-input
     :value="value"
-    @input="$emit('input', $event)"
-  />
+    class="interface-fallback"
+    @input="$emit('input', $event)" />
 </template>
 
 <script>
 export default {
+  name: 'interface-fallback',
   props: {
     value: {
       type: null,
