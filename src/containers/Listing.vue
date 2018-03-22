@@ -1,6 +1,9 @@
 <template>
   <div class="listing">
-    <loader v-if="hydrating" />
+    <loader
+      v-if="hydrating"
+      area="content"
+    />
 
     <portal to="header-custom">
       <search-filter

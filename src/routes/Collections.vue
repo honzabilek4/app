@@ -3,13 +3,12 @@
     <portal to="header-title">
       {{ $t('collections') }}
     </portal>
-    <ul>
-      <li
-        v-for="name in collectionNames"
-        :key="name">
-        <router-link :to="`/collections/${name}`">{{ $t(`cn-${name}`) }}</router-link>
-      </li>
-    </ul>
+    <v-table
+      :items="items"
+      :columns="fields"
+      primary-key-field="collection"
+      link="__link__"
+      @select="select" />
   </div>
 </template>
 
@@ -17,14 +16,24 @@
 export default {
   name: 'collections',
   computed: {
-    loading() {
-      return this.$store.state.collections.loading;
+    items() {
+      const collections = this.$store.state.collections.data || {};
+
+      return Object.keys(collections).map(collection => ({
+        collection: this.$t(`cn-${collection}`),
+        __link__: `/collections/${collection}`,
+      }));
     },
-    collections() {
-      return this.$store.state.collections.data;
+    fields() {
+      return [{
+        field: 'collection',
+        name: this.$t('collection'),
+      }];
     },
-    collectionNames() {
-      return this.collections && Object.keys(this.collections);
+  },
+  methods: {
+    select(selection) {
+      this.selection = selection;
     },
   },
 };

@@ -26,6 +26,7 @@ export default {
   cancel: 'Cancel',
   change_project: 'Change Project',
   choose_one: 'Choose one',
+  collection: 'Collection',
   collections: 'Collections',
   comments: 'Comments',
   contains: 'Contains',

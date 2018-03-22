@@ -1,6 +1,9 @@
 <template>
   <div class="edit">
-    <loader v-if="hydrating" />
+    <loader
+      v-if="hydrating"
+      area="content"
+    />
 
     <portal to="header-title">
       <breadcrumb :links="breadcrumb" />

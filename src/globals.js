@@ -11,6 +11,7 @@ import Avatar from './components/Avatar.vue';
 import Modal from './components/Modal.vue';
 import Blocker from './components/Blocker.vue';
 import Loader from './components/Loader.vue';
+import VTable from './components/VTable.vue';
 
 Vue.component('header-button', HeaderButton);
 Vue.component('breadcrumb', Breadcrumb);
@@ -23,3 +24,4 @@ Vue.component('avatar', Avatar);
 Vue.component('modal', Modal);
 Vue.component('blocker', Blocker);
 Vue.component('loader', Loader);
+Vue.component('VTable', VTable);

@@ -59,7 +59,7 @@
 
     <loader
       v-if="hydrating"
-      :full-page="true" />
+      area="full-page" />
   </div>
 </template>
 
