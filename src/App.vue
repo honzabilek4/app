@@ -6,9 +6,7 @@
   <div
     v-else
     class="directus">
-    <div
-      v-if="!hydrating"
-      class="directus">
+    <div v-if="!hydrating">
       <header-bar
         :show-info-button="infoSidebarHasContent"
         @toggleNav="toggleNav"
@@ -20,11 +18,8 @@
       <nav-sidebar
         v-show="navActive || $mq !== 'small'"
         @toggleNav="toggleNav" />
-      <main :class="{ infoActive }">
-        <div class="page-root">
-          <sub-header v-if="subHeaderHasContent" />
-          <router-view />
-        </div>
+      <main :class="{ 'info-active': infoActive }">
+        <router-view class="page-root" />
         <blocker
           v-if="infoSidebarHasContent &&
             ((infoActive && $mq === 'small') || (infoActive && $mq === 'medium'))
@@ -66,14 +61,13 @@
 <script>
 import { Wormhole } from 'portal-vue';
 import HeaderBar from './containers/HeaderBar.vue';
-import SubHeader from './components/SubHeader.vue';
 import NavSidebar from './containers/NavSidebar.vue';
 import InfoSidebar from './components/InfoSidebar.vue';
 
 export default {
   name: 'directus',
   components: {
-    HeaderBar, NavSidebar, InfoSidebar, SubHeader,
+    HeaderBar, NavSidebar, InfoSidebar,
   },
   data() {
     return {
@@ -104,6 +98,12 @@ export default {
     },
     toggleInfo(visible = !this.infoActive) {
       this.infoActive = visible;
+
+      if (visible) {
+        document.body.classList.add('info-active');
+      } else {
+        document.body.classList.remove('info-active');
+      }
     },
     keepEditing() {
       this.$router.push(`/collections/${this.$route.query.collection}/${this.$route.query.primaryKey}`);
@@ -116,40 +116,34 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.directus, .page-root {
-  height: 100%;
-}
-
-.flex {
-  display: flex;
-  align-items: stretch;
-  height: 100%;
-}
-
-.page-root {
-  flex-grow: 1;
-}
-
-main {
-  min-width: 100%;
-  height: 100%;
+<style lang="scss">
+body {
   padding-top: var(--header-height);
 
   @media (min-width: 50em) {
-    padding-left: calc(var(--nav-sidebar-width) + 1px); /* sidebar shadow */
+    padding-left: calc(var(--nav-sidebar-width) + 1px); /* +1px = sidebar shadow */
   }
 
   @media (min-width: 62.5em) {
-    display: flex;
-    align-items: stretch;
-    padding-right: 0;
     transition: padding-right var(--medium) var(--transition-out);
 
-    &.infoActive {
+    &.info-active {
       transition: padding-right var(--slow) var(--transition-in);
       padding-right: var(--info-sidebar-width);
     }
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.directus, .page-root, .directus > div:first-child {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 </style>

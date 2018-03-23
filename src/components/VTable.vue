@@ -1,5 +1,7 @@
 <template>
-  <div class="v-table">
+  <div
+    :style="{ minWidth: totalWidth + 'px' }"
+    class="v-table">
     <div class="toolbar">
       <div
         v-if="selectable"
@@ -189,6 +191,11 @@ export default {
     resizeable() {
       return this.$lodash.isObject(this.columnWidths);
     },
+    totalWidth() {
+      return Object.keys(this.widths)
+        .map(field => this.widths[field])
+        .reduce((acc, val) => acc + val) + 30 + 40;
+    },
   },
   watch: {
     widths: {
@@ -264,6 +271,10 @@ export default {
 </script>
 
 <style scoped>
+.v-table {
+  width: 100%;
+}
+
 .drag-handle {
   width: 8px;
   height: 100%;
@@ -290,17 +301,20 @@ export default {
   align-items: center;
   padding: 0 20px;
   border-bottom: 1px solid var(--lighter-gray);
-  background-color: var(--white);
 }
 
 .toolbar {
   position: sticky;
-  top: var(--header-height);
   height: var(--header-height);
+  left: 0;
+  top: 0;
+  z-index: +1;
+  background-color: var(--white);
 }
 
 .row {
   opacity: 1;
+  background-color: var(--white);
 }
 
 .row.link:hover {

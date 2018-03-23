@@ -16,9 +16,7 @@ import FocusLock from 'vue-focus-lock';
 
 export default {
   name: 'info-sidebar',
-  components: {
-    FocusLock,
-  },
+  components: { FocusLock },
   props: {
     active: {
       type: Boolean,
