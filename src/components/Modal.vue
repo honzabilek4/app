@@ -36,11 +36,11 @@
                   <button
                     v-if="!actionRequired"
                     @click="$emit('close')">{{ cancel || $t('cancel') }}</button>
-                  <form-button
+                  <v-button
                     :bg="okBg"
                     :color="okColor"
                     class="confirm"
-                    @click="$emit('confirm')">{{ ok || $t('ok') }}</form-button>
+                    @click="$emit('confirm')">{{ ok || $t('ok') }}</v-button>
                 </slot>
               </div>
             </div>

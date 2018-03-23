@@ -36,7 +36,7 @@
 
     <portal to="info-sidebar-system">
       <label for="listing">{{ $t('view_type') }}</label>
-      <form-select
+      <v-select
         id="listing"
         :options="listingNames"
         :value="listing"
@@ -72,6 +72,7 @@
       :selection="selection"
       @query="updateListingPreferences('view_query', $event)"
       @select="value => { selection = value }"
+      @input="updateListingPreferences('view_options', $event)"
     />
   </div>
 </template>

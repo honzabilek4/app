@@ -1,5 +1,5 @@
 <template>
-  <form-input
+  <v-input
     :value="value"
     class="interface-fallback"
     @input="$emit('input', $event)" />

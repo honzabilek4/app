@@ -5,7 +5,7 @@
 
     <div v-if="apiUrls.length === 0">
       <invisible-label html-for="url">{{ $t('api_url') }}</invisible-label>
-      <form-input
+      <v-input
         id="url"
         v-model="url"
         :placeholder="$t('api_url')"
@@ -15,7 +15,7 @@
         class="input" />
     </div>
 
-    <form-select
+    <v-select
       v-if="(apiUrls.length === 1 && allowOther === true) || apiUrls.length > 1"
       id="url"
       v-model="url"
@@ -28,7 +28,7 @@
       type="url" />
 
     <invisible-label html-for="email">{{ $t('email_address') }}</invisible-label>
-    <form-input
+    <v-input
       id="email"
       v-model="email"
       :placeholder="$t('email')"
@@ -38,7 +38,7 @@
       name="email" />
 
     <invisible-label html-for="password">{{ $t('password') }}</invisible-label>
-    <form-input
+    <v-input
       id="password"
       v-model="password"
       :placeholder="$t('password')"
@@ -47,22 +47,17 @@
       name="password"
       class="input" />
 
-    <form-button
+    <v-button
       :fullwidth="true"
       :disabled="disabled"
       :loading="loading"
-      type="submit">{{ $t('login') }}</form-button>
+      type="submit">{{ $t('login') }}</v-button>
   </form>
 </template>
 
 <script>
-import InvisibleLabel from '../components/form/InvisibleLabel.vue';
-
 export default {
   name: 'login-form',
-  components: {
-    InvisibleLabel,
-  },
   props: {
     loading: {
       type: Boolean,

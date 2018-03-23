@@ -69,13 +69,8 @@
 </template>
 
 <script>
-import InvisibleLabel from '../components/form/InvisibleLabel.vue';
-
 export default {
   name: 'search-filter',
-  components: {
-    InvisibleLabel,
-  },
   props: {
     fields: {
       type: Object,

@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{icon}"
-    class="form-input">
+    class="v-input">
     <input
       ref="input"
       :type="type"
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'form-input',
+  name: 'v-input',
   props: {
     type: {
       type: String,

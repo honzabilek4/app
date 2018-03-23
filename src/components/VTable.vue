@@ -4,7 +4,7 @@
       <div
         v-if="selectable"
         class="select cell">
-        <form-checkbox
+        <v-checkbox
           id="select-all"
           :checked="allSelected"
           name="select-all"
@@ -14,6 +14,11 @@
       <div
         v-for="{field, name} in columns"
         :key="field"
+        :style="{
+          flexBasis: widths && widths[field] ?
+            widths[field] + 'px' :
+            null
+        }"
         class="cell">
 
         <button
@@ -32,6 +37,16 @@
         <span
           v-else
           class="style-4">{{ name }}</span>
+
+        <div
+          v-if="resizeable"
+          class="drag-handle"
+          draggable
+          @drag="drag(field, $event)"
+          @dragstart="hideDragImage"
+          @dragend="lastDragXPosition = 0">
+          <div class="drag-handle-line" />
+        </div>
 
       </div>
     </div>
@@ -59,7 +74,7 @@
             v-if="selectable"
             class="cell select"
             @click.stop>
-            <form-checkbox
+            <v-checkbox
               :id="'check-' + row[primaryKeyField]"
               :value="row[primaryKeyField]"
               :checked="selection.includes(row[primaryKeyField])"
@@ -68,6 +83,11 @@
           <div
             v-for="{field} in columns"
             :key="field"
+            :style="{
+              flexBasis: widths && widths[field] ?
+                widths[field] + 'px' :
+                null
+            }"
             class="cell">{{ row[field] }}</div>
         </div>
       </transition-group>
@@ -84,16 +104,21 @@
             v-if="selectable"
             class="select"
             @click.stop>
-            <form-checkbox
+            <v-checkbox
               :id="'check-' + i"
               :value="row[primaryKeyField]"
               :checked="selection.includes(row[primaryKeyField])"
               @change="toggleCheckbox(row[primaryKeyField])" />
           </div>
           <div
-            v-for="{field, name} in columns"
-            :key="name"
-            class="cell">{{ row[name] }}</div>
+            v-for="{field} in columns"
+            :key="field"
+            :style="{
+              flexBasis: widths && widths[field] ?
+                widths[field] + 'px' :
+                null
+            }"
+            class="cell">{{ row[field] }}</div>
         </div>
       </transition-group>
 
@@ -137,6 +162,16 @@ export default {
       type: Number,
       default: 40,
     },
+    columnWidths: {
+      type: Object,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      widths: {},
+      lastDragXPosition: null,
+    };
   },
   computed: {
     allSelected() {
@@ -151,6 +186,31 @@ export default {
     sortable() {
       return this.$lodash.isObject(this.sortVal);
     },
+    resizeable() {
+      return this.$lodash.isObject(this.columnWidths);
+    },
+  },
+  watch: {
+    widths: {
+      deep: true,
+      handler() {
+        this.emitWidths();
+      },
+    },
+  },
+  created() {
+    this.drag = this.$lodash.throttle(this.drag, 20);
+    this.emitWidths = this.$lodash.debounce(this.emitWidths, 100);
+
+    const widths = {};
+    this.columns.forEach(({ field }) => {
+      widths[field] = 200;
+    });
+
+    this.widths = {
+      ...widths,
+      ...this.columnWidths,
+    };
   },
   methods: {
     selectAll() {
@@ -179,11 +239,47 @@ export default {
 
       this.$emit('select', selection);
     },
+    drag(field, event) {
+      const { screenX } = event;
+
+      if (screenX !== 0 && this.lastDragXPosition) {
+        const delta = screenX - this.lastDragXPosition;
+        const newPos = this.widths[field] + delta;
+        this.widths[field] = newPos;
+      }
+
+      this.lastDragXPosition = screenX;
+    },
+    hideDragImage(event) {
+      const img = document.createElement('img');
+      img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      event.dataTransfer.setDragImage(img, 0, 0);
+      event.dataTransfer.effectAllowed = 'move';
+    },
+    emitWidths() {
+      this.$emit('widths', this.widths);
+    },
   },
 };
 </script>
 
 <style scoped>
+.drag-handle {
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drag-handle-line {
+  background-color: var(--lighter-gray);
+  width: 1px;
+  height: 60%;
+}
+
 .body {
   position: relative;
 }
@@ -217,10 +313,13 @@ export default {
 }
 
 .cell {
-  flex-basis: 100px;
-  flex-grow: 1;
   flex-shrink: 0;
+  flex-basis: 200px;
   padding: 0 10px;
+}
+
+.cell:last-of-type {
+  flex-grow: 1;
 }
 
 .toolbar .cell:not(.select) {

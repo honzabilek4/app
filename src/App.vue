@@ -44,11 +44,11 @@
           {{ $t('unsaved_changes_copy') }}
         </p>
         <template slot="footer">
-          <form-button
+          <v-button
             bg="danger"
-            @click="discardChanges">{{ $t('discard_changes') }}</form-button>
-          <form-button
-            @click="keepEditing">{{ $t('keep_editing') }}</form-button>
+            @click="discardChanges">{{ $t('discard_changes') }}</v-button>
+          <v-button
+            @click="keepEditing">{{ $t('keep_editing') }}</v-button>
         </template>
       </modal>
     </div>

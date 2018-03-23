@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{ icon }"
-    class="form-select">
+    class="v-select">
     <select
       v-if="other"
       :id="otherActive ? null : id"
@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: 'form-select',
+  name: 'v-select',
   props: {
     disabled: {
       type: Boolean,
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-select {
+.v-select {
   position: relative;
   margin: 10px 0;
   max-width: 400px;
