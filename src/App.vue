@@ -92,7 +92,22 @@ export default {
       return this.$route.query.editing === true;
     },
   },
+  watch: {
+    $route() {
+      this.bodyClass();
+    },
+  },
+  created() {
+    this.bodyClass();
+  },
   methods: {
+    bodyClass() {
+      if (this.publicRoute) {
+        document.body.classList.add('public');
+      } else {
+        document.body.classList.remove('public');
+      }
+    },
     toggleNav(visible = !this.navActive) {
       this.navActive = visible;
     },
@@ -117,7 +132,7 @@ export default {
 </script>
 
 <style lang="scss">
-body {
+body:not(.public) {
   padding-top: var(--header-height);
 
   @media (min-width: 50em) {
