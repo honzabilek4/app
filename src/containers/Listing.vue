@@ -45,9 +45,9 @@
     </portal>
 
     <portal to="info-sidebar">
-      <component
+      <listing-options-extension
         v-if="hydrating === false"
-        :is="`${prefixes.listingOptions}-${listing}`"
+        :id="listing"
         :collection="collection"
         :primary-key-field="primaryKeyField"
         :fields="fields"
@@ -55,13 +55,16 @@
         :options="listingPreferences.view_options || {}"
         :loading="loading"
         :query="listingPreferences.view_query"
+        :selection="selection"
+        @query="updateListingPreferences('view_query', $event)"
+        @select="value => { selection = value }"
         @input="updateListingPreferences('view_options', $event)"
       />
     </portal>
 
-    <component
+    <listing-extension
       v-if="hydrating === false"
-      :is="`${prefixes.listing}-${listing}`"
+      :id="listing"
       :collection="collection"
       :primary-key-field="primaryKeyField"
       :fields="fields"
@@ -79,7 +82,6 @@
 
 <script>
 import { diff } from 'deep-object-diff';
-import { registerListing } from '../helpers/register-extension';
 import SearchFilter from '../components/SearchFilter.vue';
 import formatFilters from '../helpers/format-filters';
 import prefixes from '../helpers/prefixes';
@@ -176,7 +178,6 @@ export default {
         .then(() => {
           this.hydrating = false;
           this.getItems();
-          registerListing(this.listing);
         })
         .catch(console.error);
     },

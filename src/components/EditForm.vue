@@ -8,11 +8,12 @@
       :class="`col-${field.view_width}`"
       class="field">
       <label :for="field.field">{{ $t(`fn-${field.field}`) }}</label>
-      <component
-        :is="`${$helpers.prefixes.interface}-${field.interface}`"
+      <interface-extension
+        :id="field.interface"
         :name="field.field"
         :required="Boolean(field.required)"
-        :_options="field.options"
+        :options="field.options"
+        :type="field.type"
         :value="values[field.field]"
         @input="$emit('stageValue', {
           field: field.field,
@@ -24,7 +25,6 @@
 </template>
 
 <script>
-import { registerInterface } from '../helpers/register-extension';
 
 export default {
   name: 'edit-form',
@@ -37,11 +37,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  created() {
-    this.$lodash
-      .uniq(this.$lodash.map(this.fields, info => info.interface))
-      .forEach(registerInterface);
   },
 };
 </script>

@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import formatName from './format-name';
 import gravatar from './gravatar';
-import registerExtension from './register-extension';
 import prefixes from './prefixes';
 import date from './date';
 
 const helpers = {
   formatName,
   gravatar,
-  registerExtension,
   prefixes,
   date,
 };
