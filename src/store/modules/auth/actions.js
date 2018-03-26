@@ -13,11 +13,11 @@ export function login({ commit }, credentials) {
       ...credentials,
       persist: true,
     })
+      .then(hydrateStore)
       .then(info => commit('LOGIN_SUCCESS', {
         ...info,
         projectName: config.api[info.url] || extractHostname(info.url),
       }))
-      .then(hydrateStore)
       .then(resolve)
       .catch((error) => {
         commit('LOGIN_FAILED', error);

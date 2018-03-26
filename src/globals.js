@@ -17,6 +17,7 @@ import VTable from './components/VTable.vue';
 import ListingExtension from './components/extensions/ListingExtension.vue';
 import ListingOptionsExtension from './components/extensions/ListingOptionsExtension.vue';
 import InterfaceExtension from './components/extensions/InterfaceExtension.vue';
+import ReadonlyExtension from './components/extensions/ReadonlyExtension.vue';
 
 Vue.component('header-button', HeaderButton);
 Vue.component('breadcrumb', Breadcrumb);
@@ -35,3 +36,4 @@ Vue.component('v-table', VTable);
 Vue.component('listing-extension', ListingExtension);
 Vue.component('listing-options-extension', ListingOptionsExtension);
 Vue.component('interface-extension', InterfaceExtension);
+Vue.component('readonly-extension', ReadonlyExtension);

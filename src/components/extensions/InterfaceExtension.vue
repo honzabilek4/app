@@ -3,8 +3,8 @@
     :is="componentName"
     :name="name"
     :value="value"
-    :type="type"
-    :length="length"
+    :type="typeOrDefault"
+    :length="lengthOrDefault"
     :readonly="readonly"
     :required="required"
     :loading="loading"
@@ -37,7 +37,7 @@ export default {
     },
     type: {
       type: String,
-      required: true,
+      default: null,
     },
     length: {
       type: [String, Number],
@@ -69,6 +69,14 @@ export default {
     },
     componentName() {
       return `interface-${this.id}`;
+    },
+    typeOrDefault() {
+      if (!this.interface) return null;
+      return this.type ? this.type : Object.keys(this.interface.dataTypes)[0];
+    },
+    lengthOrDefault() {
+      if (!this.interface) return null;
+      return this.length ? this.length : this.interface.dataTypes[this.typeOrDefault];
     },
     optionsWithDefaults() {
       if (!this.interface) return {};

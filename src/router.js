@@ -7,6 +7,8 @@ import ItemListing from './routes/ItemListing.vue';
 import Edit from './routes/Edit.vue';
 import Login from './routes/Login.vue';
 import NotFound from './routes/NotFound.vue';
+import Interfaces from './routes/Interfaces.vue';
+import InterfaceDebugger from './routes/InterfaceDebugger.vue';
 
 Vue.use(Router);
 
@@ -30,6 +32,15 @@ const router = new Router({
       path: '/collections/:collection/:primaryKey',
       props: true,
       component: Edit,
+    },
+    {
+      path: '/interfaces',
+      component: Interfaces,
+    },
+    {
+      path: '/interfaces/:id',
+      component: InterfaceDebugger,
+      props: true,
     },
     {
       path: '/login',
