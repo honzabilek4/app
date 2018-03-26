@@ -200,7 +200,8 @@ export default {
   watch: {
     widths: {
       deep: true,
-      handler() {
+      handler(newVal, oldVal) {
+        if (this.$lodash.isEmpty(oldVal)) return;
         this.emitWidths();
       },
     },
