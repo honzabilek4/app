@@ -17,6 +17,20 @@ import hydrateStore from './store/hydrate';
 
 import './helpers/handle-focus';
 
+// Check if the global config is setup correctly. Panic if not.
+if (!window.__DirectusConfig__) { // eslint-disable-line no-underscore-dangle
+  const message = `
+
+No Directus config found.
+
+Please make sure to rename /static/config_example.js to /static/config.js and edit the config to match your project.
+
+`;
+
+  alert(message); // eslint-disable-line no-alert
+  throw new Error(message);
+}
+
 Vue.config.productionTip = false;
 
 Object.defineProperty(Vue.prototype, '$lodash', { value: lodash });

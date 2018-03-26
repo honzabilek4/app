@@ -22,6 +22,7 @@
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
     <% }}} %>
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.publicPath %>static/style.css">
   </head>
   <body>
     <noscript>Please enable JavaScript to use Directus</noscript>
