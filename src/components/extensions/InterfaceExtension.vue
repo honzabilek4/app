@@ -8,7 +8,7 @@
     :readonly="readonly"
     :required="required"
     :loading="loading"
-    :options="options"
+    :options="optionsWithDefaults"
     class="interface-extension"
     @input="$emit('input', $event)" />
 </template>
@@ -69,6 +69,19 @@ export default {
     },
     componentName() {
       return `interface-${this.id}`;
+    },
+    optionsWithDefaults() {
+      if (!this.interface) return {};
+
+      const defaults = this.$lodash.mapValues(
+        this.interface.options,
+        settings => settings.default || null,
+      );
+
+      return {
+        ...defaults,
+        ...this.options,
+      };
     },
   },
   watch: {
