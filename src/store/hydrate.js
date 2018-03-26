@@ -5,12 +5,13 @@ export default function hydrateStore() {
     store.dispatch('getCollections'),
     store.dispatch('getMe'),
     store.dispatch('getSettings'),
-    store.dispatch('getExtensions'),
+    store.dispatch('getAllExtensions'),
   ])
     .then(() => {
       store.commit('STORE_HYDRATED');
     })
     .catch((error) => {
       store.commit('HYDRATING_FAILED', error);
+      throw error;
     });
 }
