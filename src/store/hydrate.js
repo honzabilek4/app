@@ -1,4 +1,8 @@
 import store from './index';
+import {
+  STORE_HYDRATED,
+  HYDRATING_FAILED,
+} from './mutation-types';
 
 export default function hydrateStore() {
   return Promise.all([
@@ -8,10 +12,10 @@ export default function hydrateStore() {
     store.dispatch('getAllExtensions'),
   ])
     .then(() => {
-      store.commit('STORE_HYDRATED');
+      store.commit(STORE_HYDRATED);
     })
     .catch((error) => {
-      store.commit('HYDRATING_FAILED', error);
+      store.commit(HYDRATING_FAILED, error);
       throw error;
     });
 }

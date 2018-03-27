@@ -1,14 +1,20 @@
-export function ME_PENDING(state) {
-  state.loading = true;
-}
+import { ME_PENDING, ME_SUCCESS, ME_FAILED } from '../../mutation-types';
 
-export function ME_SUCCESS(state, data) {
-  state.data = data;
-  state.error = null;
-  state.loading = false;
-}
+const mutations = {
+  [ME_PENDING](state) {
+    state.loading = true;
+  },
 
-export function ME_FAILED(state, error) {
-  state.error = error;
-  state.loading = false;
-}
+  [ME_SUCCESS](state, data) {
+    state.data = data;
+    state.error = null;
+    state.loading = false;
+  },
+
+  [ME_FAILED](state, error) {
+    state.error = error;
+    state.loading = false;
+  },
+};
+
+export default mutations;

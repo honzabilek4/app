@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import * as mutations from './mutations';
+import mutations from './mutations';
 
 const state = {
   token: null,

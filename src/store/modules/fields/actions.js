@@ -2,14 +2,19 @@ import { isEmpty, forEach } from 'lodash';
 import { i18n, availableLanguages } from '../../../lang/';
 import api from '../../../api';
 import formatName from '../../../helpers/format-name';
+import {
+  FIELDS_PENDING,
+  FIELDS_SUCCESS,
+  FIELDS_FAILED,
+} from '../../mutation-types';
 
 export function getFields({ commit }, collection) { // eslint-disable-line
-  commit('FIELDS_PENDING', collection);
+  commit(FIELDS_PENDING, collection);
 
   return api.getFields(collection)
     .then(res => res.data)
     .then((data) => {
-      commit('FIELDS_SUCCESS', { data, collection });
+      commit(FIELDS_SUCCESS, { data, collection });
 
       forEach(data, (field) => {
         if (!isEmpty(field.translation)) {
@@ -23,5 +28,5 @@ export function getFields({ commit }, collection) { // eslint-disable-line
         }
       });
     })
-    .catch(error => commit('FIELDS_FAILED', { error: Object(error), collection }));
+    .catch(error => commit(FIELDS_FAILED, { error: Object(error), collection }));
 }

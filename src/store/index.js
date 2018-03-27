@@ -11,7 +11,7 @@ import listingPreferences from './modules/listing-preferences';
 import extensions from './modules/extensions';
 import edits from './modules/edits';
 
-import * as mutations from './mutations';
+import mutations from './mutations';
 
 Vue.use(Vuex);
 
