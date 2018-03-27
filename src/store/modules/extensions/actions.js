@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { forEach, mapKeys, isObject, mapValues } from 'lodash';
 import api from '../../../api';
 import { i18n } from '../../../lang/';
@@ -48,7 +47,6 @@ export function getExtensions({ commit }, type) {
       request = api.getPages();
       break;
     default:
-      return;
   }
 
   commit(`${typeUpper}_PENDING`);
@@ -76,13 +74,10 @@ export function getExtensions({ commit }, type) {
     })
 
     /**
-     * Replace all to-be-translated strings (prefixed with $t: ) with previously registered translations
+     * Replace all to-be-translated strings (prefixed with $t: )
+     *   with previously registered translations
      */
-    .then((extensions) => {
-      return extensions.map((extension) => {
-        return translateFields(extension, type, extension.id);
-      });
-    })
+    .then(extensions => extensions.map(extension => translateFields(extension, type, extension.id)))
 
     /**
      * Commit parsed extensions to the store
