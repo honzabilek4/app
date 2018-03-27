@@ -12,9 +12,13 @@ import { i18n } from '../../../lang/';
  */
 function translateFields(meta, type, id) {
   return mapValues(meta, (value) => {
-    if (typeof value === 'string' && value.startsWith('$t:')) {
-      const i18nString = value.substring(3);
-      return i18n.t(`${type}-${id}-${i18nString}`);
+    if (typeof value === 'string') {
+      // split up the sentence into separate words to allow multiple translations in one value
+      //   like $t:option $t:or $t:value
+      return value
+        .split(' ')
+        .map(word => (word.startsWith('$t:') ? i18n.t(`${type}-${id}-${word.substring(3)}`) : word))
+        .join(' ');
     }
 
     if (value !== null && isObject(value) && Object.keys(value).length > 0) {
