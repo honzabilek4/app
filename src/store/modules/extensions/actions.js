@@ -11,7 +11,9 @@ import { i18n } from '../../../lang/';
  * @return {Object}      Formatted object
  */
 function translateFields(meta, type, id) {
-  return mapValues(meta, (value) => {
+  const format = (value) => {
+    if (value == null) return value;
+
     if (typeof value === 'string') {
       // split up the sentence into separate words to allow multiple translations in one value
       //   like $t:option $t:or $t:value
@@ -21,12 +23,17 @@ function translateFields(meta, type, id) {
         .join(' ');
     }
 
-    if (value !== null && isObject(value) && Object.keys(value).length > 0) {
+    if (
+      (isObject(value) && Object.keys(value).length > 0) ||
+      (Array.isArray(value) && value.length > 0)
+    ) {
       return translateFields(value, type, id);
     }
 
     return value;
-  });
+  };
+
+  return Array.isArray(meta) ? meta.map(format) : mapValues(meta, format);
 }
 
 /**
