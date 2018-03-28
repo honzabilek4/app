@@ -42,7 +42,7 @@ export default {
         url += `/${part}`;
 
         return {
-          name: this.$helpers.formatName(part),
+          name: this.$helpers.formatTitle(part),
           path: url,
         };
       });

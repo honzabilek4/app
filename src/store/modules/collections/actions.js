@@ -1,7 +1,7 @@
+import formatTitle from '@directus/format-title';
 import { isEmpty, forEach } from 'lodash';
 import { i18n, availableLanguages } from '../../../lang/';
 import api from '../../../api';
-import formatName from '../../../helpers/format-name';
 import {
   COLLECTIONS_PENDING,
   COLLECTIONS_SUCCESS,
@@ -23,7 +23,7 @@ export function getCollections({ commit }) { // eslint-disable-line
           });
         } else {
           forEach(availableLanguages, (locale) => {
-            i18n.mergeLocaleMessage(locale, { [`cn-${collection.collection}`]: formatName(collection.collection) });
+            i18n.mergeLocaleMessage(locale, { [`cn-${collection.collection}`]: formatTitle(collection.collection) });
           });
         }
       });

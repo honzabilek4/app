@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import formatName from './format-name';
+import formatTitle from '@directus/format-title';
 import gravatar from './gravatar';
 import prefixes from './prefixes';
 import date from './date';
 
 const helpers = {
-  formatName,
+  formatTitle,
   gravatar,
   prefixes,
   date,

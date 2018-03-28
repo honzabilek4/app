@@ -1,7 +1,7 @@
+import formatTitle from '@directus/format-title';
 import { isEmpty, forEach } from 'lodash';
 import { i18n, availableLanguages } from '../../../lang/';
 import api from '../../../api';
-import formatName from '../../../helpers/format-name';
 import {
   FIELDS_PENDING,
   FIELDS_SUCCESS,
@@ -23,7 +23,7 @@ export function getFields({ commit }, collection) { // eslint-disable-line
           });
         } else {
           forEach(availableLanguages, (locale) => {
-            i18n.mergeLocaleMessage(locale, { [`fn-${field.field}`]: formatName(field.field) });
+            i18n.mergeLocaleMessage(locale, { [`fn-${field.field}`]: formatTitle(field.field) });
           });
         }
       });

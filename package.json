@@ -61,13 +61,8 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "@rijk/acronyms": "^1.0.0",
-    "@rijk/conjunctions": "^1.0.0",
-    "@rijk/prepositions": "^1.0.0",
-    "@rijk/special-case": "^1.0.0",
+    "@directus/format-title": "^1.0.0",
     "body-scroll-lock": "^2.3.3",
-    "capitalize": "^1.0.0",
-    "decamelize": "^2.0.0",
     "deep-object-diff": "^1.1.0",
     "directus-sdk-javascript": "git+https://github.com/directus/directus-sdk-javascript.git#next",
     "lodash": "^4.17.5",
