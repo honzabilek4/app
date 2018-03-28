@@ -41,6 +41,7 @@ export default {
   enter_value: 'Enter Value',
   errors: {
     '-1': 'Couldn\'t reach API',
+    11: 'Can\'t connect to database',
     100: 'Wrong username and/or password',
     101: 'Invalid access token',
     102: 'Expired access token',

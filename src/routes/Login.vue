@@ -41,7 +41,10 @@ export default {
       return `${this.$t('version')} ${version}`;
     },
     errorType() {
-      return this.error.code === -1 ? 'error' : 'warning';
+      if (+this.error.code >= 100 && +this.error.code < 200) {
+        return 'warning';
+      }
+      return 'error';
     },
     error() {
       return this.$store.state.auth.error;
