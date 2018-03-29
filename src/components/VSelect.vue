@@ -45,6 +45,9 @@
       <i
         v-if="icon"
         class="material-icons">{{ icon }}</i>
+      <span
+        v-if="placeholder && !value"
+        class="placeholder">{{ placeholder }}</span>
       {{ options[value] }}
     </div>
     <i class="material-icons chevron">arrow_drop_down</i>
@@ -208,6 +211,10 @@ export default {
     input:focus i {
       color: var(--primary);
     }
+  }
+
+  .placeholder {
+    opacity: 0.6;
   }
 }
 </style>
