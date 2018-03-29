@@ -1,7 +1,11 @@
 <template>
   <div
-    :class="{icon}"
+    :class="{ 'icon-left': iconLeft, 'icon-right': iconRight }"
     class="v-input">
+    <i
+      v-if="iconLeft"
+      :class="iconLeftColor"
+      class="material-icons">{{ iconLeft }}</i>
     <input
       ref="input"
       :type="type"
@@ -19,8 +23,9 @@
       :id="id"
       @input="$emit('input', $event.target.value)">
     <i
-      v-if="icon"
-      class="material-icons">{{ icon }}</i>
+      v-if="iconRight"
+      :class="iconRightColor"
+      class="material-icons">{{ iconRight }}</i>
     <span v-if="charactercount">{{ charsRemaining }}</span>
   </div>
 </template>
@@ -82,9 +87,27 @@ export default {
       default: '',
     },
 
-    icon: {
+    iconLeft: {
       type: String,
       default: '',
+    },
+    iconLeftColor: {
+      type: String,
+      default: null,
+      validator(val) {
+        return ['primary', 'secondary', 'success', 'warning', 'danger'].includes(val);
+      },
+    },
+    iconRight: {
+      type: String,
+      default: '',
+    },
+    iconRightColor: {
+      type: String,
+      default: 'primary',
+      validator(val) {
+        return ['primary', 'secondary', 'success', 'warning', 'danger'].includes(val);
+      },
     },
     valid: {
       type: Boolean,
@@ -169,16 +192,47 @@ input:focus + span {
   opacity: 1;
 }
 
-.icon input {
+.icon-left input {
   padding-left: 33px;
 }
 
-i {
+.icon-right input {
+  padding-right: 33px;
+}
+
+.icon-left i, .icon-right i {
   position: absolute;
-  left: 10px;
   top: 50%;
   color: var(--light-gray);
   transform: translateY(-50%);
   font-size: 18px;
+
+  &.primary {
+    color: var(--primary);
+  }
+
+  &.secondary {
+    color: var(--secondary);
+  }
+
+  &.success {
+    color: var(--success);
+  }
+
+  &.warning {
+    color: var(--warning);
+  }
+
+  &.danger {
+    color: var(--danger);
+  }
+}
+
+.icon-left i:first-of-type {
+  left: 10px;
+}
+
+.icon-right i:last-of-type {
+  right: 10px;
 }
 </style>
