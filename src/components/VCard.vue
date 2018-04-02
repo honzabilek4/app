@@ -1,21 +1,26 @@
 <template>
   <component
     :is="element"
-    :class="href ? 'link' : null"
+    :class="to ? 'link' : null"
     class="v-card">
     <component
       :is="wrapperTag"
-      :href="href">
+      :to="to">
       <div
-        v-if="src || icon"
+        v-if="src || icon || $slots.icon"
         class="header">
+
         <img
           v-if="src"
           :alt="title"
           :src="src">
+
         <i
           v-if="icon"
           class="material-icons">{{ icon }}</i>
+
+        <div class="custom-icon"><slot name="icon"/></div>
+
         <span
           v-if="label"
           class="label">{{ label }}</span>
@@ -59,7 +64,7 @@ export default {
       type: String,
       default: null,
     },
-    href: {
+    to: {
       type: String,
       default: null,
     },
@@ -70,7 +75,7 @@ export default {
   },
   computed: {
     wrapperTag() {
-      return this.href ? 'a' : 'div';
+      return this.to ? 'router-link' : 'div';
     },
   },
 };
@@ -83,6 +88,7 @@ export default {
   box-shadow: var(--box-shadow);
   overflow: hidden;
   transition: box-shadow var(--fast) var(--transition);
+  background-color: var(--white);
 
   a {
     text-decoration: none;
@@ -114,7 +120,12 @@ export default {
       text-align: center;
     }
 
-    img, i {
+    .custom-icon {
+      width: 64px;
+      height: 64px;
+    }
+
+    img, i, .icon {
       grid-row: 1;
       grid-column: 1;
     }
