@@ -127,112 +127,112 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
+.v-input {
   position: relative;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-}
 
-input {
-  flex-grow: 1;
-  width: 100%;
-  border: var(--input-border-width) solid var(--lighter-gray);
-  border-radius: var(--border-radius);
-  color: var(--gray);
-  padding: 10px;
-  line-height: 1.5;
-  transition: var(--fast) var(--transition);
-  transition-property: color, border-color;
-  height: var(--input-height);
-
-  &::placeholder {
-    color: var(--light-gray);
-  }
-
-  &:focus {
-    color: var(--darker-gray);
-    border-color: var(--primary);
-    outline: 0;
-  }
-
-  &:focus + i {
-    color: var(--primary);
-  }
-
-  &:-webkit-autofill {
-    box-shadow: inset 0 0 0 1000px var(--white) !important;
-    color: var(--dark-gray) !important;
-    -webkit-text-fill-color: var(--dark-gray) !important;
-  }
-
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus
-  input:-webkit-autofill,
-  textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover
-  textarea:-webkit-autofill:focus {
+  input {
+    width: 100%;
     border: var(--input-border-width) solid var(--lighter-gray);
-    background-color: var(--white);
-    box-shadow: inset 0 0 0 2000px var(--white);
+    border-radius: var(--border-radius);
+    color: var(--gray);
+    padding: 10px;
+    line-height: 1.5;
+    transition: var(--fast) var(--transition);
+    transition-property: color, border-color, padding;
+    height: var(--input-height);
+
+    &::placeholder {
+      color: var(--light-gray);
+    }
+
+    &:focus {
+      color: var(--darker-gray);
+      border-color: var(--primary);
+      outline: 0;
+    }
+
+    &:focus + i {
+      color: var(--primary);
+    }
+
+    &:-webkit-autofill {
+      box-shadow: inset 0 0 0 1000px var(--white) !important;
+      color: var(--dark-gray) !important;
+      -webkit-text-fill-color: var(--dark-gray) !important;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus
+    input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover
+    textarea:-webkit-autofill:focus {
+      border: var(--input-border-width) solid var(--lighter-gray);
+      background-color: var(--white);
+      box-shadow: inset 0 0 0 2000px var(--white);
+    }
   }
 
-}
-
-span {
-  margin: 0 10px;
-  opacity: 0;
-  transition: var(--fast) var(--transition);
-  flex-shrink: 0;
-  flex-basis: 30px;
-}
-
-input:focus + span {
-  opacity: 1;
-}
-
-.icon-left input {
-  padding-left: 33px;
-}
-
-.icon-right input {
-  padding-right: 33px;
-}
-
-.icon-left i, .icon-right i {
-  position: absolute;
-  top: 50%;
-  color: var(--light-gray);
-  transform: translateY(-50%);
-  font-size: 18px;
-
-  &.primary {
-    color: var(--primary);
+  span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: var(--fast) var(--transition);
   }
 
-  &.secondary {
-    color: var(--secondary);
+  input:focus {
+    padding-right: 30px;
   }
 
-  &.success {
-    color: var(--success);
+  input:focus + span {
+    opacity: 1;
   }
 
-  &.warning {
-    color: var(--warning);
+  .icon-left input {
+    padding-left: 33px;
   }
 
-  &.danger {
-    color: var(--danger);
+  .icon-right input {
+    padding-right: 33px;
   }
-}
 
-.icon-left i:first-of-type {
-  left: 10px;
-}
+  .icon-left i, .icon-right i {
+    position: absolute;
+    top: 50%;
+    color: var(--light-gray);
+    transform: translateY(-50%);
+    font-size: 18px;
 
-.icon-right i:last-of-type {
-  right: 10px;
+    &.primary {
+      color: var(--primary);
+    }
+
+    &.secondary {
+      color: var(--secondary);
+    }
+
+    &.success {
+      color: var(--success);
+    }
+
+    &.warning {
+      color: var(--warning);
+    }
+
+    &.danger {
+      color: var(--danger);
+    }
+  }
+
+  .icon-left i:first-of-type {
+    left: 10px;
+  }
+
+  .icon-right i:last-of-type {
+    right: 10px;
+  }
 }
 </style>
