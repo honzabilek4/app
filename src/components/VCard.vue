@@ -19,7 +19,9 @@
           v-if="icon"
           class="material-icons">{{ icon }}</i>
 
-        <div class="custom-icon"><slot name="icon"/></div>
+        <div
+          v-if="$slots.icon"
+          class="custom-icon"><slot name="icon"/></div>
 
         <span
           v-if="label"
