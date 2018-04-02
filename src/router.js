@@ -9,6 +9,7 @@ import Login from './routes/Login.vue';
 import NotFound from './routes/NotFound.vue';
 import Interfaces from './routes/Interfaces.vue';
 import InterfaceDebugger from './routes/InterfaceDebugger.vue';
+import Debug from './routes/Debug.vue';
 
 Vue.use(Router);
 
@@ -32,6 +33,10 @@ const router = new Router({
       path: '/collections/:collection/:primaryKey',
       props: true,
       component: Edit,
+    },
+    {
+      path: '/debug',
+      component: Debug,
     },
     {
       path: '/interfaces',
