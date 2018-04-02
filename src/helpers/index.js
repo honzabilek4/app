@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import convertRange from 'convert-range';
 import formatTitle from '@directus/format-title';
 import gravatar from './gravatar';
 import prefixes from './prefixes';
@@ -9,6 +10,7 @@ const helpers = {
   gravatar,
   prefixes,
   date,
+  convertRange,
 };
 
 const helpersPlugin = {

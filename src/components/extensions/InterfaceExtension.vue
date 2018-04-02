@@ -9,6 +9,7 @@
     :required="required"
     :loading="loading"
     :options="optionsWithDefaults"
+    :new-item="newItem"
     class="interface-extension"
     @input="$emit('input', $event)" />
 </template>
@@ -58,6 +59,10 @@ export default {
     options: {
       type: Object,
       default: () => ({}),
+    },
+    newItem: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

@@ -63,6 +63,7 @@
   "dependencies": {
     "@directus/format-title": "^1.0.0",
     "body-scroll-lock": "^2.3.3",
+    "convert-range": "^1.1.0",
     "deep-object-diff": "^1.1.0",
     "directus-sdk-javascript": "git+https://github.com/directus/directus-sdk-javascript.git#next",
     "lodash": "^4.17.5",

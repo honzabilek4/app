@@ -16,10 +16,13 @@
         :readonly="readonly"
         :required="required"
         :loading="loading"
-        :options="options" />
+        :options="options"
+        :new-item="newItem" />
     </div>
 
-    <output>{{ value }}</output>
+    <v-input
+      v-model="value"
+      type="text" />
 
     <div
       :style="{ width: width + 'px' }"
@@ -86,7 +89,7 @@
           <p>{{ option.comment }}</p>
           <interface-extension
             v-model="options[optionID]"
-            :id="optionID"
+            :id="option.interface"
             :name="optionID"
             :type="option.type"
             :length="option.length"
@@ -98,6 +101,13 @@
       </fieldset>
       <fieldset>
         <legend>Misc.</legend>
+
+        <label for="new">New item</label>
+        <input
+          id="new"
+          v-model="newItem"
+          type="checkbox">
+
         <label for="width">Responsiveness tester</label>
         <input
           id="width"
@@ -131,6 +141,7 @@ export default {
       loading: false,
       options: {},
       width: 200,
+      newItem: false,
     };
   },
   computed: {
