@@ -26,13 +26,13 @@ export default {
 <style lang="scss" scoped>
 .v-group {
   width: 100%;
-  margin: 10px 0;
+  margin: 10px 0 40px;
 
   summary {
     border-top: 1px solid var(--lighter-gray);
     border-bottom: 1px solid var(--lighter-gray);
     padding: 10px 0;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-size: 18px;
     color: var(--darker-gray);
     list-style-type: none;

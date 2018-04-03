@@ -1,11 +1,12 @@
 <template>
   <component
     :is="element"
-    :class="to ? 'link' : null"
+    :class="{ link }"
     class="v-card">
     <component
       :is="wrapperTag"
-      :to="to">
+      :to="to"
+      :href="href">
       <div
         v-if="src || icon || $slots.icon"
         class="header">
@@ -70,6 +71,10 @@ export default {
       type: String,
       default: null,
     },
+    href: {
+      type: String,
+      default: null,
+    },
     label: {
       type: String,
       default: null,
@@ -77,7 +82,22 @@ export default {
   },
   computed: {
     wrapperTag() {
-      return this.to ? 'router-link' : 'div';
+      if (this.to) {
+        return 'router-link';
+      }
+
+      if (this.href) {
+        return 'a';
+      }
+
+      return 'div';
+    },
+    link() {
+      if (this.to || this.href) {
+        return true;
+      }
+
+      return false;
     },
   },
 };
@@ -94,6 +114,8 @@ export default {
 
   a {
     text-decoration: none;
+    cursor: pointer;
+    user-select: none;
   }
 
   &.link:hover {

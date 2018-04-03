@@ -10,6 +10,7 @@ import NotFound from './routes/NotFound.vue';
 import Interfaces from './routes/Interfaces.vue';
 import InterfaceDebugger from './routes/InterfaceDebugger.vue';
 import Debug from './routes/Debug.vue';
+import Settings from './routes/Settings.vue';
 
 Vue.use(Router);
 
@@ -37,6 +38,10 @@ const router = new Router({
     {
       path: '/debug',
       component: Debug,
+    },
+    {
+      path: '/settings',
+      component: Settings,
     },
     {
       path: '/interfaces',
