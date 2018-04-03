@@ -23,7 +23,7 @@
           <button
             class="project-switcher"
             @click="projectSwitcherActive = true">
-            <i class="material-icons signal">signal_wifi_4_bar</i>
+            <v-signal />
             <span>{{ $store.state.auth.projectName }}</span>
             <i class="material-icons chevron">arrow_drop_down</i>
           </button>
@@ -123,12 +123,13 @@
 
 <script>
 import FocusLock from 'vue-focus-lock';
+import VSignal from '../components/VSignal.vue';
 import createGravatarLink from '../helpers/gravatar';
 
 export default {
   name: 'nav-sidebar',
   components: {
-    FocusLock,
+    FocusLock, VSignal,
   },
   props: {
     active: {
@@ -328,6 +329,10 @@ nav:not(:last-of-type) {
   color: var(--primary);
   margin-bottom: 20px;
 
+  svg {
+    fill: var(--primary);
+  }
+
   i {
     color: var(--primary);
   }
@@ -335,6 +340,7 @@ nav:not(:last-of-type) {
   span {
     flex-grow: 1;
     line-height: 24px;
+    text-align: left;
   }
 }
 

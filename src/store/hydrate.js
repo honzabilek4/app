@@ -3,9 +3,13 @@ import {
   STORE_HYDRATED,
   HYDRATING_FAILED,
 } from './mutation-types';
+import { startPolling } from './polling';
 
 export default function hydrateStore() {
+  startPolling();
+
   return Promise.all([
+    store.dispatch('latency'),
     store.dispatch('getCollections'),
     store.dispatch('getMe'),
     store.dispatch('getSettings'),

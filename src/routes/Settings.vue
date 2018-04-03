@@ -62,8 +62,11 @@
           <v-card
             :title="$t('connection')"
             element="li"
-            to="/settings/connection"
-            icon="storage" />
+            to="/settings/connection">
+            <v-signal
+              slot="icon"
+              class="signal" />
+          </v-card>
 
           <v-card
             :title="$t('server_details')"
@@ -86,9 +89,13 @@
 
 <script>
 import { version } from '../../package.json';
+import VSignal from '../components/VSignal.vue';
 
 export default {
   name: 'settings',
+  components: {
+    VSignal,
+  },
   computed: {
     globalNum() {
       return Object.keys(this.$store.state.settings.data.global).length;
@@ -120,5 +127,9 @@ nav ul {
   li {
     display: block;
   }
+}
+
+.signal {
+  fill: var(--white);
 }
 </style>

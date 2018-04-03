@@ -10,6 +10,7 @@ import {
   REMOVE_AUTH_ERROR,
   LOGOUT,
 } from '../../mutation-types';
+import { stopPolling } from '../../polling';
 
 const config = window.__DirectusConfig__; // eslint-disable-line
 
@@ -41,6 +42,7 @@ export function refresh({ commit }, { token, url }) {
 }
 
 export function logout({ commit }, error) {
+  stopPolling();
   api.logout();
   router.push('/login');
   commit(LOGOUT, error);

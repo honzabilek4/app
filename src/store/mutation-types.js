@@ -45,3 +45,5 @@ export const ME_FAILED = 'ME_FAILED';
 export const SETTINGS_PENDING = 'SETTINGS_PENDING';
 export const SETTINGS_SUCCESS = 'SETTINGS_SUCCESS';
 export const SETTINGS_FAILED = 'SETTINGS_FAILED';
+// latency check
+export const LATENCY = 'LATENCY';

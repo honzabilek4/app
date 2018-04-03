@@ -11,6 +11,8 @@ import listingPreferences from './modules/listing-preferences';
 import extensions from './modules/extensions';
 import edits from './modules/edits';
 
+import * as actions from './actions';
+import * as getters from './getters';
 import mutations from './mutations';
 
 Vue.use(Vuex);
@@ -21,7 +23,10 @@ const store = new Vuex.Store({
   state: {
     hydrating: true,
     hydratingError: null,
+    latency: [],
   },
+  actions,
+  getters,
   mutations,
   strict: debug,
   modules: {
