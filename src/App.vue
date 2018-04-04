@@ -95,6 +95,15 @@ export default {
   watch: {
     $route() {
       this.bodyClass();
+      this.navActive = false;
+      this.infoActive = false;
+    },
+    infoActive(visible) {
+      if (visible) {
+        document.body.classList.add('info-active');
+      } else {
+        document.body.classList.remove('info-active');
+      }
     },
   },
   created() {
@@ -113,12 +122,6 @@ export default {
     },
     toggleInfo(visible = !this.infoActive) {
       this.infoActive = visible;
-
-      if (visible) {
-        document.body.classList.add('info-active');
-      } else {
-        document.body.classList.remove('info-active');
-      }
     },
     keepEditing() {
       this.$router.push(`/collections/${this.$route.query.collection}/${this.$route.query.primaryKey}`);

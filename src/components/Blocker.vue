@@ -3,7 +3,8 @@
     <div
       :style="{ zIndex }"
       class="blocker"
-      @click="$emit('click')"/>
+      @click="$emit('click')"
+      @touchend="$emit('click')"/>
   </transition>
 </template>
 
@@ -27,7 +28,7 @@ export default {
   left: 0;
   top: 0;
   background-color: var(--black);
-  opacity: 0.6;
+  opacity: 0.8;
   cursor: pointer;
 }
 

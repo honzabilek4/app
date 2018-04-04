@@ -68,6 +68,7 @@
       v-if="!hydrating"
       :fields="fields"
       :values="values"
+      :collection="collection"
       @stageValue="stageValue" />
   </div>
 </template>

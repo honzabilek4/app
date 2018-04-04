@@ -37,6 +37,10 @@ export default {
       type: Object,
       required: true,
     },
+    collection: {
+      type: String,
+      required: true,
+    },
   },
 };
 </script>
@@ -48,6 +52,10 @@ export default {
 
 .field:first-of-type {
   margin-top: 0;
+}
+
+label {
+  margin-bottom: 10px;
 }
 
 @media (min-width: 800px) {

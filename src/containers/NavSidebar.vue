@@ -302,7 +302,6 @@ nav:not(:last-of-type) {
 .user-menu {
   position: relative;
   background-color: var(--white);
-  box-shadow: 1px 0 0 -0px var(--lightest-gray);
   padding: 20px;
   padding-top: 0;
 }
@@ -415,6 +414,11 @@ nav:not(:last-of-type) {
   .nav-enter,
   .nav-leave-to {
     transform: translateX(0);
+  }
+
+  .content,
+  .user-menu {
+    box-shadow: 1px 0 0 -0px var(--lightest-gray);
   }
 }
 </style>
