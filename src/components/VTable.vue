@@ -276,22 +276,6 @@ export default {
   width: 100%;
 }
 
-.drag-handle {
-  width: 8px;
-  height: 100%;
-  cursor: col-resize;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.drag-handle-line {
-  background-color: var(--lighter-gray);
-  width: 1px;
-  height: 60%;
-}
-
 .body {
   position: relative;
 }
@@ -313,6 +297,30 @@ export default {
   background-color: var(--white);
 }
 
+.drag-handle {
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 10px;
+  opacity: 0;
+  transition: opacity var(--fast) var(--transition-out);
+}
+
+.drag-handle-line {
+  background-color: var(--lighter-gray);
+  width: 1px;
+  height: 60%;
+}
+
+.toolbar:hover .drag-handle {
+  opacity: 1;
+  transition: opacity var(--medium) var(--transition-in);
+}
+
 .row {
   opacity: 1;
   background-color: var(--white);
@@ -330,7 +338,8 @@ export default {
 .cell {
   flex-shrink: 0;
   flex-basis: 200px;
-  padding: 0 10px;
+  padding-right: 20px;
+  position: relative;
 }
 
 .cell:last-of-type {
@@ -347,6 +356,11 @@ export default {
   width: 100%;
   height: 100%;
   text-align: left;
+  transition: color var(--fast) var(--transition);
+}
+
+.sort:hover {
+  color: var(--gray);
 }
 
 .sort > i {
