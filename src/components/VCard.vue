@@ -33,7 +33,12 @@
           :is="titleElement"
           class="title "
         >{{ title }}</component>
-        <p class="subtitle style-4">{{ subtitle }}</p>
+        <p
+          v-if="subtitle"
+          class="subtitle style-4">{{ subtitle }}</p>
+        <p
+          v-if="body"
+          class="content">{{ body }}</p>
       </div>
     </component>
   </component>
@@ -64,6 +69,10 @@ export default {
       required: true,
     },
     subtitle: {
+      type: String,
+      default: null,
+    },
+    body: {
       type: String,
       default: null,
     },
@@ -120,6 +129,7 @@ export default {
 
   &.link:hover {
     box-shadow: var(--box-shadow-accent);
+    transform: translateY(-1px);
   }
 
   .header {
@@ -183,6 +193,17 @@ export default {
 
   .title {
     margin-bottom: 5px;
+  }
+
+  .subtitle {
+  }
+
+  .content {
+    font-size: 11px;
+    color: var(--gray);
+    max-height: 114px; // 8 lines of text
+    overflow: hidden;
+    margin-top: 20px;
   }
 }
 </style>

@@ -41,7 +41,7 @@
         :options="listingNames"
         :value="listing"
         name="listing"
-      />
+        @input="updateListingPreferences('view_type', $event)" />
     </portal>
 
     <portal to="info-sidebar">
@@ -51,11 +51,12 @@
         :collection="collection"
         :primary-key-field="primaryKeyField"
         :fields="fields"
-        :items="items"
-        :options="listingPreferences.view_options || {}"
+        :items="itemsWithLinks"
+        :options="viewOptions"
         :loading="loading"
         :query="listingPreferences.view_query"
         :selection="selection"
+        link="__link__"
         @query="updateListingPreferences('view_query', $event)"
         @select="value => { selection = value }"
         @input="updateListingPreferences('view_options', $event)"
@@ -68,11 +69,12 @@
       :collection="collection"
       :primary-key-field="primaryKeyField"
       :fields="fields"
-      :items="items"
-      :options="listingPreferences.view_options || {}"
+      :items="itemsWithLinks"
+      :options="viewOptions"
       :loading="loading"
       :query="listingPreferences.view_query"
       :selection="selection"
+      link="__link__"
       @query="updateListingPreferences('view_query', $event)"
       @select="value => { selection = value }"
       @input="updateListingPreferences('view_options', $event)"
@@ -116,7 +118,7 @@ export default {
       if (!this.fields) return {};
       const translatedNames = {};
       Object.keys(this.fields).forEach((name) => {
-        translatedNames[name] = this.$t(`fn-${name}`);
+        translatedNames[name] = this.$t(`fields-${this.collection}-${name}`);
       });
       return translatedNames;
     },
@@ -134,6 +136,10 @@ export default {
         this.$store.state.listingPreferences[this.collection] &&
         this.$store.state.listingPreferences[this.collection].data) || {};
     },
+    viewOptions() {
+      return (this.listingPreferences.view_options &&
+        this.listingPreferences.view_options[this.listing]) || {};
+    },
     listing() {
       return (this.listingPreferences && this.listingPreferences.view_type) || 'tabular';
     },
@@ -141,9 +147,15 @@ export default {
       if (!this.$store.state.extensions.listings.data) return {};
       const translatedNames = {};
       Object.keys(this.$store.state.extensions.listings.data).forEach((id) => {
-        translatedNames[id] = this.$t(`ls-${id}-${this.$store.state.extensions.listings.data[id].name}`);
+        translatedNames[id] = this.$store.state.extensions.listings.data[id].name;
       });
       return translatedNames;
+    },
+    itemsWithLinks() {
+      return this.items.map(item => ({
+        ...item,
+        __link__: `/collections/${this.collection}/${item[this.primaryKeyField]}`,
+      }));
     },
   },
   watch: {
@@ -208,12 +220,34 @@ export default {
     updateListingPreferences(field, value) {
       let val = value;
       if (Array.isArray(value) && value.length === 0) val = null;
-      this.$store.dispatch('setListingPreferences', {
-        collection: this.collection,
-        updates: {
-          [field]: val,
-        },
-      });
+
+      let info = null;
+
+      /*
+       * If the view options are saved, nest them in the currently-in-use view_type to prevent
+       *   the settings of other view types to be overriden. This allows the user to switch back and
+       *   forth between list views, without losing settings between them.
+       */
+      if (field === 'view_options') {
+        info = {
+          collection: this.collection,
+          updates: {
+            view_options: {
+              ...this.listingPreferences.view_options || {},
+              [this.listing]: val,
+            },
+          },
+        };
+      } else {
+        info = {
+          collection: this.collection,
+          updates: {
+            [field]: val,
+          },
+        };
+      }
+
+      this.$store.dispatch('setListingPreferences', info);
     },
     add() {
       this.$router.push(`/collections/${this.collection}/+`);

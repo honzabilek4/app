@@ -7,7 +7,7 @@
       :key="field.field"
       :class="`col-${field.view_width}`"
       class="field">
-      <label :for="field.field">{{ $t(`fn-${field.field}`) }}</label>
+      <label :for="field.field">{{ $t(`fields-${collection}-${field.field}`) }}</label>
       <interface-extension
         :id="field.interface"
         :name="field.field"

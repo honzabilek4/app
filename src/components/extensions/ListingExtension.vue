@@ -9,6 +9,7 @@
     :loading="loading"
     :query="query"
     :selection="selection"
+    :link="link"
     class="listing-extension"
     @query="$emit('query', $event)"
     @select="$emit('select', $event)"
@@ -60,6 +61,10 @@ export default {
     selection: {
       type: Array,
       default: () => ([]),
+    },
+    link: {
+      type: String,
+      default: null,
     },
   },
   computed: {

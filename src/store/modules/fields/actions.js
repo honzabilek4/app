@@ -19,11 +19,11 @@ export function getFields({ commit }, collection) { // eslint-disable-line
       forEach(data, (field) => {
         if (!isEmpty(field.translation)) {
           forEach(field.translation, (value, locale) => {
-            i18n.mergeLocaleMessage(locale, { [`fn-${field.field}`]: value });
+            i18n.mergeLocaleMessage(locale, { [`fields-${collection}-${field.field}`]: value });
           });
         } else {
           forEach(availableLanguages, (locale) => {
-            i18n.mergeLocaleMessage(locale, { [`fn-${field.field}`]: formatTitle(field.field) });
+            i18n.mergeLocaleMessage(locale, { [`fields-${collection}-${field.field}`]: formatTitle(field.field) });
           });
         }
       });
