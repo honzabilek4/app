@@ -9,7 +9,7 @@
         id="url"
         v-model="url"
         :placeholder="$t('api_url')"
-        icon="cloud"
+        icon-left="cloud"
         type="url"
         name="url"
         class="input" />
@@ -32,7 +32,7 @@
       id="email"
       v-model="email"
       :placeholder="$t('email')"
-      icon="person"
+      icon-left="person"
       class="input"
       type="email"
       name="email" />
@@ -42,7 +42,7 @@
       id="password"
       v-model="password"
       :placeholder="$t('password')"
-      icon="lock"
+      icon-left="lock"
       type="password"
       name="password"
       class="input" />

@@ -192,15 +192,15 @@ export default {
     opacity: 1;
   }
 
-  .icon-left input {
+  &.icon-left input {
     padding-left: 33px;
   }
 
-  .icon-right input {
+  &.icon-right input {
     padding-right: 33px;
   }
 
-  .icon-left i, .icon-right i {
+  &.icon-left i, &.icon-right i {
     position: absolute;
     top: 50%;
     color: var(--light-gray);
@@ -228,11 +228,11 @@ export default {
     }
   }
 
-  .icon-left i:first-of-type {
+  &.icon-left i:first-of-type {
     left: 10px;
   }
 
-  .icon-right i:last-of-type {
+  &.icon-right i:last-of-type {
     right: 10px;
   }
 }

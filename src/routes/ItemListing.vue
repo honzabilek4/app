@@ -199,6 +199,10 @@ export default {
   methods: {
     hydrate() {
       this.hydrating = true;
+      this.items = [];
+      this.selection = [];
+      this.error = null;
+
       Promise.all([
         this.$store.dispatch('getFields', this.collection),
         this.$store.dispatch('getListingPreferences', this.collection),
