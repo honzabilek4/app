@@ -19,11 +19,11 @@ export function getCollections({ commit }) { // eslint-disable-line
       forEach(data, (collection) => {
         if (!isEmpty(collection.translation)) {
           forEach(collection.translation, (value, locale) => {
-            i18n.mergeLocaleMessage(locale, { [`cn-${collection.collection}`]: value });
+            i18n.mergeLocaleMessage(locale, { [`collections-${collection.collection}`]: value });
           });
         } else {
           forEach(availableLanguages, (locale) => {
-            i18n.mergeLocaleMessage(locale, { [`cn-${collection.collection}`]: formatTitle(collection.collection) });
+            i18n.mergeLocaleMessage(locale, { [`collections-${collection.collection}`]: formatTitle(collection.collection) });
           });
         }
       });

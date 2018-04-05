@@ -111,7 +111,7 @@ export default {
           path: '/collections',
         },
         {
-          name: this.$t(`cn-${this.collection}`),
+          name: this.$t(`collections-${this.collection}`),
           path: `/collections/${this.collection}`,
         },
         {

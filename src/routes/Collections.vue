@@ -20,7 +20,7 @@ export default {
       const collections = this.$store.state.collections.data || {};
 
       return Object.keys(collections).map(collection => ({
-        collection: this.$t(`cn-${collection}`),
+        collection: this.$t(`collections-${collection}`),
         __link__: `/collections/${collection}`,
       }));
     },

@@ -33,6 +33,8 @@ export default {
   collection: 'Collection',
   collections: 'Collections',
   collection_count: 'No Collections | One Collection | {count} Collections',
+  'collections-directus_files': 'Files',
+  'collections-directus_users': 'Users',
   comments: 'Comments',
   contains: 'Contains',
   delete: 'Delete',

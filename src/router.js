@@ -36,6 +36,20 @@ const router = new Router({
       component: Edit,
     },
     {
+      path: '/files',
+      props: {
+        collection: 'directus_files',
+      },
+      component: ItemListing,
+    },
+    {
+      path: '/users',
+      props: {
+        collection: 'directus_users',
+      },
+      component: ItemListing,
+    },
+    {
       path: '/debug',
       component: Debug,
     },
