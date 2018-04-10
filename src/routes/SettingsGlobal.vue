@@ -54,6 +54,7 @@ export default {
         {
           name: this.$t('settings'),
           path: '/settings',
+          color: 'warning',
         },
         {
           name: this.$t('settings_global'),

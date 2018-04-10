@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <portal to="header-title">{{ $t('settings') }}</portal>
+    <portal to="header-title"><breadcrumb :links="links" /></portal>
 
     <v-details
       :title="$t('settings_interface')"
@@ -108,6 +108,13 @@ export default {
     },
     version() {
       return version;
+    },
+    links() {
+      return [{
+        name: this.$t('settings'),
+        path: '/settings',
+        color: 'warning',
+      }];
     },
   },
 };

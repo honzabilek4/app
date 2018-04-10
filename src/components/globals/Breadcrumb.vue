@@ -5,10 +5,12 @@
       :key="index">
       <span
         v-if="link.path === $route.path"
+        :class="link.color ? link.color : null"
         class="current">{{ link.name }}</span>
       <router-link
         v-else
-        :to="link.path">{{ link.name }}</router-link>
+        :to="link.path"
+        :class="link.color ? link.color : null">{{ link.name }}</router-link>
       <i
         v-if="index !== _links.length - 1"
         class="material-icons">chevron_right</i>
@@ -72,5 +74,25 @@ i {
   margin-right: 8px;
   width: 20px;
   user-select: none;
+}
+
+.primary {
+  color: var(--primary);
+}
+
+.secondary {
+  color: var(--secondary);
+}
+
+.success {
+  color: var(--success);
+}
+
+.warning {
+  color: var(--warning);
+}
+
+.danger {
+  color: var(--danger);
 }
 </style>
