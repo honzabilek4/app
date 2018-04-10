@@ -1,4 +1,4 @@
-import { set } from 'lodash';
+import { mapValues, keyBy } from 'lodash';
 import { SETTINGS_PENDING, SETTINGS_SUCCESS, SETTINGS_FAILED } from '../../mutation-types';
 
 const mutations = {
@@ -7,19 +7,7 @@ const mutations = {
   },
 
   [SETTINGS_SUCCESS](state, data) {
-    const settings = {};
-    data.forEach(({
-      scope, group, key, value,
-    }) => {
-      if (group.length) {
-        set(settings, [scope, group, key], value);
-        return;
-      }
-
-      set(settings, [scope, key], value);
-    });
-
-    state.data = settings;
+    state.data = mapValues(keyBy(data, 'key'), obj => obj.value);
     state.error = null;
     state.loading = false;
   },

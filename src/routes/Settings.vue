@@ -2,7 +2,7 @@
   <div class="settings">
     <portal to="header-title">{{ $t('settings') }}</portal>
 
-    <v-group
+    <v-details
       :title="$t('settings_interface')"
       open>
 
@@ -39,9 +39,9 @@
             icon="extension" />
         </ul>
       </nav>
-    </v-group>
+    </v-details>
 
-    <v-group
+    <v-details
       :title="$t('additional_info')"
       open>
       <nav>
@@ -83,7 +83,7 @@
             icon="update" />
         </ul>
       </nav>
-    </v-group>
+    </v-details>
   </div>
 </template>
 
@@ -98,7 +98,7 @@ export default {
   },
   computed: {
     globalNum() {
-      return Object.keys(this.$store.state.settings.data.global).length;
+      return Object.keys(this.$store.state.settings.data).length;
     },
     collectionsNum() {
       return Object.keys(this.$store.state.collections.data).length;

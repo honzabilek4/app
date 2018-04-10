@@ -39,10 +39,6 @@ export default {
       type: Object,
       required: true,
     },
-    collection: {
-      type: String,
-      required: true,
-    },
   },
   computed: {
     fieldsGrouped() {

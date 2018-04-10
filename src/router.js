@@ -11,6 +11,7 @@ import Interfaces from './routes/Interfaces.vue';
 import InterfaceDebugger from './routes/InterfaceDebugger.vue';
 import Debug from './routes/Debug.vue';
 import Settings from './routes/Settings.vue';
+import SettingsGlobal from './routes/SettingsGlobal.vue';
 
 Vue.use(Router);
 
@@ -76,6 +77,10 @@ const router = new Router({
     {
       path: '/settings',
       component: Settings,
+    },
+    {
+      path: '/settings/global',
+      component: SettingsGlobal,
     },
     {
       path: '/interfaces',
