@@ -1,49 +1,58 @@
-// auth
-export const LOGIN_PENDING = 'LOGIN_PENDING';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILED = 'LOGIN_FAILED';
-export const LOGOUT = 'LOGOUT';
-export const REFRESH_TOKEN = 'REFRESH_TOKEN';
-export const REMOVE_AUTH_ERROR = 'REMOVE_AUTH_ERROR';
-// collections
-export const COLLECTIONS_PENDING = 'COLLECTIONS_PENDING';
-export const COLLECTIONS_SUCCESS = 'COLLECTIONS_SUCCESS';
-export const COLLECTIONS_FAILED = 'COLLECTIONS_FAILED';
-// edits
-export const DISCARD_CHANGES = 'DISCARD_CHANGES';
-export const ITEM_CREATED = 'ITEM_CREATED';
-export const START_EDITING = 'START_EDITING';
-export const UNSTAGE_VALUE = 'UNSTAGE_VALUE';
-export const STAGE_VALUE = 'STAGE_VALUE';
-// extensions
-export const INTERFACES_PENDING = 'INTERFACES_PENDING';
-export const INTERFACES_SUCCESS = 'INTERFACES_SUCCESS';
-export const INTERFACES_FAILED = 'INTERFACES_FAILED';
-export const LISTINGS_PENDING = 'LISTINGS_PENDING';
-export const LISTINGS_SUCCESS = 'LISTINGS_SUCCESS';
-export const LISTINGS_FAILED = 'LISTINGS_FAILED';
-export const PAGES_PENDING = 'PAGES_PENDING';
-export const PAGES_SUCCESS = 'PAGES_SUCCESS';
-export const PAGES_FAILED = 'PAGES_FAILED';
-// fields
-export const FIELDS_PENDING = 'FIELDS_PENDING';
-export const FIELDS_SUCCESS = 'FIELDS_SUCCESS';
-export const FIELDS_FAILED = 'FIELDS_FAILED';
-// hydrate
-export const STORE_HYDRATED = 'STORE_HYDRATED';
-export const HYDRATING_FAILED = 'HYDRATING_FAILED';
-// listing-preferences
-export const PREFERENCES_PENDING = 'PREFERENCES_PENDING';
-export const PREFERENCES_SUCCESS = 'PREFERENCES_SUCCESS';
-export const PREFERENCES_FAILED = 'PREFERENCES_FAILED';
-export const SET_PREFERENCES = 'SET_PREFERENCES';
-// me
-export const ME_PENDING = 'ME_PENDING';
-export const ME_SUCCESS = 'ME_SUCCESS';
-export const ME_FAILED = 'ME_FAILED';
-// settings
-export const SETTINGS_PENDING = 'SETTINGS_PENDING';
-export const SETTINGS_SUCCESS = 'SETTINGS_SUCCESS';
-export const SETTINGS_FAILED = 'SETTINGS_FAILED';
-// latency check
-export const LATENCY = 'LATENCY';
+// Auth
+export const LOGIN_PENDING = '🔒 Login Pending';
+export const LOGIN_SUCCESS = '🔒✅ Login Successful';
+export const LOGIN_FAILED = '🔒❌ Login Failed';
+export const LOGOUT = '🔒 Logout';
+export const REFRESH_TOKEN = '🔒 Refresh Token';
+export const REMOVE_AUTH_ERROR = '🔒 Remove Auth Error';
+
+// Collections
+export const COLLECTIONS_PENDING = '🗄 Fetching Collections...';
+export const COLLECTIONS_SUCCESS = '🗄✅ Collections Successful';
+export const COLLECTIONS_FAILED = '🗄❌ Collections Failed';
+
+// Edits
+export const DISCARD_CHANGES = '📝 Discard Changes';
+export const ITEM_CREATED = '📝 Item Created';
+export const START_EDITING = '📝 Start Editing';
+export const UNSTAGE_VALUE = '📝 Unstage Value';
+export const STAGE_VALUE = '📝 Stage Value';
+
+// Extensions
+export const INTERFACES_PENDING = '📦 Fetching Interfaces...';
+export const INTERFACES_SUCCESS = '📦✅ Interfaces Successful';
+export const INTERFACES_FAILED = '📦❌ Interfaces Failed';
+export const LISTINGS_PENDING = '📦 Fetching Listings...';
+export const LISTINGS_SUCCESS = '📦✅ Listings Successful';
+export const LISTINGS_FAILED = '📦❌ Listings Failed';
+export const PAGES_PENDING = '📦 Fetching Pages...';
+export const PAGES_SUCCESS = '📦✅ Pages Successful';
+export const PAGES_FAILED = '📦❌ Pages Failed';
+
+// Fields
+export const FIELDS_PENDING = '📌 Fetching Fields...';
+export const FIELDS_SUCCESS = '📌✅ Fields Successful';
+export const FIELDS_FAILED = '📌❌ Fields Failed';
+
+// Hydrate
+export const STORE_HYDRATED = '🏪 Store Hydrated';
+export const HYDRATING_FAILED = '🏪❌ Store Hydration Failed';
+
+// Listing Preferences
+export const PREFERENCES_PENDING = '👀 Fetching Listing Preferences...';
+export const PREFERENCES_SUCCESS = '👀✅ Listing Preferences Successful';
+export const PREFERENCES_FAILED = '👀❌ Listing Preferences Failed';
+export const SET_PREFERENCES = '👀 Set Listing Preferences';
+
+// Me
+export const ME_PENDING = '👨🏻‍💻 Fetching Me...';
+export const ME_SUCCESS = '👨🏻‍💻✅ Me Successful';
+export const ME_FAILED = '👨🏻‍💻❌ Me Failed';
+
+// Settings
+export const SETTINGS_PENDING = '⚙️ Fetching Global Settings...';
+export const SETTINGS_SUCCESS = '⚙️✅ Global Settings Successful';
+export const SETTINGS_FAILED = '⚙️❌ Global Settings Failed';
+
+// Latency Check
+export const LATENCY = '⏱ Latency Check';

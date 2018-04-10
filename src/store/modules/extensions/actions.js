@@ -2,6 +2,8 @@ import { forEach, mapKeys, isObject, mapValues } from 'lodash';
 import api from '../../../api';
 import { i18n } from '../../../lang/';
 
+import * as mutationTypes from '../../mutation-types';
+
 /**
  * Recursively loop over object values and replace each string value that starts with $t: with it's
  *   translation as managed by vue-i18n
@@ -60,7 +62,7 @@ export function getExtensions({ commit }, type) {
     default:
   }
 
-  commit(`${typeUpper}_PENDING`);
+  commit(mutationTypes[`${typeUpper}_PENDING`]);
 
   return request
     .then(res => res.data)
@@ -94,10 +96,10 @@ export function getExtensions({ commit }, type) {
      * Commit parsed extensions to the store
      */
     .then((extensions) => {
-      commit(`${typeUpper}_SUCCESS`, extensions);
+      commit(mutationTypes[`${typeUpper}_SUCCESS`], extensions);
     })
     .catch((error) => {
-      commit(`${typeUpper}_FAILED`, error);
+      commit(mutationTypes[`${typeUpper}_FAILED`], error);
     });
 }
 
