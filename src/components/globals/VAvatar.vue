@@ -1,5 +1,5 @@
 <template>
-  <div class="avatar">
+  <div class="v-avatar">
     <img
       :src="src"
       :alt="alt"
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'avatar',
+  name: 'v-avatar',
   props: {
     src: {
       type: String,

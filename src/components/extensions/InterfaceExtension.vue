@@ -11,7 +11,10 @@
     :options="optionsWithDefaults"
     :new-item="newItem"
     class="interface-extension"
-    @input="$emit('input', $event)" />
+    @input="$emit('input', $event)"
+    @setfield="$emit('setfield', $event)">
+    <slot />
+  </component>
 </template>
 
 <script>

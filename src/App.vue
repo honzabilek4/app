@@ -11,7 +11,7 @@
         :show-info-button="infoSidebarHasContent"
         @toggleNav="toggleNav"
         @toggleInfo="toggleInfo" />
-      <blocker
+      <v-blocker
         v-if="navActive && $mq === 'small'"
         :z-index="25"
         @click="toggleNav(false)" />
@@ -20,7 +20,7 @@
         @toggleNav="toggleNav" />
       <main :class="{ 'info-active': infoActive }">
         <router-view class="page-root" />
-        <blocker
+        <v-blocker
           v-if="infoSidebarHasContent &&
             ((infoActive && $mq === 'small') || (infoActive && $mq === 'medium'))
           "
@@ -31,7 +31,7 @@
           @close="toggleInfo(false)" />
       </main>
 
-      <modal
+      <v-modal
         v-if="unsavedChanges"
         :action-required="true"
         :title="$t('unsaved_changes')">
@@ -45,7 +45,7 @@
           <v-button
             @click="keepEditing">{{ $t('keep_editing') }}</v-button>
         </template>
-      </modal>
+      </v-modal>
     </div>
 
     <notifications
@@ -63,11 +63,12 @@ import { Wormhole } from 'portal-vue';
 import HeaderBar from './containers/HeaderBar.vue';
 import NavSidebar from './containers/NavSidebar.vue';
 import InfoSidebar from './components/InfoSidebar.vue';
+import VBlocker from './components/VBlocker.vue';
 
 export default {
   name: 'directus',
   components: {
-    HeaderBar, NavSidebar, InfoSidebar,
+    HeaderBar, NavSidebar, InfoSidebar, VBlocker,
   },
   data() {
     return {

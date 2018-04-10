@@ -36,7 +36,7 @@
       />
     </portal>
 
-    <modal
+    <v-modal
       v-if="removeModalActive"
       :title="$t('delete_confirmation')"
       :ok="$t('delete')"
@@ -47,9 +47,9 @@
       <p>
         {{ $t('delete_are_you_sure') }}
       </p>
-    </modal>
+    </v-modal>
 
-    <modal
+    <v-modal
       v-if="confirmNavigation"
       :action-required="true"
       :title="$t('unsaved_changes')">
@@ -62,7 +62,7 @@
           @click="discardChanges">{{ $t('discard_changes') }}</v-button>
         <v-button @click="confirmNavigation = false">{{ $t('keep_editing') }}</v-button>
       </template>
-    </modal>
+    </v-modal>
 
     <edit-form
       v-if="!hydrating"
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import EditForm from '../components/EditForm.vue';
+import EditForm from '../containers/EditForm.vue';
 import ActivityOverview from '../containers/ActivityOverview.vue';
 
 export default {
@@ -105,6 +105,19 @@ export default {
   },
   computed: {
     breadcrumb() {
+      if (this.collection.startsWith('directus_')) {
+        return [
+          {
+            name: this.$t(`collections-${this.collection}`),
+            path: `/${this.collection.substring(9)}`,
+          },
+          {
+            name: this.$t('editing_item'),
+            path: this.$route.path,
+          },
+        ];
+      }
+
       return [
         {
           name: this.$t('collections'),
@@ -215,7 +228,13 @@ export default {
         .then(() => {
           this.saving = false;
         })
-        .then(() => this.$router.push(`/collections/${this.collection}`))
+        .then(() => {
+          if (this.collection.startsWith('directus_')) {
+            return this.$router.push(`/${this.collection.substring(9)}`);
+          }
+
+          return this.$router.push(`/collections/${this.collection}`);
+        })
         .catch(console.error);
     },
     saveAndAdd() {
@@ -224,7 +243,13 @@ export default {
         .then(() => {
           this.saving = false;
         })
-        .then(() => this.$router.push(`/collections/${this.collection}/+`))
+        .then(() => {
+          if (this.collection.startsWith('directus_')) {
+            return this.$router.push(`/${this.collection.substring(9)}/+`);
+          }
+
+          return this.$router.push(`/collections/${this.collection}/+`);
+        })
         .catch(console.error);
     },
     saveAsCopy() {
@@ -237,7 +262,13 @@ export default {
           this.saving = false;
           return res.data[this.primaryKeyField];
         })
-        .then(pk => this.$router.push(`/collections/${this.collection}/${pk}`))
+        .then((pk) => {
+          if (this.collection.startsWith('directus_')) {
+            return this.$router.push(`/${this.collection.substring(9)}/${pk}`);
+          }
+
+          return this.$router.push(`/collections/${this.collection}/${pk}`);
+        })
         .catch(console.error);
     },
     discardChanges() {
@@ -253,7 +284,7 @@ export default {
 
 <style lang="scss" scoped>
 .edit {
-  padding: 30px 20px;
+  padding: 20px;
   position: relative;
   height: 100%;
   width: 100%;

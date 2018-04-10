@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="modal">
+    <div class="v-modal">
       <div
         :class="actionRequired ? null : 'pointer'"
         class="modal-mask"
@@ -56,7 +56,7 @@ import FocusLock from 'vue-focus-lock';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 export default {
-  name: 'modal',
+  name: 'v-modal',
   components: {
     FocusLock,
   },
@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal {
+.v-modal {
   display: table;
   position: fixed;
   z-index: 500;

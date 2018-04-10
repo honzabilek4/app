@@ -1,7 +1,7 @@
 <template>
   <details
     :open="open"
-    class="v-group">
+    class="v-details">
     <summary>{{ title }}</summary>
     <slot />
   </details>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'v-group',
+  name: 'v-details',
   props: {
     title: {
       type: String,
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-group {
+.v-details {
   width: 100%;
   margin: 10px 0 40px;
 

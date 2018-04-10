@@ -156,12 +156,33 @@ export default {
       return translatedNames;
     },
     itemsWithLinks() {
+      if (this.collection === 'directus_users' || this.collection === 'directus_files') {
+        return this.items.map(item => ({
+          ...item,
+          __link__: `/${this.collection.substring(9)}/${item[this.primaryKeyField]}`,
+        }));
+      }
+
       return this.items.map(item => ({
         ...item,
         __link__: `/collections/${this.collection}/${item[this.primaryKeyField]}`,
       }));
     },
     links() {
+      if (this.collection === 'directus_users') {
+        return [{
+          name: this.$t('user_directory'),
+          path: '/users',
+        }];
+      }
+
+      if (this.collection === 'directus_files') {
+        return [{
+          name: this.$t('file_library'),
+          path: '/files',
+        }];
+      }
+
       return [
         {
           name: this.$t('collections'),
@@ -271,7 +292,13 @@ export default {
       this.$store.dispatch('setListingPreferences', info);
     },
     add() {
-      this.$router.push(`/collections/${this.collection}/+`);
+      let route = `/collections/${this.collection}/+`;
+
+      if (this.collection === 'directus_users' || this.collection === 'directus_files') {
+        route = `/${this.collection.substring(9)}/+`;
+      }
+
+      this.$router.push(route);
     },
   },
 };

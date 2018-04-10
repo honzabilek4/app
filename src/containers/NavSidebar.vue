@@ -1,12 +1,12 @@
 <template>
   <transition name="nav">
     <aside class="nav-sidebar">
-      <modal
+      <v-modal
         v-if="projectSwitcherActive"
         :title="$t('change_project')"
         @close="projectSwitcherActive = false">
         Project changer form
-      </modal>
+      </v-modal>
       <focus-lock :disabled="!overlay">
         <button
           v-if="$mq === 'small'"
@@ -50,7 +50,7 @@
           @mouseleave="toggleUserMenu(false, 500)">
           <header>
             <button @click="toggleUserMenu()">
-              <avatar
+              <v-avatar
                 :src="avatarURL"
                 :alt="fullName"
                 :indicator="true"

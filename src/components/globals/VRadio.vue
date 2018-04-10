@@ -1,13 +1,13 @@
 <template>
   <div class="v-radio">
     <input
-      :id="name"
+      :id="id"
       :name="name"
       :checked="shouldBeChecked"
       :value="value"
       type="radio"
       @change="updateInput">
-    <label :for="name">{{ label }}</label>
+    <label :for="id">{{ label }}</label>
   </div>
 </template>
 
@@ -19,6 +19,10 @@ export default {
   },
   props: {
     name: {
+      type: String,
+      required: true,
+    },
+    id: {
       type: String,
       required: true,
     },

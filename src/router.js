@@ -43,11 +43,31 @@ const router = new Router({
       component: ItemListing,
     },
     {
+      path: '/files/:primaryKey',
+      props(route) {
+        return {
+          collection: 'directus_files',
+          primaryKey: route.params.primaryKey,
+        };
+      },
+      component: Edit,
+    },
+    {
       path: '/users',
       props: {
         collection: 'directus_users',
       },
       component: ItemListing,
+    },
+    {
+      path: '/users/:primaryKey',
+      props(route) {
+        return {
+          collection: 'directus_users',
+          primaryKey: route.params.primaryKey,
+        };
+      },
+      component: Edit,
     },
     {
       path: '/debug',
