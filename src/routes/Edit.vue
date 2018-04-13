@@ -6,7 +6,7 @@
     />
 
     <portal to="header-title">
-      <breadcrumb :links="breadcrumb" />
+      <h1 class="style-1"><breadcrumb :links="breadcrumb" /></h1>
     </portal>
 
     <portal to="header-buttons">

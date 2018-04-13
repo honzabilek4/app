@@ -6,6 +6,13 @@ export const LOGOUT = '🔒 Logout';
 export const REFRESH_TOKEN = '🔒 Refresh Token';
 export const REMOVE_AUTH_ERROR = '🔒 Remove Auth Error';
 
+// Bookmarks
+export const BOOKMARKS_PENDING = '🔖 Fetching Bookmarks...';
+export const BOOKMARKS_SUCCESS = '🔖✅ Bookmarks Successful';
+export const BOOKMARKS_FAILED = '🔖❌ Bookmarks Failed';
+export const BOOKMARKS_NEW = '🔖 New Bookmark';
+export const BOOKMARKS_DELETE = '🔖 Delete Bookmark';
+
 // Collections
 export const COLLECTIONS_PENDING = '🗄 Fetching Collections...';
 export const COLLECTIONS_SUCCESS = '🗄✅ Collections Successful';

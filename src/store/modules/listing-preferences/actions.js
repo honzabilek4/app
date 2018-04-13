@@ -20,31 +20,31 @@ export function setListingPreferences({ commit, state, rootState }, { collection
   const preferences = state[collection].data;
   const userPreferencesExist = Boolean(preferences.id) && Boolean(preferences.user);
 
+  // Call setter without waiting for the api to respond with local data, so the view updates
+  //   right away
+  commit(SET_PREFERENCES, { collection, preferences: { ...preferences, ...updates } });
+
   if (userPreferencesExist) {
-    api.updateCollectionPreset(preferences.id, updates)
+    return api.updateCollectionPreset(preferences.id, updates)
       .then(res => res.data)
       // Commit the view options in case the local options got out of sync with the API's
       .then(savedPreferences => commit(SET_PREFERENCES, {
         collection, preferences: savedPreferences,
       }))
       .catch(console.error);
-  } else {
-    api.createCollectionPreset({
-      ...preferences,
-      ...updates,
-      collection,
-      group: rootState.me.data.group,
-      user: rootState.me.data.id,
-    })
-      .then(res => res.data)
-      // Commit the view options to add the missing fields to the local version
-      .then(savedPreferences => commit(SET_PREFERENCES, {
-        collection, preferences: savedPreferences,
-      }))
-      .catch(console.error);
   }
 
-  // Call setter without waiting for the api to respond with local data, so the view updates
-  //   right away
-  commit(SET_PREFERENCES, { collection, preferences });
+  return api.createCollectionPreset({
+    ...preferences,
+    ...updates,
+    collection,
+    group: rootState.me.data.group,
+    user: rootState.me.data.id,
+  })
+    .then(res => res.data)
+  // Commit the view options to add the missing fields to the local version
+    .then(savedPreferences => commit(SET_PREFERENCES, {
+      collection, preferences: savedPreferences,
+    }))
+    .catch(console.error);
 }

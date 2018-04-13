@@ -1,7 +1,12 @@
 <template>
   <div class="collections">
     <portal to="header-title">
-      {{ $t('collections') }}
+      <h1 class="style-1"><breadcrumb
+        :links="[{
+          name: $t('collections'),
+          path: '/collections'
+        }]"
+      /></h1>
     </portal>
     <v-table
       :items="items"

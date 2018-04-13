@@ -107,7 +107,7 @@
             class="select"
             @click.stop>
             <v-checkbox
-              :id="'check-' + i"
+              :id="'check-' + row[primaryKeyField]"
               :value="row[primaryKeyField]"
               :checked="selection.includes(row[primaryKeyField])"
               @change="toggleCheckbox(row[primaryKeyField])" />
@@ -370,6 +370,7 @@ export default {
 
 .select {
   flex-basis: 30px;
+  padding-right: 20px;
 }
 
 .row-move {

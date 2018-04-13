@@ -1,19 +1,26 @@
 <template>
   <div class="item-listing">
     <portal to="header-title">
-      <breadcrumb :links="links" />
+      <h1 class="style-1"><breadcrumb :links="links" /></h1>
+      <div
+        v-if="currentBookmark"
+        class="bookmark-name">({{ currentBookmark.title }})</div>
+      <button
+        :class="currentBookmark ? 'active' : null"
+        :disabled="currentBookmark"
+        class="bookmark"
+        @click="bookmarkModal = true">
+        <i class="material-icons">
+          {{ currentBookmark ? 'bookmark' : 'bookmark_border' }}
+        </i>
+      </button>
     </portal>
-
-    <loader
-      v-if="hydrating"
-      area="content"
-    />
 
     <portal to="header-custom">
       <search-filter
         v-if="selection.length === 0"
-        :filters="listingPreferences.filters || []"
-        :search-query="listingPreferences.search_query || ''"
+        :filters="preferences.filters || []"
+        :search-query="preferences.search_query || ''"
         :fields="fieldNames"
         @filter="updateListingPreferences('filters', $event)"
         @search="updateListingPreferences('search_query', $event)"
@@ -23,14 +30,14 @@
     <portal to="header-buttons">
       <header-button
         v-if="selection.length > 1"
-        :disabled="true"
-        title="This feature hasn't been build yet"
         icon="mode_edit"
-        bg="warning">{{ $t('batch_edit') }}</header-button>
+        bg="warning"
+        @click="batchEdit">{{ $t('batch_edit') }}</header-button>
       <header-button
         v-if="selection.length"
         icon="close"
-        bg="danger">{{ $t('delete') }}</header-button>
+        bg="danger"
+        @click="batchDelete">{{ $t('delete') }}</header-button>
       <header-button
         icon="add"
         bg="primary"
@@ -43,7 +50,7 @@
       <v-select
         id="listing"
         :options="listingNames"
-        :value="listing"
+        :value="viewType"
         name="listing"
         @input="updateListingPreferences('view_type', $event)" />
     </portal>
@@ -51,49 +58,55 @@
     <portal to="info-sidebar">
       <listing-options-extension
         v-if="hydrating === false"
-        :id="listing"
+        :id="viewType"
         :collection="collection"
         :primary-key-field="primaryKeyField"
         :fields="fields"
-        :items="itemsWithLinks"
+        :items="items"
         :options="viewOptions"
         :loading="loading"
-        :query="listingPreferences.view_query"
+        :query="preferences.view_query"
         :selection="selection"
         link="__link__"
         @query="updateListingPreferences('view_query', $event)"
-        @select="value => { selection = value }"
+        @select="selection = $event"
         @input="updateListingPreferences('view_options', $event)"
       />
     </portal>
 
     <listing-extension
-      v-if="hydrating === false"
-      :id="listing"
-      :collection="collection"
+      v-if="!hydrating"
+      :id="viewType"
       :primary-key-field="primaryKeyField"
       :fields="fields"
-      :items="itemsWithLinks"
+      :items="items"
       :options="viewOptions"
-      :loading="loading"
-      :query="listingPreferences.view_query"
       :selection="selection"
+      :query="preferences.view_query || {}"
       link="__link__"
-      @query="updateListingPreferences('view_query', $event)"
-      @select="value => { selection = value }"
+      @select="selection = $event"
       @input="updateListingPreferences('view_options', $event)"
-    />
+      @query="updateListingPreferences('view_query', $event)" />
+
+    <v-modal
+      v-if="bookmarkModal"
+      :title="$t('save_as_bookmark')"
+      @confirm="saveBookmark"
+      @close="bookmarkModal = false">
+      <label for="bookmark">{{ $t('name_bookmark') }}</label>
+      <v-input
+        v-model="bookmarkTitle"
+        type="text" />
+    </v-modal>
   </div>
 </template>
 
 <script>
-import { diff } from 'deep-object-diff';
-import SearchFilter from '../components/SearchFilter.vue';
 import formatFilters from '../helpers/format-filters';
-import prefixes from '../helpers/prefixes';
+import SearchFilter from '../components/SearchFilter.vue';
 
 export default {
-  name: 'listing',
+  name: 'item-listing',
   components: {
     SearchFilter,
   },
@@ -105,18 +118,52 @@ export default {
   },
   data() {
     return {
-      selection: [],
       items: [],
-      loading: false,
       error: null,
+      loading: false,
       hydrating: false,
+      selection: [],
+      bookmarkTitle: '',
+      bookmarkModal: false,
     };
   },
   computed: {
+    currentBookmark() {
+      const bookmarks = this.$store.state.bookmarks.data;
+      const preferences = {
+        collection: this.preferences.collection,
+        search_query: this.preferences.search_query,
+        filters: this.preferences.filters,
+        view_options: this.preferences.view_options,
+        view_type: this.preferences.view_type,
+        view_query: this.preferences.view_query,
+      };
+
+      const currentBookmark = bookmarks.filter((bookmark) => {
+        const bookmarkPreferences = {
+          collection: bookmark.collection,
+          search_query: bookmark.search_query,
+          filters: bookmark.filters,
+          view_options: bookmark.view_options,
+          view_type: bookmark.view_type,
+          view_query: bookmark.view_query,
+        };
+
+        return this.$lodash.isEqual(bookmarkPreferences, preferences);
+      })[0];
+
+      return currentBookmark || null;
+    },
     fields() {
-      return this.$store.state.fields &&
-        this.$store.state.fields[this.collection] &&
-        this.$store.state.fields[this.collection].data;
+      return this.$lodash.mapValues(
+        (this.$store.state.fields &&
+          this.$store.state.fields[this.collection] &&
+          this.$store.state.fields[this.collection].data) || {},
+        field => ({
+          ...field,
+          name: this.$t(`fields-${this.collection}-${field.field}`),
+        }),
+      );
     },
     fieldNames() {
       if (!this.fields) return {};
@@ -126,48 +173,6 @@ export default {
       });
       return translatedNames;
     },
-    prefixes() {
-      return prefixes;
-    },
-    primaryKeyField() {
-      return this.$lodash.find(
-        this.fields,
-        { interface: 'primary-key' },
-      ).field;
-    },
-    listingPreferences() {
-      return (this.$store.state.listingPreferences &&
-        this.$store.state.listingPreferences[this.collection] &&
-        this.$store.state.listingPreferences[this.collection].data) || {};
-    },
-    viewOptions() {
-      return (this.listingPreferences.view_options &&
-        this.listingPreferences.view_options[this.listing]) || {};
-    },
-    listing() {
-      return (this.listingPreferences && this.listingPreferences.view_type) || 'tabular';
-    },
-    listingNames() {
-      if (!this.$store.state.extensions.listings.data) return {};
-      const translatedNames = {};
-      Object.keys(this.$store.state.extensions.listings.data).forEach((id) => {
-        translatedNames[id] = this.$store.state.extensions.listings.data[id].name;
-      });
-      return translatedNames;
-    },
-    itemsWithLinks() {
-      if (this.collection === 'directus_users' || this.collection === 'directus_files') {
-        return this.items.map(item => ({
-          ...item,
-          __link__: `/${this.collection.substring(9)}/${item[this.primaryKeyField]}`,
-        }));
-      }
-
-      return this.items.map(item => ({
-        ...item,
-        __link__: `/collections/${this.collection}/${item[this.primaryKeyField]}`,
-      }));
-    },
     links() {
       if (this.collection === 'directus_users') {
         return [{
@@ -175,14 +180,12 @@ export default {
           path: '/users',
         }];
       }
-
       if (this.collection === 'directus_files') {
         return [{
           name: this.$t('file_library'),
           path: '/files',
         }];
       }
-
       return [
         {
           name: this.$t('collections'),
@@ -194,20 +197,67 @@ export default {
         },
       ];
     },
+    listingNames() {
+      if (!this.$store.state.extensions.listings.data) return {};
+      const translatedNames = {};
+      Object.keys(this.$store.state.extensions.listings.data).forEach((id) => {
+        translatedNames[id] = this.$store.state.extensions.listings.data[id].name;
+      });
+      return translatedNames;
+    },
+    itemParams() {
+      let params = {
+        fields: '*.*', // by default, we fetch all items + 1 level of relational items
+      };
+
+      Object.assign(params, this.preferences.view_query || {});
+
+      if (this.preferences.search_query) {
+        params.q = this.preferences.search_query;
+      }
+
+      if (this.preferences.filters && this.preferences.filters.length > 0) {
+        params = {
+          ...params,
+          ...formatFilters(this.preferences.filters),
+        };
+      }
+
+      return params;
+    },
+    preferences() {
+      return (this.$store.state.listingPreferences[this.collection] &&
+        this.$store.state.listingPreferences[this.collection].data) || {};
+    },
+    primaryKeyField() {
+      return this.$lodash.find(
+        this.fields,
+        { interface: 'primary-key' },
+      ).field;
+    },
+    viewType() {
+      return this.preferences.view_type || 'tabular';
+    },
+    viewOptions() {
+      return (this.preferences.view_options &&
+        this.preferences.view_options[this.viewType]) || {};
+    },
   },
   watch: {
-    collection() {
-      this.hydrate();
-    },
-    listingPreferences: {
+    collection: 'hydrate',
+
+    /**
+     * If the search_query, filters, or view_query changes: fetch the fresh items
+     */
+    preferences: {
       deep: true,
       handler(newVal, oldVal) {
-        if (this.$lodash.isEmpty(oldVal)) return;
-        const changedKeys = Object.keys(diff(oldVal, newVal));
+        if (this.$lodash.isEmpty(oldVal) || this.$lodash.isEmpty(newVal)) return;
+
         if (
-          changedKeys.includes('search_query') ||
-          changedKeys.includes('filters') ||
-          changedKeys.includes('view_query')
+          newVal.search_query !== oldVal.search_query ||
+          newVal.filters !== oldVal.filters ||
+          newVal.view_query !== oldVal.view_query
         ) {
           this.getItems();
         }
@@ -218,51 +268,60 @@ export default {
     this.hydrate();
   },
   methods: {
+    /**
+     * Fetch component crucial information before rendering
+     */
     hydrate() {
       this.hydrating = true;
-      this.items = [];
-      this.selection = [];
       this.error = null;
+      this.items = [];
 
       Promise.all([
         this.$store.dispatch('getFields', this.collection),
         this.$store.dispatch('getListingPreferences', this.collection),
       ])
         .then(() => {
-          this.hydrating = false;
           this.getItems();
         })
-        .catch(console.error);
-    },
-    getItems() {
-      this.loading = true;
-      let params = this.listingPreferences.view_query || {};
-      if (this.listingPreferences.search_query) {
-        params.q = this.listingPreferences.search_query;
-      }
-      if (this.listingPreferences.filters && this.listingPreferences.filters.length > 0) {
-        params = {
-          ...params,
-          ...formatFilters(this.listingPreferences.filters),
-        };
-      }
-
-      this.$api.getItems(this.collection, params)
-        .then(res => res.data)
-        .then((items) => {
-          this.loading = false;
-          this.error = null;
-          this.items = items;
+        .then(() => {
+          this.hydrating = false;
         })
         .catch((error) => {
-          this.loading = false;
           this.error = error;
+          this.hydrating = false;
         });
     },
+
+    /**
+     * Fetch (new) items
+     */
+    getItems() {
+      this.error = null;
+      this.loading = true;
+
+      return this.$api.getItems(this.collection, this.itemParams)
+        .then(res => res.data)
+        .then((items) => {
+          this.items = items.map(item => ({
+            ...item,
+            __link__: `/collections/${this.collection}/${item[this.primaryKeyField]}`,
+          }));
+        })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = error;
+          this.loading = false;
+        });
+    },
+
+    /**
+     * Update a single column in directus_collection_presets mapped to the current collection
+     */
     updateListingPreferences(field, value) {
       let val = value;
       if (Array.isArray(value) && value.length === 0) val = null;
-
       let info = null;
 
       /*
@@ -275,8 +334,8 @@ export default {
           collection: this.collection,
           updates: {
             view_options: {
-              ...this.listingPreferences.view_options || {},
-              [this.listing]: val,
+              ...this.preferences.view_options || {},
+              [this.viewType]: val,
             },
           },
         };
@@ -288,18 +347,74 @@ export default {
           },
         };
       }
-
       this.$store.dispatch('setListingPreferences', info);
     },
+
+    batchEdit() {
+      let route = `/collections/${this.collection}/${this.selection.join()}`;
+      if (this.collection === 'directus_users' || this.collection === 'directus_files') {
+        route = `/${this.collection.substring(9)}/${this.selection.join()}`;
+      }
+      this.$router.push(route);
+    },
+
+    batchDelete() {
+      console.log('DELETE BATCH');
+      // TODO:
+      //   - show modal "are you sure"
+      //   - fire delete request for items through store on yes
+    },
+
     add() {
       let route = `/collections/${this.collection}/+`;
-
       if (this.collection === 'directus_users' || this.collection === 'directus_files') {
         route = `/${this.collection.substring(9)}/+`;
       }
-
       this.$router.push(route);
+    },
+
+    saveBookmark() {
+      const preferences = { ...this.preferences };
+      preferences.user = this.$store.state.me.data.id;
+      preferences.title = this.bookmarkTitle;
+      delete preferences.id;
+      delete preferences.group;
+      this.$store.dispatch('saveBookmark', preferences)
+        .then(() => {
+          this.bookmarkModal = false;
+        })
+        .catch(console.error);
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.bookmark {
+  margin-left: 10px;
+  opacity: 0.4;
+  transition: opacity var(--fast) var(--transition);
+
+  &:hover {
+    opacity: 1;
+  }
+
+  i {
+    font-size: 24px;
+    height: 20px;
+  }
+}
+
+.bookmark.active {
+  opacity: 1;
+
+  i {
+    color: var(--primary);
+  }
+}
+
+.bookmark-name {
+  color: var(--gray);
+  margin-left: 10px;
+}
+</style>

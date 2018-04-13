@@ -4,13 +4,9 @@
       class="nav-toggle"
       @click="$emit('toggleNav', true)"><i class="material-icons">menu</i></button>
 
-    <h1 class="style-1">
-      <portal-target
-        name="header-title"
-        slim>
-        <breadcrumb />
-      </portal-target>
-    </h1>
+    <portal-target
+      class="title"
+      name="header-title"><h1 class="style-1"><breadcrumb /></h1></portal-target>
 
     <portal-target
       name="header-custom"
@@ -70,11 +66,13 @@ export default {
   z-index: 20;
   padding-left: 20px;
 
-  h1 {
+  .title {
     flex-grow: 1;
     color: var(--white);
     margin-right: 20px;
-    height: 20px;
+
+    display: flex;
+    align-items: center;
   }
 
   @media (min-width: 50em) {

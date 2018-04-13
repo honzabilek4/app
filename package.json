@@ -30,7 +30,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.9.0",
-    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-vue": "^4.4.0",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.16.3",
@@ -57,7 +57,7 @@
     "webpack": "^3.11.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-middleware": "^2.0.6",
-    "webpack-hot-middleware": "^2.21.2",
+    "webpack-hot-middleware": "^2.22.0",
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
@@ -78,6 +78,6 @@
     "vue-simple-spinner": "^1.2.8",
     "vue-timeago": "^3.4.4",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.5.1"
+    "vuex-persistedstate": "^2.5.2"
   }
 }

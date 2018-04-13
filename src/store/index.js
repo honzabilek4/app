@@ -10,6 +10,7 @@ import fields from './modules/fields';
 import listingPreferences from './modules/listing-preferences';
 import extensions from './modules/extensions';
 import edits from './modules/edits';
+import bookmarks from './modules/bookmarks';
 
 import * as actions from './actions';
 import * as getters from './getters';
@@ -38,6 +39,7 @@ const store = new Vuex.Store({
     listingPreferences,
     extensions,
     edits,
+    bookmarks,
   },
   plugins: [
     createPersistedState({

@@ -2,7 +2,6 @@
   <component
     :is="componentName"
     :primary-key-field="primaryKeyField"
-    :collection="collection"
     :fields="fields"
     :items="items"
     :options="options"
@@ -27,10 +26,6 @@ export default {
   name: 'listing-extension',
   props: {
     id: {
-      type: String,
-      required: true,
-    },
-    collection: {
       type: String,
       required: true,
     },

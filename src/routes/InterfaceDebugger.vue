@@ -1,7 +1,7 @@
 <template>
   <div class="interface-debugger">
     <portal to="header-title">
-      <breadcrumb :links="links" />
+      <h1 class="style-1"><breadcrumb :links="links" /></h1>
     </portal>
 
     <div

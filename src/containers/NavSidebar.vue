@@ -28,7 +28,7 @@
             <i class="material-icons chevron">arrow_drop_down</i>
           </button>
           <h3 class="style-4">{{ $t('collections') }}</h3>
-          <nav>
+          <nav class="list">
             <ul>
               <li
                 v-for="name in collectionNames"
@@ -42,6 +42,26 @@
               </li>
             </ul>
           </nav>
+          <h3
+            v-if="bookmarks && bookmarks.length > 0"
+            class="style-4">{{ $t('bookmarks') }}</h3>
+          <ul
+            v-if="bookmarks && bookmarks.length > 0"
+            class="list">
+            <li
+              v-for="bookmark in bookmarks"
+              :key="bookmark.id">
+              <button
+                class="bookmark"
+                @click="toBookmark(bookmark)">
+                <i class="material-icons">bookmark_outline</i>
+                {{ bookmark.title }}
+              </button>
+              <button @click="deleteBookmark(bookmark.id)">
+                <i class="material-icons">remove_circle_outline</i>
+              </button>
+            </li>
+          </ul>
         </section>
         <section
           :class="{userMenuActive: userMenuActive}"
@@ -149,6 +169,9 @@ export default {
       return this.$store.state.collections.data &&
         Object.keys(this.$store.state.collections.data);
     },
+    bookmarks() {
+      return this.$store.state.bookmarks.data;
+    },
     avatarURL() {
       if (this.$store.state.me.avatar) {
         // TODO: This is basically pseudo code. Hasn't been tested yet
@@ -193,6 +216,25 @@ export default {
     },
     logout() {
       this.$store.dispatch('logout');
+    },
+    deleteBookmark(id) {
+      this.$store.dispatch('deleteBookmark', id);
+    },
+    toBookmark(bookmark) {
+      /* eslint-disable camelcase */
+      const {
+        collection, search_query, filters, view_options, view_type, view_query,
+      } = bookmark;
+
+      this.$store.dispatch('setListingPreferences', {
+        collection,
+        updates: {
+          search_query, filters, view_options, view_type, view_query,
+        },
+      })
+        .then(() => {
+          this.$router.push(`/collections/${collection}`);
+        });
     },
   },
 };
@@ -269,7 +311,8 @@ a, i, svg {
 }
 
 a:hover,
-.router-link-active {
+.router-link-exact-active,
+.bookmark:hover {
   color: var(--primary);
   i, svg {
     color: var(--primary);
@@ -277,7 +320,7 @@ a:hover,
   }
 }
 
-.router-link-active::before {
+.router-link-exact-active::before {
   content: '';
   position: absolute;
   height: 100%;
@@ -292,9 +335,9 @@ ul {
   padding: 0;
 }
 
-nav:not(:last-of-type) {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+.list:not(:last-child) {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 1px solid var(--lightest-gray);
 }
 

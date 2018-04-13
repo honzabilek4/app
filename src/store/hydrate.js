@@ -14,6 +14,7 @@ export default function hydrateStore() {
     store.dispatch('getMe'),
     store.dispatch('getSettings'),
     store.dispatch('getAllExtensions'),
+    store.dispatch('getBookmarks'),
   ])
     .then(() => {
       store.commit(STORE_HYDRATED);
