@@ -32,7 +32,7 @@
             class="project-switcher"
             @click="projectSwitcherActive = true">
             <v-signal class="icon" />
-            <span>{{ $store.state.auth.projectName }}</span>
+            <span class="no-wrap">{{ $store.state.auth.projectName }}</span>
             <i class="material-icons chevron">arrow_drop_down</i>
           </button>
           <h3 class="style-4">{{ $t('collections') }}</h3>
@@ -282,7 +282,7 @@ h3 {
   font-size: 18px;
   width: 15px;
   height: 18px;
-  margin-right: 15px;
+  margin-right: 10px;
   color: var(--light-gray);
   fill: var(--light-gray);
 
