@@ -6,8 +6,6 @@ import {
 import { startPolling } from './polling';
 
 export default function hydrateStore() {
-  startPolling();
-
   return Promise.all([
     store.dispatch('latency'),
     store.dispatch('getCollections'),
@@ -18,9 +16,9 @@ export default function hydrateStore() {
   ])
     .then(() => {
       store.commit(STORE_HYDRATED);
+      startPolling();
     })
     .catch((error) => {
       store.commit(HYDRATING_FAILED, error);
-      throw error;
     });
 }

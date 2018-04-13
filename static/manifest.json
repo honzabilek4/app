@@ -1,5 +1,5 @@
 {
-  "name": "Directus7",
+  "name": "Directus",
   "short_name": "Directus",
   "icons": [
     {
@@ -15,6 +15,6 @@
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#4f97d6",
+  "theme_color": "#4f97d6"
 }

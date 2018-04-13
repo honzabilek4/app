@@ -182,6 +182,12 @@ label {
   text-transform: uppercase;
 }
 
+.no-wrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .notifications {
   width: 100% !important;
   max-width: 400px !important;

@@ -83,14 +83,23 @@
               @change="toggleCheckbox(row[primaryKeyField])" />
           </div>
           <div
-            v-for="{field} in columns"
+            v-for="{field, fieldInfo} in columns"
             :key="field"
             :style="{
               flexBasis: widths && widths[field] ?
                 widths[field] + 'px' :
                 null
             }"
-            class="cell">{{ row[field] }}</div>
+            class="cell"
+          >
+            <readonly-extension
+              v-if="useInterfaces"
+              :id="fieldInfo.interface"
+              :name="field"
+              :type="fieldInfo.type"
+              :value="row[field]" />
+            <template v-else>{{ row[field] }}</template>
+          </div>
         </div>
       </transition-group>
 
@@ -167,6 +176,10 @@ export default {
     columnWidths: {
       type: Object,
       default: null,
+    },
+    useInterfaces: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -340,6 +353,7 @@ export default {
   flex-basis: 200px;
   padding-right: 20px;
   position: relative;
+  overflow: hidden;
 }
 
 .cell:last-of-type {

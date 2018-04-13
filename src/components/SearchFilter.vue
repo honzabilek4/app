@@ -116,6 +116,7 @@ export default {
   },
   created() {
     this.searchInput = this.$lodash.debounce(this.searchInput, 300);
+    this.updateFilter = this.$lodash.debounce(this.updateFilter, 300);
   },
   methods: {
     searchInput(event) {

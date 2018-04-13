@@ -7,6 +7,16 @@
         @close="projectSwitcherActive = false">
         Project changer form
       </v-modal>
+
+      <v-modal
+        v-if="signOutActive"
+        :title="$t('sign_out')"
+        :ok="$t('sign_out')"
+        @confirm="$router.push('/logout')"
+        @close="signOutActive = false">
+        {{ $t('sign_out_confirm') }}
+      </v-modal>
+
       <focus-lock :disabled="!overlay">
         <button
           v-if="$mq === 'small'"
@@ -17,23 +27,23 @@
             src="@/assets/logo.svg"
             alt="Directus Logo">
         </section>
-        <section
-          :class="{userMenuActive: userMenuActive}"
-          class="content">
+        <section class="content">
           <button
             class="project-switcher"
             @click="projectSwitcherActive = true">
-            <v-signal />
+            <v-signal class="icon" />
             <span>{{ $store.state.auth.projectName }}</span>
             <i class="material-icons chevron">arrow_drop_down</i>
           </button>
           <h3 class="style-4">{{ $t('collections') }}</h3>
-          <nav class="list">
+          <nav>
             <ul>
               <li
                 v-for="name in collectionNames"
                 :key="name">
-                <router-link :to="`/collections/${name}`"><svg viewBox="0 0 15 16">
+                <router-link :to="`/collections/${name}`"><svg
+                  class="icon"
+                  viewBox="0 0 15 16">
                   <!-- eslint-disable max-len -->
                   <path
                     d="M.422 12.598l6.773 3.114a.696.696 0 0 0 .61 0l6.771-3.114a.676.676 0 0 0 .424-.66V3.844a.726.726 0 0 0-.013-.13v-.039a.727.727 0 0 0-.029-.093l-.01-.03a.726.726 0 0 0-.059-.11l-.016-.023a.727.727 0 0 0-.064-.077l-.035-.023a.726.726 0 0 0-.08-.066l-.02-.014a.727.727 0 0 0-.098-.055L7.803.07a.696.696 0 0 0-.61 0L.423 3.184a.726.726 0 0 0-.098.055l-.02.014a.727.727 0 0 0-.08.066L.2 3.344a.727.727 0 0 0-.064.077l-.016.023a.726.726 0 0 0-.058.11l-.02.028a.727.727 0 0 0-.03.093v.038A.726.726 0 0 0 0 3.844v8.094c0 .31.14.53.422.66zm1.031-7.617l5.319 2.45v6.493l-5.319-2.451V4.98zm6.774 8.942V7.43l5.318-2.45v6.493l-5.318 2.449zM7.499 1.525l5.035 2.32-5.035 2.318-5.034-2.319 5.034-2.319z" />
@@ -45,29 +55,24 @@
           <h3
             v-if="bookmarks && bookmarks.length > 0"
             class="style-4">{{ $t('bookmarks') }}</h3>
-          <ul
-            v-if="bookmarks && bookmarks.length > 0"
-            class="list">
-            <li
-              v-for="bookmark in bookmarks"
-              :key="bookmark.id">
-              <button
-                class="bookmark"
-                @click="toBookmark(bookmark)">
-                <i class="material-icons">bookmark_outline</i>
-                {{ bookmark.title }}
-              </button>
-              <button @click="deleteBookmark(bookmark.id)">
-                <i class="material-icons">remove_circle_outline</i>
-              </button>
-            </li>
-          </ul>
+          <nav v-if="bookmarks && bookmarks.length > 0">
+            <ul>
+              <li
+                v-for="bookmark in bookmarks"
+                :key="bookmark.id"
+                class="bookmark">
+                <button
+                  class="no-wrap"
+                  @click="toBookmark(bookmark)">
+                <i class="material-icons icon">bookmark_outline</i>{{ bookmark.title }}</button>
+                <button @click="deleteBookmark(bookmark.id)">
+                  <i class="material-icons">remove_circle_outline</i>
+                </button>
+              </li>
+            </ul>
+          </nav>
         </section>
-        <section
-          :class="{userMenuActive: userMenuActive}"
-          class="user-menu"
-          @mouseenter="toggleUserMenu(true)"
-          @mouseleave="toggleUserMenu(false, 500)">
+        <section class="user-menu">
           <header>
             <button @click="toggleUserMenu()">
               <v-avatar
@@ -84,13 +89,13 @@
               <ul>
                 <li class="warning">
                   <router-link to="/settings">
-                    <i class="material-icons">settings</i>
+                    <i class="material-icons icon">settings</i>
                     {{ $t('admin_settings') }}
                   </router-link>
                 </li>
                 <li>
                   <a href="https://getdirectus.com">
-                    <i class="material-icons">help</i>
+                    <i class="material-icons icon">help</i>
                     {{ $t('help_and_docs') }}
                   </a>
                 </li>
@@ -100,13 +105,13 @@
               <ul>
                 <li>
                   <router-link to="/files">
-                    <i class="material-icons">collections</i>
+                    <i class="material-icons icon">collections</i>
                     {{ $t('file_library') }}
                   </router-link>
                 </li>
                 <li>
                   <router-link to="/users">
-                    <i class="material-icons">person</i>
+                    <i class="material-icons icon">person</i>
                     {{ $t('user_directory') }}
                   </router-link>
                 </li>
@@ -116,21 +121,21 @@
               <ul>
                 <li>
                   <router-link to="/activity">
-                    <i class="material-icons">notifications</i>
+                    <i class="material-icons icon">notifications</i>
                     {{ $t('activity') }}
                   </router-link>
                 </li>
                 <li>
                   <router-link :to="`/users/${currentUserID}`">
-                    <i class="material-icons">person</i>
+                    <i class="material-icons icon">person</i>
                     {{ $t('my_profile') }}
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/logout">
-                    <i class="material-icons">exit_to_app</i>
+                  <button @click="signOutActive = true">
+                    <i class="material-icons icon">exit_to_app</i>
                     {{ $t('sign_out') }}
-                  </router-link>
+                  </button>
                 </li>
               </ul>
             </nav>
@@ -159,9 +164,8 @@ export default {
   },
   data() {
     return {
-      userMenuActive: false,
-      timeout: null,
       projectSwitcherActive: false,
+      signOutActive: false,
     };
   },
   computed: {
@@ -204,16 +208,6 @@ export default {
     },
   },
   methods: {
-    toggleUserMenu(active = !this.userMenuActive, delay = false) {
-      if (delay) {
-        this.timeout = setTimeout(() => {
-          this.userMenuActive = active;
-        }, delay);
-      } else {
-        clearTimeout(this.timeout);
-        this.userMenuActive = active;
-      }
-    },
     logout() {
       this.$store.dispatch('logout');
     },
@@ -281,27 +275,26 @@ aside {
 
 h3 {
   margin-bottom: 10px;
+  margin-top: 15px;
 }
 
-i, svg {
-  vertical-align: -4px;
-  display: inline-block;
-  width: 15px;
-  margin-right: 10px;
-}
-
-i {
+.icon {
   font-size: 18px;
+  width: 15px;
+  height: 18px;
+  margin-right: 15px;
   color: var(--light-gray);
-}
-
-svg {
   fill: var(--light-gray);
+
+  /* Forces left-alignment of material-icons */
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  vertical-align: -4px;
 }
 
 a {
   text-decoration: none;
-  padding: 5px 0;
   display: block;
   position: relative;
 }
@@ -312,7 +305,8 @@ a, i, svg {
 
 a:hover,
 .router-link-exact-active,
-.bookmark:hover {
+.bookmark button:first-child:hover,
+.user-menu button:hover {
   color: var(--primary);
   i, svg {
     color: var(--primary);
@@ -335,9 +329,13 @@ ul {
   padding: 0;
 }
 
-.list:not(:last-child) {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+nav > ul > li > * {
+  padding: 5px 0;
+}
+
+nav:not(:last-child) {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
   border-bottom: 1px solid var(--lightest-gray);
 }
 
@@ -369,7 +367,7 @@ ul {
   display: flex;
   align-items: center;
   color: var(--primary);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   svg {
     fill: var(--primary);
@@ -386,6 +384,39 @@ ul {
   }
 }
 
+.bookmark {
+  display: flex;
+  align-items: center;
+
+  > * {
+    display: block;
+  }
+
+  & button:first-child {
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  & button:last-child {
+    opacity: 0;
+    transition: opacity var(--fast) var(--transition);
+
+    i {
+      font-size: 18px;
+      vertical-align: baseline;
+      color: var(--lighter-gray);
+    }
+
+    &:hover i {
+      color: var(--danger);
+    }
+  }
+
+  &:hover button:last-child {
+    opacity: 1;
+  }
+}
+
 .user-menu {
   position: absolute;
   left: 0;
@@ -395,9 +426,9 @@ ul {
   transition: transform var(--medium) var(--transition-out);
   will-change: transform;
 
-  &.userMenuActive,
-  &:focus,
-  &:focus-within {
+  &:hover,
+  .user-is-tabbing &:focus,
+  .user-is-tabbing &:focus-within {
     transform: translateY(0);
     transition: transform var(--slow) var(--transition-in);
   }

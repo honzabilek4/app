@@ -6,7 +6,18 @@
   <div
     v-else
     class="directus">
-    <div v-if="!hydrating">
+
+    <loader
+      v-if="hydrating"
+      area="full-page" />
+
+    <div v-else-if="hydratingError">
+      Oops... something went terribly wrong. Please try refreshing the page.
+
+      <pre>{{ hydratingError }}</pre>
+    </div>
+
+    <div v-else>
       <header-bar
         :show-info-button="infoSidebarHasContent"
         @toggleNav="toggleNav"
@@ -46,15 +57,13 @@
             @click="keepEditing">{{ $t('keep_editing') }}</v-button>
         </template>
       </v-modal>
+
     </div>
 
     <notifications
       position="bottom right"
       classes="directus-notification" />
 
-    <loader
-      v-if="hydrating"
-      area="full-page" />
   </div>
 </template>
 
@@ -88,6 +97,9 @@ export default {
     },
     hydrating() {
       return this.$store.state.hydrating;
+    },
+    hydratingError() {
+      return this.$store.state.hydratingError;
     },
     unsavedChanges() {
       return this.$route.query.editing === true;

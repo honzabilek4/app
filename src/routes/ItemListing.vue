@@ -2,9 +2,6 @@
   <div class="item-listing">
     <portal to="header-title">
       <h1 class="style-1"><breadcrumb :links="links" /></h1>
-      <div
-        v-if="currentBookmark"
-        class="bookmark-name">({{ currentBookmark.title }})</div>
       <button
         :class="currentBookmark ? 'active' : null"
         :disabled="currentBookmark"
@@ -14,6 +11,9 @@
           {{ currentBookmark ? 'bookmark' : 'bookmark_border' }}
         </i>
       </button>
+      <div
+        v-if="currentBookmark"
+        class="bookmark-name no-wrap">({{ currentBookmark.title }})</div>
     </portal>
 
     <portal to="header-custom">
@@ -302,6 +302,14 @@ export default {
       return this.$api.getItems(this.collection, this.itemParams)
         .then(res => res.data)
         .then((items) => {
+          if (this.collection === 'directus_users' || this.collection === 'directus_files') {
+            this.items = items.map(item => ({
+              ...item,
+              __link__: `/${this.collection.substring(9)}/${item[this.primaryKeyField]}`,
+            }));
+            return;
+          }
+
           this.items = items.map(item => ({
             ...item,
             __link__: `/collections/${this.collection}/${item[this.primaryKeyField]}`,
@@ -414,7 +422,12 @@ export default {
 }
 
 .bookmark-name {
-  color: var(--gray);
-  margin-left: 10px;
+  color: var(--primary);
+  margin-left: 5px;
+  margin-top: 3px;
+  font-size: 0.77em;
+  line-height: 1.1;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 </style>

@@ -7,19 +7,19 @@ export function signalStrength(state) { // eslint-disable-line
 
   lastLatency = lastLatency.latency;
 
-  if (lastLatency > 0 && lastLatency < 100) {
+  if (lastLatency > 0 && lastLatency < 200) {
     return 4;
   }
 
-  if (lastLatency >= 100 && lastLatency < 150) {
+  if (lastLatency >= 200 && lastLatency < 500) {
     return 3;
   }
 
-  if (lastLatency >= 150 && lastLatency < 200) {
+  if (lastLatency >= 500 && lastLatency < 1000) {
     return 2;
   }
 
-  if (lastLatency >= 200) {
+  if (lastLatency >= 1000) {
     return 1;
   }
 
