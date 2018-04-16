@@ -1,9 +1,12 @@
 <template>
   <details
     :open="open"
+    :class="type"
     class="v-details">
     <summary>{{ title }}</summary>
-    <slot />
+    <div class="content">
+      <slot />
+    </div>
   </details>
 </template>
 
@@ -19,6 +22,13 @@ export default {
       type: Boolean,
       default: false,
     },
+    type: {
+      type: String,
+      default: 'group',
+      validator(val) {
+        return ['group', 'break'].includes(val);
+      },
+    },
   },
 };
 </script>
@@ -26,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 .v-details {
   width: 100%;
-  margin: 10px 0 40px;
+  margin-bottom: 20px;
 
   summary {
     border-top: 1px solid var(--lighter-gray);
@@ -70,8 +80,30 @@ export default {
     }
   }
 
-  &[open] summary::after {
-    transform: rotate(-90deg);
+  &.group {
+    border: 1px solid var(--lighter-gray);
+    border-radius: 3px;
+
+    .content {
+      padding: 20px;
+    }
+
+    summary {
+      border: 0;
+      margin-bottom: 0;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  &[open] {
+    summary {
+      border-bottom: 1px solid var(--lighter-gray);
+    }
+
+    summary::after {
+      transform: rotate(-90deg);
+    }
   }
 }
 </style>

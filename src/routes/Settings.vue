@@ -4,6 +4,7 @@
 
     <v-details
       :title="$t('settings_interface')"
+      type="break"
       open>
 
       <nav>
@@ -43,6 +44,7 @@
 
     <v-details
       :title="$t('additional_info')"
+      type="break"
       open>
       <nav>
         <ul>
