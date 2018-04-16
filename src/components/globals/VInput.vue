@@ -8,6 +8,7 @@
       class="material-icons">{{ iconLeft }}</i>
     <input
       ref="input"
+      :class="{charactercount}"
       :type="type"
       :autocomplete="autocomplete"
       :max="max"
@@ -21,6 +22,7 @@
       :spellcheck="spellcheck"
       :value="value"
       :id="id"
+      @keydown="$emit('keydown', $event)"
       @input="$emit('input', $event.target.value)">
     <i
       v-if="iconRight"
@@ -184,7 +186,7 @@ export default {
     color: var(--gray);
   }
 
-  input:focus {
+  input.charactercount:focus {
     padding-right: 30px;
   }
 

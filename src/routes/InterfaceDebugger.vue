@@ -140,7 +140,7 @@ export default {
       required: false,
       loading: false,
       options: {},
-      width: 200,
+      width: 1000,
       newItem: false,
     };
   },

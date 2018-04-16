@@ -9,7 +9,7 @@
       @change="change($event.target.value)">
       <optgroup :label="$t('values')">
         <option
-          v-for="(key, value) in options"
+          v-for="(key, value) in parsedOptions"
           :key="key"
           :value="value"
         >{{ key }}</option>
@@ -27,7 +27,7 @@
       :value="value"
       @change="change($event.target.value)">
       <option
-        v-for="(key, value) in options"
+        v-for="(key, value) in parsedOptions"
         :key="key"
         :value="value"
       >{{ key }}</option>
@@ -48,7 +48,7 @@
       <span
         v-if="placeholder && !value"
         class="placeholder">{{ placeholder }}</span>
-      {{ options[value] }}
+      {{ parsedOptions[value] }}
     </div>
     <i class="material-icons chevron">arrow_drop_down</i>
   </div>
@@ -88,7 +88,7 @@ export default {
       default: '',
     },
     options: {
-      type: Object,
+      type: [Object, String],
       required: true,
     },
     placeholder: {
@@ -101,6 +101,15 @@ export default {
       otherActive: false,
       customValue: '',
     };
+  },
+  computed: {
+    parsedOptions() {
+      if (typeof this.options === 'string') {
+        return JSON.parse(this.options);
+      }
+
+      return this.options;
+    },
   },
   methods: {
     change(value) {
@@ -125,7 +134,6 @@ export default {
 .v-select {
   position: relative;
   margin: 10px 0;
-  max-width: 400px;
 
   select {
     position: absolute;

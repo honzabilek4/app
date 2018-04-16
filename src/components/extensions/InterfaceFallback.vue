@@ -16,3 +16,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.interface-fallback {
+  max-width: var(--width-normal);
+}
+</style>

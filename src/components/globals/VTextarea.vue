@@ -12,8 +12,10 @@
     :rows="rows"
     :spellcheck="spellcheck"
     :wrap="wrap"
+    :value="value"
     class="v-textarea"
-    @input="$emit('input', $event.target.value)" />
+    @keydown="$emit('keydown', $event.target.value)"
+    @input="$emit('input', $event.target.value)"/>
 </template>
 
 <script>
@@ -65,6 +67,10 @@ export default {
       default: null,
     },
     wrap: {
+      type: String,
+      default: null,
+    },
+    value: {
       type: String,
       default: null,
     },

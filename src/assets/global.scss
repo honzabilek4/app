@@ -33,14 +33,17 @@
   --medium: 200ms;
   --slow: 300ms;
 
-  --scale: 1.414;
-
   --input-border-width: 2px;
   --input-height: 3.077rem;
 
   --nav-sidebar-width: 15.4rem;
   --header-height: 4.62rem;
   --info-sidebar-width: 27.7rem;
+
+  --width-small: 200px;
+  --width-normal: 400px;
+  --width-large: 600px;
+  --width-x-large: 800px;
 }
 
 @font-face {
