@@ -47,6 +47,8 @@ export default {
   editing_item: 'Editing Item',
   email_address: 'Email Address',
   email: 'Email',
+  empty_collection: 'Empty Collection',
+  empty_collection_body: 'There are no items in this collection yet',
   enter_value: 'Enter Value',
   errors: {
     '-1': 'Couldn\'t reach API',
@@ -79,6 +81,8 @@ export default {
   no_related_entries: 'Has no related entries',
   not_between: 'Not between',
   not_contains: 'Does\'t contain',
+  no_results: 'No Results',
+  no_results_body: 'The current filters do not match any collection items',
   page_not_found: 'Page Not Found',
   page_not_found_body: 'The page you are looking for doesn\t seem to exist.',
   name_bookmark: 'What would you like to name this bookmark?',

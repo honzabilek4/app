@@ -1,5 +1,7 @@
 <template>
-  <div class="item-listing">
+  <div
+    :class="{ 'no-results': noResults || emptyCollection }"
+    class="item-listing">
     <portal to="header-title">
       <h1 class="style-1"><breadcrumb :links="links" /></h1>
       <button
@@ -74,8 +76,20 @@
       />
     </portal>
 
+    <v-error
+      v-if="!hydrating && noResults"
+      :title="$t('no_results')"
+      :body="$t('no_results_body')"
+      icon="search" />
+
+    <v-error
+      v-if="!hydrating && emptyCollection"
+      :title="$t('empty_collection')"
+      :body="$t('empty_collection_body')"
+      icon="web_asset" />
+
     <listing-extension
-      v-if="!hydrating"
+      v-else-if="!hydrating && !noResults && items.length > 0"
       :id="viewType"
       :primary-key-field="primaryKeyField"
       :fields="fields"
@@ -104,11 +118,12 @@
 <script>
 import formatFilters from '../helpers/format-filters';
 import SearchFilter from '../components/SearchFilter.vue';
+import VError from '../components/VError.vue';
 
 export default {
   name: 'item-listing',
   components: {
-    SearchFilter,
+    SearchFilter, VError,
   },
   props: {
     collection: {
@@ -119,15 +134,29 @@ export default {
   data() {
     return {
       items: [],
+      meta: null,
       error: null,
       loading: false,
-      hydrating: false,
+      hydrating: true,
       selection: [],
       bookmarkTitle: '',
       bookmarkModal: false,
     };
   },
   computed: {
+    noResults() {
+      return (
+        this.meta &&
+        (this.meta.result_count !== null) &&
+        this.meta.result_count === 0 &&
+      this.meta.total_count !== 0) || false;
+    },
+    emptyCollection() {
+      return (
+        this.meta &&
+        (this.meta.total_count !== null) &&
+        this.meta.total_count === 0) || false;
+    },
     currentBookmark() {
       const bookmarks = this.$store.state.bookmarks.data;
       const preferences = {
@@ -208,6 +237,7 @@ export default {
     itemParams() {
       let params = {
         fields: '*.*', // by default, we fetch all items + 1 level of relational items
+        meta: 'result_count,total_count',
       };
 
       Object.assign(params, this.preferences.view_query || {});
@@ -275,6 +305,7 @@ export default {
       this.hydrating = true;
       this.error = null;
       this.items = [];
+      this.meta = null;
 
       Promise.all([
         this.$store.dispatch('getFields', this.collection),
@@ -300,7 +331,10 @@ export default {
       this.loading = true;
 
       return this.$api.getItems(this.collection, this.itemParams)
-        .then(res => res.data)
+        .then((res) => {
+          this.meta = res.meta;
+          return res.data;
+        })
         .then((items) => {
           if (this.collection === 'directus_users' || this.collection === 'directus_files') {
             this.items = items.map(item => ({
@@ -398,8 +432,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.item-listing {
+.item-listing:not(.no-results) {
   padding-bottom: var(--page-padding-bottom);
+}
+
+.no-results {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bookmark {
