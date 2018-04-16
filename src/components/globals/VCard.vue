@@ -12,9 +12,14 @@
         class="header">
 
         <img
-          v-if="src"
+          v-if="src && !error"
           :alt="title"
-          :src="src">
+          :src="src"
+          @error="onImageError">
+
+        <i
+          v-if="error"
+          class="material-icons error">broken_image</i>
 
         <i
           v-if="icon"
@@ -89,6 +94,11 @@ export default {
       default: null,
     },
   },
+  data() {
+    return {
+      error: null,
+    };
+  },
   computed: {
     wrapperTag() {
       if (this.to) {
@@ -107,6 +117,11 @@ export default {
       }
 
       return false;
+    },
+  },
+  methods: {
+    onImageError(error) {
+      this.error = error;
     },
   },
 };
@@ -195,15 +210,16 @@ export default {
     margin-bottom: 5px;
   }
 
-  .subtitle {
-  }
-
   .content {
     font-size: 11px;
     color: var(--gray);
     max-height: 114px; // 8 lines of text
     overflow: hidden;
     margin-top: 20px;
+  }
+
+  .error {
+    opacity: 0.5;
   }
 }
 </style>
