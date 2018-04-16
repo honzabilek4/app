@@ -284,9 +284,9 @@ export default {
 
 <style lang="scss" scoped>
 .edit {
-  padding: 20px;
+  padding: var(--page-padding);
+  padding-bottom: (--page-padding-bottom);
   position: relative;
-  height: 100%;
   width: 100%;
 }
 </style>

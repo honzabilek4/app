@@ -43,3 +43,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.collections {
+  padding-bottom: (--page-padding-bottom);
+}
+</style>

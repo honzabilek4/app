@@ -398,6 +398,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.item-listing {
+  padding-bottom: var(--page-padding-bottom);
+}
+
 .bookmark {
   margin-left: 10px;
   opacity: 0.4;

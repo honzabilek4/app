@@ -124,7 +124,7 @@ export default {
 
 <style lang="scss" scoped>
 .settings {
-  padding: 20px;
+  padding: var(--page-padding);
 }
 
 nav ul {

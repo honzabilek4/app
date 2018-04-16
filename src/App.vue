@@ -167,12 +167,11 @@ body:not(.public) {
 </style>
 
 <style lang="scss" scoped>
-.directus, .page-root, .directus > div:first-child {
+.directus, .directus > div:first-child, main {
   height: 100%;
 }
 
 main {
-  height: 100%;
   width: 100%;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
