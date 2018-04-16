@@ -356,6 +356,11 @@ export default {
   overflow: hidden;
 }
 
+.cell:not(.select) {
+  /* Visually align values with rows */
+  transform: translateY(-1px);
+}
+
 .cell:last-of-type {
   flex-grow: 1;
 }
