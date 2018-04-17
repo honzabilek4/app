@@ -290,7 +290,7 @@ h3 {
   display: inline-flex;
   justify-content: flex-end;
   align-items: center;
-  vertical-align: -4px;
+  vertical-align: -5px;
 }
 
 a {
