@@ -274,7 +274,7 @@ aside {
 }
 
 h3 {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-top: 15px;
 }
 
