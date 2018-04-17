@@ -81,10 +81,28 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 input {
   opacity: 0;
   position: absolute;
   z-index: -1;
 }
+
+label {
+  cursor: pointer;
+
+  i {
+    color: inherit;
+  }
+
+  &:hover i,
+  .user-is-tabbing &:focus i {
+    color: var(--primary);
+  }
+}
+
+input:checked + label {
+  color: var(--primary);
+}
+
 </style>

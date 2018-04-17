@@ -26,14 +26,10 @@
         <button
           v-if="sortable"
           :class="{ active: sortVal.field === field }"
-          class="sort style-4"
-          @click="updateSort(field)">
-          {{ name }}
-          <i
+          class="sort style-4 no-wrap"
+          @click="updateSort(field)">{{ name }}<i
             v-if="sortVal.field === field"
-            class="material-icons">
-            {{ sortVal.asc ? 'arrow_downward' : 'arrow_upward' }}
-          </i>
+            class="material-icons">{{ sortVal.asc ? 'arrow_downward' : 'arrow_upward' }}</i>
         </button>
 
         <span
@@ -301,6 +297,7 @@ export default {
   align-items: center;
   padding: 0 20px;
   border-bottom: 1px solid var(--lighter-gray);
+  box-sizing: content-box;
 }
 
 .toolbar {
@@ -329,6 +326,11 @@ export default {
   background-color: var(--lighter-gray);
   width: 1px;
   height: 60%;
+  transition: background-color var(--fast) var(--transition);
+}
+
+.drag-handle:hover .drag-handle-line {
+  background-color: var(--gray);
 }
 
 .toolbar:hover .drag-handle {
@@ -356,11 +358,7 @@ export default {
   padding-right: 20px;
   position: relative;
   overflow: hidden;
-}
-
-.cell:not(.select) {
-  /* Visually align values with rows */
-  transform: translateY(-1px);
+  min-width: 40px;
 }
 
 .cell:last-of-type {
@@ -382,6 +380,7 @@ export default {
   height: 100%;
   text-align: left;
   transition: color var(--fast) var(--transition);
+  position: relative;
 }
 
 .sort:hover {
@@ -390,12 +389,17 @@ export default {
 
 .sort > i {
   font-size: 12px;
-  vertical-align: -1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5px;
 }
 
 .select {
   flex-basis: 30px;
-  padding-right: 20px;
+  padding: 0;
+  margin-left: -3px; /* Shift to accomodate material design icons checkbox */
+  margin-right: 8px;
 }
 
 .row-move {
