@@ -12,6 +12,12 @@
         type="text"
         name="search"
         @input="searchInput">
+      <button
+        v-if="showClearButton"
+        class="clear"
+        @click="$emit('clearFilters')">
+        <i class="material-icons">close</i>
+      </button>
       <button @click="toggleForm($event.target.value)">
         <i class="material-icons">filter_list</i>
       </button>
@@ -113,6 +119,14 @@ export default {
         nhas: 'no_related_entries',
       };
     },
+    showClearButton() {
+      if (
+        (this.filters && this.filters.length > 0) ||
+        this.searchQuery
+      ) return true;
+
+      return false;
+    },
   },
   created() {
     this.searchInput = this.$lodash.debounce(this.searchInput, 300);
@@ -151,7 +165,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .search-filter {
   color: var(--darkest-gray);
   flex-basis: 300px;
@@ -193,7 +207,7 @@ i {
 
 .search button {
   position: absolute;
-  right: 0;
+  right: 10px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -202,6 +216,24 @@ i {
   background: transparent;
   border-radius: 0;
   top: 0;
+
+  i {
+    transition: color var(--fast) var(--transition);
+  }
+
+  &:hover i,
+  .user-is-tabbing &:focus i {
+    color: var(--primary);
+  }
+}
+
+.search button.clear {
+  right: 40px;
+
+  &:hover i,
+  .user-is-tabbing &:focus i {
+    color: var(--danger);
+  }
 }
 
 form {

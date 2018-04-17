@@ -26,6 +26,7 @@
         :fields="fieldNames"
         @filter="updateListingPreferences('filters', $event)"
         @search="updateListingPreferences('search_query', $event)"
+        @clearFilters="clearFilters"
       />
     </portal>
 
@@ -426,6 +427,11 @@ export default {
           this.bookmarkModal = false;
         })
         .catch(console.error);
+    },
+
+    clearFilters() {
+      this.updateListingPreferences('filters', null);
+      this.updateListingPreferences('search_query', null);
     },
   },
 };
