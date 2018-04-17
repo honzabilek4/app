@@ -24,6 +24,7 @@
         :filters="preferences.filters || []"
         :search-query="preferences.search_query || ''"
         :fields="fieldNames"
+        :placeholder="resultCopy"
         @filter="updateListingPreferences('filters', $event)"
         @search="updateListingPreferences('search_query', $event)"
         @clearFilters="clearFilters"
@@ -265,6 +266,16 @@ export default {
         this.fields,
         { interface: 'primary-key' },
       ).field;
+    },
+    resultCopy() {
+      if (!this.meta) return '';
+
+      const isFiltering = !this.$lodash.isEmpty(this.preferences.filters) ||
+        this.preferences.search_query != null;
+
+      return isFiltering ?
+        this.$tc('item_count_filter', this.meta.result_count, { count: this.meta.result_count }) :
+        this.$tc('item_count', this.meta.result_count, { count: this.meta.result_count });
     },
     viewType() {
       return this.preferences.view_type || 'tabular';

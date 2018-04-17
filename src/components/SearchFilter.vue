@@ -7,7 +7,7 @@
       <i class="material-icons">search</i>
       <input
         id="search"
-        :placeholder="$t('search')"
+        :placeholder="placeholder"
         :value="searchQuery"
         type="text"
         name="search"
@@ -89,6 +89,10 @@ export default {
     searchQuery: {
       type: String,
       default: '',
+    },
+    placeholder: {
+      type: String,
+      default: () => this.$t('search'),
     },
   },
   data() {
@@ -191,6 +195,10 @@ i {
   z-index: 5;
   position: relative;
   padding-left: 40px;
+
+  &::placeholder {
+    color: var(--light-gray);
+  }
 }
 
 .active .search input {
@@ -203,6 +211,7 @@ i {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
+  color: var(--light-gray);
 }
 
 .search button {
