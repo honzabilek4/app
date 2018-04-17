@@ -92,10 +92,10 @@
             }"
             class="cell">
             <div
-              v-if="$lodash.isEmpty(row[field])"
+              v-if="$lodash.isNil(row[field])"
               class="empty">--</div>
             <readonly-extension
-              v-else-if="useInterfaces && !$lodash.isEmpty(row[field])"
+              v-else-if="useInterfaces && !$lodash.isNil(row[field])"
               :id="fieldInfo.interface"
               :name="field"
               :type="fieldInfo.type"

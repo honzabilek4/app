@@ -15,7 +15,6 @@ export function getAllUserListingPreferences({ commit, getters }) {
       .then(res => res.data)
       .then((preferences) => {
         preferences.forEach((preference) => {
-          console.log(preference, preference.collection);
           commit(SET_PREFERENCES, { collection: preference.collection, preferences: preference });
         });
         resolve();
