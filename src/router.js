@@ -4,7 +4,9 @@ import api from './api';
 import store from './store';
 import Collections from './routes/Collections.vue';
 import ItemListing from './routes/ItemListing.vue';
+import ItemListingGuard from './routes/ItemListingGuard.vue';
 import Edit from './routes/Edit.vue';
+import EditGuard from './routes/EditGuard.vue';
 import Login from './routes/Login.vue';
 import NotFound from './routes/NotFound.vue';
 import Interfaces from './routes/Interfaces.vue';
@@ -29,12 +31,12 @@ const router = new Router({
     {
       path: '/collections/:collection',
       props: true,
-      component: ItemListing,
+      component: ItemListingGuard,
     },
     {
       path: '/collections/:collection/:primaryKey',
       props: true,
-      component: Edit,
+      component: EditGuard,
     },
     {
       path: '/files',
