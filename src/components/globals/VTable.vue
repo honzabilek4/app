@@ -90,10 +90,12 @@
                 widths[field] + 'px' :
                 null
             }"
-            class="cell"
-          >
+            class="cell">
+            <div
+              v-if="$lodash.isEmpty(row[field])"
+              class="empty">--</div>
             <readonly-extension
-              v-if="useInterfaces"
+              v-else-if="useInterfaces && !$lodash.isEmpty(row[field])"
               :id="fieldInfo.interface"
               :name="field"
               :type="fieldInfo.type"
@@ -363,6 +365,10 @@ export default {
 
 .cell:last-of-type {
   flex-grow: 1;
+}
+
+.empty {
+  color: var(--lighter-gray);
 }
 
 .toolbar .cell:not(.select) {
