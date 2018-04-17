@@ -46,6 +46,9 @@ export const STORE_HYDRATED = '🏪 Store Hydrated';
 export const HYDRATING_FAILED = '🏪❌ Store Hydration Failed';
 
 // Listing Preferences
+export const PREFERENCES_ALL_PENDING = '👀 Fetching All User Listing Preferences...';
+export const PREFERENCES_ALL_SUCCESS = '👀✅ Listing All User Preferences Successful';
+export const PREFERENCES_ALL_FAILED = '👀❌ Listing All User Preferences Failed';
 export const PREFERENCES_PENDING = '👀 Fetching Listing Preferences...';
 export const PREFERENCES_SUCCESS = '👀✅ Listing Preferences Successful';
 export const PREFERENCES_FAILED = '👀❌ Listing Preferences Failed';

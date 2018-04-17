@@ -1,5 +1,6 @@
 import * as actions from './actions';
 import mutations from './mutations';
+import * as getters from './getters';
 
 const state = {
   token: null,
@@ -14,4 +15,5 @@ export default {
   state,
   actions,
   mutations,
+  getters,
 };

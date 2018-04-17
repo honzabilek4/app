@@ -6,6 +6,24 @@ import {
   SET_PREFERENCES,
 } from '../../mutation-types';
 
+export function getAllUserListingPreferences({ commit, getters }) {
+  return new Promise((resolve, reject) => {
+    api.getItems('directus_collection_presets', {
+      'filter[title][null]': 1,
+      'filter[user][eq]': getters.tokenPayload.id,
+    })
+      .then(res => res.data)
+      .then((preferences) => {
+        preferences.forEach((preference) => {
+          console.log(preference, preference.collection);
+          commit(SET_PREFERENCES, { collection: preference.collection, preferences: preference });
+        });
+        resolve();
+      })
+      .catch(reject);
+  });
+}
+
 export function getListingPreferences({ commit }, collection) {
   commit(PREFERENCES_PENDING, collection);
 

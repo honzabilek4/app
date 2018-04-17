@@ -32,6 +32,14 @@ const mutations = {
   },
 
   [SET_PREFERENCES](state, { collection, preferences }) {
+    if (isEmpty(state[collection])) {
+      Vue.set(state, collection, {
+        data: null,
+        error: null,
+        loading: false,
+      });
+    }
+
     Vue.set(state[collection], 'data', preferences);
   },
 };

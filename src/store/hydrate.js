@@ -8,6 +8,7 @@ import { startPolling } from './polling';
 export default function hydrateStore() {
   return Promise.all([
     store.dispatch('latency'),
+    store.dispatch('getAllUserListingPreferences'),
     store.dispatch('getCollections'),
     store.dispatch('getMe'),
     store.dispatch('getSettings'),
