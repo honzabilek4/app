@@ -23,6 +23,7 @@
 
         <i
           v-if="icon"
+          :class="{ 'half-opacity': opacity === 'half' }"
           class="material-icons">{{ icon }}</i>
 
         <div
@@ -92,6 +93,13 @@ export default {
     label: {
       type: String,
       default: null,
+    },
+    opacity: {
+      type: String,
+      default: 'full',
+      validator(val) {
+        return ['full', 'half'].includes(val);
+      },
     },
   },
   data() {
@@ -219,6 +227,10 @@ export default {
   }
 
   .error {
+    opacity: 0.5;
+  }
+
+  .half-opacity {
     opacity: 0.5;
   }
 }
