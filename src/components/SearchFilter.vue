@@ -369,6 +369,27 @@ export default {
       &:hover, .user-is-tabbing &:focus {
         color: var(--primary);
       }
+
+      &::after {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: var(--warning);
+        border-radius: 50%;
+        position: absolute;
+        top: 5%;
+        right: 5%;
+        border: 1px solid var(--white);
+        transform: scale(0);
+        transition: transform var(--fast) var(--transition-out);
+      }
+
+      &.has-filters {
+        &::after {
+          transform: scale(1);
+        }
+      }
     }
 
     .clear-filters {
