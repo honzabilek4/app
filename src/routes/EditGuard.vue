@@ -57,6 +57,11 @@ export default {
   },
   methods: {
     checkExistence() {
+      if (this.primaryKey === '+') {
+        this.exists = true;
+        return;
+      }
+
       this.exists = null;
       this.loading = true;
 
