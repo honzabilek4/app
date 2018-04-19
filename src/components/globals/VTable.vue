@@ -63,6 +63,7 @@
           v-for="row in items"
           :key="row[primaryKeyField]"
           :style="{ height: rowHeight + 'px' }"
+          :class="{ selected: selection.includes(row[primaryKeyField])}"
           class="link row"
           tabindex="0"
           role="link"
@@ -346,6 +347,10 @@ export default {
 .row.link:hover {
   background-color: #f5fafd;
   cursor: pointer;
+}
+
+.row.selected {
+  background-color: #f5fafd;
 }
 
 .sort.active {
