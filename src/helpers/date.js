@@ -13,10 +13,10 @@ function sqlToDate(sqlDate) {
  * @param  {Date} date JavaScript Date date
  * @return {String}    SQL datetime string YYYY-MM-DD HH:MM:SS
  */
-function dateToSQl(date) {
+function dateToSql(date) {
   return date.toISOString().slice(0, 19).replace('T', ' ');
 }
 
 export default {
-  sqlToDate, dateToSQl,
+  sqlToDate, dateToSql,
 };

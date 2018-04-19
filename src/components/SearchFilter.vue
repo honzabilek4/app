@@ -24,7 +24,9 @@
           v-show="hasFilters"
           :class="{ 'has-filters': hasFilters }"
           class="clear-filters"
-          @click="$emit('clearFilters')"><i class="material-icons">close</i></button>
+          @click="clearFilters">
+          <i class="material-icons">close</i>
+        </button>
       </transition>
       <button
         :class="{ 'has-filters': hasFilters }"
@@ -192,6 +194,10 @@ export default {
       filters.splice(index, 1);
 
       this.$emit('filter', filters);
+    },
+    clearFilters() {
+      this.$emit('clearFilters');
+      this.open = !this.open;
     },
   },
 };
