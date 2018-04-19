@@ -39,6 +39,8 @@
           @click="toggleInfo(false)" />
         <info-sidebar
           v-show="infoSidebarHasContent && infoActive"
+          :class="$route.meta && $route.meta.infoSidebarWidth"
+          class="info-sidebar"
           @close="toggleInfo(false)" />
       </main>
 
@@ -112,10 +114,14 @@ export default {
       this.infoActive = false;
     },
     infoActive(visible) {
+      const className = this.$route.meta && this.$route.meta.infoSidebarWidth === 'wide' ?
+        'info-wide-active' :
+        'info-active';
+
       if (visible) {
-        document.body.classList.add('info-active');
+        document.body.classList.add(className);
       } else {
-        document.body.classList.remove('info-active');
+        document.body.classList.remove(className);
       }
     },
   },
@@ -160,6 +166,11 @@ body:not(.public) {
 
     &.info-active {
       transition: padding-right var(--slow) var(--transition-in);
+      padding-right: var(--nav-sidebar-width);
+    }
+
+    &.info-wide-active {
+      transition: padding-right var(--slow) var(--transition-in);
       padding-right: var(--info-sidebar-width);
     }
   }
@@ -175,5 +186,13 @@ main {
   width: 100%;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.info-sidebar {
+  max-width: var(--nav-sidebar-width);
+}
+
+.info-sidebar.wide {
+  max-width: var(--info-sidebar-width);
 }
 </style>

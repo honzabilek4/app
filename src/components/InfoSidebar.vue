@@ -42,8 +42,7 @@ export default {
   height: calc(100% - var(--header-height));
   z-index: 10;
   transition: var(--slow) var(--transition-out);
-  width: 100%;
-  max-width: var(--info-sidebar-width);
+  width: 90%;
   background-color: var(--white);
   border-left: 1px solid var(--lightest-gray);
   padding: 20px;

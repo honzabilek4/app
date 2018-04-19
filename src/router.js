@@ -37,6 +37,18 @@ const router = new Router({
       path: '/collections/:collection/:primaryKey',
       props: true,
       component: EditGuard,
+      meta: {
+        /* NOTE:
+         * Hi there! I'm not too pleased with this solution of 'hacking' the infoSidebar
+         *   to be wide on certain pages, but I didn't want to add a third sidebar either..
+         *
+         * This'll do fine for the time being, but if you can think of a better way;
+         *   please let me know!
+         *
+         * ~ Rijk
+         */
+        infoSidebarWidth: 'wide',
+      },
     },
     {
       path: '/files',
@@ -54,6 +66,9 @@ const router = new Router({
         };
       },
       component: Edit,
+      meta: {
+        infoSidebarWidth: 'wide',
+      },
     },
     {
       path: '/users',
@@ -71,6 +86,9 @@ const router = new Router({
         };
       },
       component: Edit,
+      meta: {
+        infoSidebarWidth: 'wide',
+      },
     },
     {
       path: '/debug',
