@@ -196,6 +196,7 @@ export default {
     top: 50%;
     color: var(--light-gray);
     transform: translateY(-50%);
+    font-size: 18px;
   }
 
   i.chevron {
@@ -206,7 +207,7 @@ export default {
 
   &.icon {
     .value {
-      padding-left: 40px;
+      padding-left: 33px;
     }
 
     input {
