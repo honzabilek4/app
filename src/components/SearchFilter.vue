@@ -49,45 +49,44 @@
             @input="search" />
         </div>
 
-        <form @submit.prevent>
-          <div
-            v-for="(filter, i) in filters"
-            :key="i"
-            class="field">
-            <invisible-label :html-for="`filter-${i}`">
-              {{ fields[filter.field] }} {{ operators[filter.operator] }}
-            </invisible-label>
-            <div class="name">
-              <p>{{ fields[filter.field] }}</p>
-              <span>
-                {{ $t(operators[filter.operator]) }}
-                <i class="material-icons">arrow_drop_down</i>
-                <select @change="updateFilter(i, 'operator', $event.target.value)">
-                  <option
-                    v-for="(name, operator) in operators"
-                    :key="operator"
-                    :value="operator">{{ $t(name) }}</option>
-                </select>
-              </span>
-              <button
-                class="remove"
-                @click="deleteFilter(i)">{{ $t('remove') }}</button>
-            </div>
-            <v-input
-              :id="`filter-${i}`"
-              type="text"
-              @input="updateFilter(i, 'value', $event)" />
+        <div
+          v-for="(filter, i) in filters"
+          :key="i"
+          class="field">
+          <invisible-label :html-for="`filter-${i}`">
+            {{ fields[filter.field] }} {{ operators[filter.operator] }}
+          </invisible-label>
+          <div class="name">
+            <p>{{ fields[filter.field] }}</p>
+            <span>
+              {{ $t(operators[filter.operator]) }}
+              <i class="material-icons">arrow_drop_down</i>
+              <select @change="updateFilter(i, 'operator', $event.target.value)">
+                <option
+                  v-for="(name, operator) in operators"
+                  :key="operator"
+                  :value="operator">{{ $t(name) }}</option>
+              </select>
+            </span>
+            <button
+              class="remove"
+              @click="deleteFilter(i)">{{ $t('remove') }}</button>
           </div>
+          <v-input
+            :id="`filter-${i}`"
+            type="text"
+            @input="updateFilter(i, 'value', $event)" />
+        </div>
 
-          <div class="field">
-            <invisible-label html-for="add">{{ $t('add_field_filter') }}</invisible-label>
-            <v-select
-              id="add"
-              :placeholder="$t('add_field_filter')"
-              :options="fields"
-              @input="addFilter" />
-          </div>
-        </form>
+        <div class="field">
+          <invisible-label html-for="add">{{ $t('add_field_filter') }}</invisible-label>
+          <v-select
+            id="add"
+            :placeholder="$t('add_field_filter')"
+            :options="fields"
+            default-value
+            @input="addFilter" />
+        </div>
       </div>
     </transition>
 
@@ -197,7 +196,7 @@ export default {
     },
     clearFilters() {
       this.$emit('clearFilters');
-      this.open = !this.open;
+      if (this.open) this.open = false;
     },
   },
 };

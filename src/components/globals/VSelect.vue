@@ -23,13 +23,21 @@
     </select>
     <select
       v-else
+      ref="select"
       :id="otherActive ? null : id"
       :value="value"
       @change="change($event.target.value)">
       <option
-        v-for="(key, value) in parsedOptions"
+        ref="default"
+        selected
+        disabled
+        value="">
+        {{ placeholder }}
+      </option>
+      <option
+        v-for="(key, optionValue) in parsedOptions"
         :key="key"
-        :value="value"
+        :value="optionValue"
       >{{ key }}</option>
     </select>
     <input
@@ -95,6 +103,11 @@ export default {
       type: String,
       default: '',
     },
+
+    defaultValue: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -121,6 +134,11 @@ export default {
 
       this.otherActive = false;
       this.$emit('input', value);
+
+      if (this.defaultValue === true) {
+        this.$refs.default.setAttribute('selected', 'selected');
+        this.$refs.select.value = '';
+      }
     },
     changeCustom(event) {
       this.customValue = event.target.value;
