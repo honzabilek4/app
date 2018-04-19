@@ -63,7 +63,7 @@
           v-for="row in items"
           :key="row[primaryKeyField]"
           :style="{ height: rowHeight + 'px' }"
-          :class="{ selected: selection.includes(row[primaryKeyField])}"
+          :class="{ selected: selection && selection.includes(row[primaryKeyField])}"
           class="link row"
           tabindex="0"
           role="link"
