@@ -1,5 +1,14 @@
 <template>
-  <div class="breadcrumb">
+  <div
+    v-if="$mq === 'small'"
+    class="breadcrumb">
+    <span
+      :class="lastLink.color ? lastLink.color : null"
+      class="current">{{ lastLink.name }}</span>
+  </div>
+  <div
+    v-else
+    class="breadcrumb">
     <span
       v-for="(link, index) in _links"
       :key="index">
@@ -48,6 +57,9 @@ export default {
           path: url,
         };
       });
+    },
+    lastLink() {
+      return this._links[this._links.length - 1]; // eslint-disable-line no-underscore-dangle
     },
   },
 };
