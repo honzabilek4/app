@@ -106,7 +106,7 @@ export default {
 
   .field,
   .group {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   .group {
