@@ -1,82 +1,110 @@
 <template>
   <div
-    :class="{ active }"
+    :class="{ full, open }"
     class="search-filter">
-    <div class="search">
-      <invisible-label html-for="search">{{ $t('search') }}</invisible-label>
+    <header-button
+      v-if="!full"
+      :seek-attention="hasFilters"
+      icon="filter_list"
+      @click="open = !open">Filter</header-button>
+
+    <div
+      v-if="full"
+      class="wrapper">
       <i class="material-icons">search</i>
       <input
-        id="search"
         :placeholder="placeholder"
         :value="searchQuery"
-        type="text"
-        name="search"
-        @input="searchInput">
+        :class="{ 'has-filters': hasFilters }"
+        class="search"
+        type="search"
+        @input="search($event.target.value)">
+      <transition name="fade">
+        <button
+          v-show="hasFilters"
+          :class="{ 'has-filters': hasFilters }"
+          class="clear-filters"
+          @click="$emit('clearFilters')"><i class="material-icons">close</i></button>
+      </transition>
       <button
-        v-if="showClearButton"
-        class="clear"
-        @click="$emit('clearFilters')">
-        <i class="material-icons">close</i>
-      </button>
-      <button @click="toggleForm($event.target.value)">
-        <i class="material-icons">filter_list</i>
-      </button>
+        :class="{ 'has-filters': hasFilters }"
+        class="toggle"
+        @click="open = !open"><i class="material-icons">filter_list</i></button>
     </div>
-    <form
-      v-if="active"
-      @submit.prevent>
-      <fieldset
-        v-for="(filter, index) in filters"
-        :key="index">
-        <div>
-          <label>
-            {{ $t('field') }}
-            <select
-              :value="filter.field"
-              @change="updateFilter(index, 'field', $event.target.value)">
-              <option
-                disabled
-                selected>{{ $t('choose_one') }}</option>
-              <option
-                v-for="(key, value) in fields"
-                :value="value"
-                :key="key">{{ key }}</option>
-            </select>
-          </label>
-          <label>
-            {{ $t('operator') }}
-            <select
-              :value="filter.operator"
-              @change="updateFilter(index, 'operator', $event.target.value)">
-              <option
-                disabled
-                selected>{{ $t('choose_one') }}</option>
-              <option
-                v-for="(key, value) in operators"
-                :key="key"
-                :value="value">
-                {{ $t(key) }}
-              </option>
-            </select>
-          </label>
-          <label>
-            {{ $t('value') }}
-            <input
-              :value="filter.value"
-              type="text"
-              @input="updateFilter(index, 'value', $event.target.value)">
-          </label>
-          <button @click="deleteFilter(index)">Delete</button>
+
+    <transition name="slide">
+      <div
+        v-show="open"
+        class="dropdown">
+        <div
+          v-if="!full"
+          class="field">
+          <v-input
+            :placeholder="placeholder"
+            :value="searchQuery"
+            type="search"
+            icon-left="search"
+            @input="search" />
         </div>
-      </fieldset>
-      <button @click="addNew">{{ $t('add_new') }}</button>
-    </form>
+
+        <form @submit.prevent>
+          <div
+            v-for="(filter, i) in filters"
+            :key="i"
+            class="field">
+            <invisible-label :html-for="`filter-${i}`">
+              {{ fields[filter.field] }} {{ operators[filter.operator] }}
+            </invisible-label>
+            <div class="name">
+              <p>{{ fields[filter.field] }}</p>
+              <span>
+                {{ $t(operators[filter.operator]) }}
+                <i class="material-icons">arrow_drop_down</i>
+                <select @change="updateFilter(i, 'operator', $event.target.value)">
+                  <option
+                    v-for="(name, operator) in operators"
+                    :key="operator"
+                    :value="operator">{{ $t(name) }}</option>
+                </select>
+              </span>
+              <button
+                class="remove"
+                @click="deleteFilter(i)">{{ $t('remove') }}</button>
+            </div>
+            <v-input
+              :id="`filter-${i}`"
+              type="text"
+              @input="updateFilter(i, 'value', $event)" />
+          </div>
+
+          <div class="field">
+            <invisible-label html-for="add">{{ $t('add_field_filter') }}</invisible-label>
+            <v-select
+              id="add"
+              :placeholder="$t('add_field_filter')"
+              :options="fields"
+              @input="addFilter" />
+          </div>
+        </form>
+      </div>
+    </transition>
+
+    <v-blocker
+      v-if="!full && open"
+      :z-index="18"
+      class="blocker"
+      @click="open = !open" />
   </div>
 </template>
 
 <script>
+import VBlocker from './VBlocker.vue';
+
 export default {
   name: 'search-filter',
+  components: {
+    VBlocker,
+  },
   props: {
     fields: {
       type: Object,
@@ -97,7 +125,7 @@ export default {
   },
   data() {
     return {
-      active: false,
+      open: true,
     };
   },
   computed: {
@@ -123,7 +151,7 @@ export default {
         nhas: 'no_related_entries',
       };
     },
-    showClearButton() {
+    hasFilters() {
       if (
         (this.filters && this.filters.length > 0) ||
         this.searchQuery
@@ -131,28 +159,31 @@ export default {
 
       return false;
     },
+    full() {
+      return this.$mq === 'extraLarge';
+    },
   },
   created() {
-    this.searchInput = this.$lodash.debounce(this.searchInput, 300);
+    this.search = this.$lodash.debounce(this.search, 300);
     this.updateFilter = this.$lodash.debounce(this.updateFilter, 300);
   },
   methods: {
-    searchInput(event) {
-      this.$emit('search', event.target.value);
+    search(value) {
+      this.$emit('search', value);
     },
-    addNew() {
+    addFilter(field) {
       this.$emit('filter', [
         ...this.filters,
         {
-          field: '',
-          operator: '',
+          field,
+          operator: 'eq',
           value: '',
         },
       ]);
     },
-    updateFilter(index, field, value) {
+    updateFilter(index, key, value) {
       const filters = this.$lodash.cloneDeep(this.filters);
-      filters[index][field] = value;
+      filters[index][key] = value;
 
       this.$emit('filter', filters);
     },
@@ -162,103 +193,216 @@ export default {
 
       this.$emit('filter', filters);
     },
-    toggleForm() {
-      this.active = !this.active;
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.search-filter {
-  color: var(--darkest-gray);
-  flex-basis: 300px;
-  position: relative;
-}
-
-i {
-  color: var(--gray);
-  position: relative;
-  z-index: 10;
-}
-
-.search {
-  position: relative;
-  width: 100%;
-}
-
-.search input {
-  height: var(--input-height);
-  border-radius: var(--border-radius);
-  border: none;
-  width: 100%;
-  z-index: 5;
-  position: relative;
-  padding-left: 40px;
-
-  &::placeholder {
-    color: var(--light-gray);
-  }
-}
-
-.active .search input {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.search > i {
+.dropdown {
   position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--light-gray);
-}
-
-.search button {
-  position: absolute;
-  right: 10px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background: transparent;
-  border-radius: 0;
-  top: 0;
-
-  i {
-    transition: color var(--fast) var(--transition);
-  }
-
-  &:hover i,
-  .user-is-tabbing &:focus i {
-    color: var(--primary);
-  }
-}
-
-.search button.clear {
-  right: 40px;
-
-  &:hover i,
-  .user-is-tabbing &:focus i {
-    color: var(--danger);
-  }
-}
-
-form {
-  position: absolute;
+  top: var(--header-height);
   background-color: white;
-  border-top: 1px solid var(--light-gray);
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
-  right: 0;
   width: 100%;
+  left: 0;
+  z-index: 19;
+  padding: 20px;
+  color: var(--darkest-gray);
+  transform-origin: top;
+  box-shadow: var(--box-shadow);
 }
 
-fieldset {
-  border: 0;
+.blocker {
+  top: var(--header-height) !important;
 }
 
-form input, form select {
-  display: block;
+.field:not(:last-child) {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--lighter-gray);
+
+  .name {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: var(--dark-gray);
+    font-weight: 700;
+
+    span {
+      position: relative;
+      color: var(--primary);
+      margin-left: 5px;
+      padding-right: 2em;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+
+      select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: +1;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      i {
+        width: 1px; /* Hack to make sure the span text has enough room */
+      }
+    }
+
+    .remove {
+      text-transform: uppercase;
+      opacity: 0;
+      transition: var(--fast) var(--transition);
+      transition-property: color, opacity;
+      color: var(--gray);
+
+      &:hover, .user-is-tabbing &:focus {
+        color: var(--danger);
+        opacity: 1;
+      }
+    }
+  }
+
+  &:hover, .user-is-tabbing:focus, .user-is-tabbing:focus-within {
+    .remove {
+      opacity: 1;
+    }
+  }
+}
+
+.slide-enter-active {
+  transition: var(--medium) var(--transition-in);
+}
+
+.slide-leave-active {
+  transition: var(--fast) var(--transition-out);
+}
+
+.slide-enter, .slide-leave-to {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+.search-filter.full {
+  margin-right: 10px;
+  position: relative;
+
+  .search {
+    width: 300px;
+    height: var(--input-height);
+    border-radius: var(--border-radius);
+    display: block;
+    border: 0;
+    color: var(--gray);
+    padding: 10px;
+    line-height: 1.5;
+    transition: var(--fast) var(--transition);
+    transition-property: color, border-color, padding;
+    height: var(--input-height);
+    padding-left: 40px;
+    padding-right: 40px;
+
+    &::placeholder {
+      color: var(--light-gray);
+    }
+
+    &:focus {
+      color: var(--darker-gray);
+      border-color: var(--primary);
+      outline: 0;
+    }
+
+    &:focus + i {
+      color: var(--primary);
+    }
+
+    &:-webkit-autofill {
+      color: var(--dark-gray) !important;
+      -webkit-text-fill-color: var(--dark-gray) !important;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      background-color: var(--white);
+      box-shadow: inset 0 0 0 2000px var(--white);
+    }
+
+    &.has-filters {
+      padding-right: 73px;
+    }
+  }
+
+  .wrapper {
+    position: relative;
+
+    > i, > button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      user-select: none;
+    }
+
+    > i {
+      color: var(--lighter-gray);
+      left: 10px;
+    }
+
+    button i {
+      transition: color var(--fast) var(--transition);
+    }
+
+    .toggle {
+      right: 10px;
+      color: var(--gray);
+
+      &:hover, .user-is-tabbing &:focus {
+        color: var(--primary);
+      }
+    }
+
+    .clear-filters {
+      right: 40px;
+      color: var(--gray);
+
+      &:hover, .user-is-tabbing &:focus {
+        color: var(--danger);
+      }
+    }
+  }
+
+  .dropdown {
+    top: auto;
+  }
+
+  &.open {
+    .toggle {
+      i {
+        color: var(--primary);
+      }
+    }
+
+    .search {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.fade-enter-active {
+  transition: var(--medium) var(--transition-in);
+}
+
+.fade-leave-active {
+  transition: var(--fast) var(--transition-out);
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

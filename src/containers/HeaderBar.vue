@@ -16,8 +16,9 @@
     <header-button
       v-if="showInfoButton"
       icon="info"
+      class="button"
       @click="$emit('toggleInfo')">
-      Info
+      {{ $t('info') }}
     </header-button>
     <portal-target
       name="header-buttons"
@@ -89,7 +90,7 @@ export default {
   height: 100%;
 }
 
-.custom {
-  margin: 0 20px;
+.button {
+  flex-shrink: 0;
 }
 </style>

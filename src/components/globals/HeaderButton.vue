@@ -26,7 +26,7 @@
       :style="{
         color: `var(--${color})`,
       }"
-      :class="bg || 'no-bg'"
+      :class="[bg || 'no-bg', { 'attention': seekAttention }]"
       :disabled="disabled"
       @click="$emit('click', $event)">
       <i
@@ -75,6 +75,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    seekAttention: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -98,6 +102,7 @@ export default {
 }
 
 button {
+  position: relative;
   background-color: transparent;
   appearance: none;
   display: block;
@@ -133,6 +138,26 @@ button {
   &:not([disabled]):active i {
     transform: scale(0.8);
     opacity: 0.8;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--warning);
+    border-radius: 50%;
+    position: absolute;
+    top: 27%;
+    right: 27%;
+    border: 2px solid var(--darkest-gray);
+    transform: scale(0);
+    transition: transform var(--fast) var(--transition-out);
+  }
+
+  &.attention::after {
+    transform: scale(1);
+    transition: transform var(--fast) var(--transition-in);
   }
 }
 

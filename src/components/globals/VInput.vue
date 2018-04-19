@@ -163,13 +163,9 @@ export default {
       -webkit-text-fill-color: var(--dark-gray) !important;
     }
 
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus
-    input:-webkit-autofill,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover
-    textarea:-webkit-autofill:focus {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
       border: var(--input-border-width) solid var(--lighter-gray);
       background-color: var(--white);
       box-shadow: inset 0 0 0 2000px var(--white);

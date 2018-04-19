@@ -271,7 +271,10 @@ export default {
       if (!this.meta) return '';
 
       const isFiltering = !this.$lodash.isEmpty(this.preferences.filters) ||
-        this.preferences.search_query != null;
+        (
+          !this.$lodash.isNil(this.preferences.search_query) &&
+          this.preferences.search_query.length > 0
+        );
 
       return isFiltering ?
         this.$tc('item_count_filter', this.meta.result_count, { count: this.meta.result_count }) :

@@ -222,7 +222,7 @@ export default {
   }
 
   .placeholder {
-    opacity: 0.6;
+    color: var(--light-gray);
   }
 }
 </style>
