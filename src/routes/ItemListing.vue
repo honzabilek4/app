@@ -160,6 +160,8 @@ export default {
         this.meta.total_count === 0) || false;
     },
     currentBookmark() {
+      if (this.hydrating) return null;
+
       const bookmarks = this.$store.state.bookmarks.data;
       const preferences = {
         collection: this.preferences.collection,
@@ -268,6 +270,7 @@ export default {
       ).field;
     },
     resultCopy() {
+      if (this.loading) return this.$t('loading');
       if (!this.meta) return '';
 
       const isFiltering = !this.$lodash.isEmpty(this.preferences.filters) ||

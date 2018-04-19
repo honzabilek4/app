@@ -78,6 +78,7 @@ export default {
   learn_more: 'Learn More',
   less_than_equal: 'Less than or equal to',
   less_than: 'Less than',
+  loading: 'Loading...',
   login: 'Log in',
   navigate_changes: 'Are you sure you want to leave this page? The changes you made will be lost if you navigate away from this page.',
   new: 'New',
