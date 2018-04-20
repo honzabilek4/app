@@ -134,6 +134,15 @@ label {
   display: block;
 }
 
+fieldset {
+  border: 0;
+  padding: 0;
+
+  legend {
+    margin-bottom: 10px;
+  }
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -165,7 +174,8 @@ label {
 }
 
 .style-3,
-label {
+label,
+legend {
   color: var(--dark-gray);
   font-size: 0.85em;
   line-height: 1.18;

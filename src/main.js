@@ -3,6 +3,7 @@ import VueMQ from 'vue-mq';
 import PortalVue from 'portal-vue';
 import lodash from 'lodash';
 import Notifications from 'vue-notification';
+import VueDraggable from 'vuedraggable';
 
 import './assets/global.scss';
 import './globals';
@@ -46,6 +47,7 @@ Vue.use(VueMQ, {
   },
 });
 Vue.use(Notifications);
+Vue.component('draggable', VueDraggable);
 
 /* eslint-disable no-new */
 new Vue({
