@@ -25,6 +25,8 @@ export default {
   admin_settings: 'Admin Settings',
   api_url: 'API URL',
   batch_edit: 'Batch edit',
+  batch_delete: 'Batch Delete',
+  batch_delete_confirm: 'No items have been selected | One item will be deleted. | {count} items will be deleted.',
   between: 'Between',
   both: 'Both',
   bookmarks: 'Bookmarks',

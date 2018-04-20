@@ -41,7 +41,9 @@
         v-if="selection.length"
         icon="close"
         bg="danger"
-        @click="batchDelete">{{ $t('delete') }}</header-button>
+        @click="remove">
+        {{ $t('delete') }}
+      </header-button>
       <header-button
         icon="add"
         bg="primary"
@@ -114,6 +116,16 @@
         v-model="bookmarkTitle"
         type="text" />
     </v-modal>
+
+    <v-modal
+      v-if="batchDeleteModal"
+      :title="$t('batch_delete')"
+      :ok="$t('delete')"
+      ok-bg="danger"
+      @confirm="batchDelete"
+      @close="batchDeleteModal = false">
+      <p>{{ $tc('batch_delete_confirm', selection.length, { count: selection.length }) }}</p>
+    </v-modal>
   </div>
 </template>
 
@@ -143,6 +155,7 @@ export default {
       selection: [],
       bookmarkTitle: '',
       bookmarkModal: false,
+      batchDeleteModal: false,
     };
   },
   computed: {
@@ -155,9 +168,9 @@ export default {
     },
     emptyCollection() {
       return (
-        this.meta &&
-        (this.meta.total_count !== null) &&
-        this.meta.total_count === 0) || false;
+        this.items &&
+        this.items.length === 0
+      ) || false;
     },
     currentBookmark() {
       if (this.hydrating) return null;
@@ -241,7 +254,7 @@ export default {
     itemParams() {
       let params = {
         fields: '*.*', // by default, we fetch all items + 1 level of relational items
-        meta: 'result_count,total_count',
+        meta: 'total_count',
       };
 
       Object.assign(params, this.preferences.view_query || {});
@@ -273,6 +286,8 @@ export default {
       if (this.loading) return this.$t('loading');
       if (!this.meta) return '';
 
+      const count = this.items && this.items.length;
+
       const isFiltering = !this.$lodash.isEmpty(this.preferences.filters) ||
         (
           !this.$lodash.isNil(this.preferences.search_query) &&
@@ -280,8 +295,8 @@ export default {
         );
 
       return isFiltering ?
-        this.$tc('item_count_filter', this.meta.result_count, { count: this.meta.result_count }) :
-        this.$tc('item_count', this.meta.result_count, { count: this.meta.result_count });
+        this.$tc('item_count_filter', count, { count }) :
+        this.$tc('item_count', count, { count });
     },
     viewType() {
       return this.preferences.view_type || 'tabular';
@@ -418,11 +433,33 @@ export default {
       this.$router.push(route);
     },
 
+    remove() {
+      if (this.selection.length === 1) {
+        this.deleteSingle(this.selection[0]);
+      } else {
+        this.batchDeleteModal = true;
+      }
+    },
+
     batchDelete() {
-      console.log('DELETE BATCH');
-      // TODO:
-      //   - show modal "are you sure"
-      //   - fire delete request for items through store on yes
+      const primaryKeys = this.selection;
+
+      this.selection = [];
+      this.items = this.items.filter(item =>
+        primaryKeys.includes(item[this.primaryKeyField]) === false);
+
+      this.batchDeleteModal = false;
+
+      this.$api.deleteItems(this.collection, primaryKeys)
+        .catch(console.error);
+    },
+
+    deleteSingle(primaryKey) {
+      this.selection = this.selection.filter(itemPrimaryKey => itemPrimaryKey !== primaryKey);
+      this.items = this.items.filter(item => item[this.primaryKeyField] !== primaryKey);
+
+      this.$api.deleteItem(this.collection, primaryKey)
+        .catch(console.error);
     },
 
     add() {
