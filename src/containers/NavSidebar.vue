@@ -10,12 +10,11 @@
 
       <v-modal
         v-if="signOutActive"
-        :title="$t('sign_out')"
+        :title="$t('sign_out_confirm')"
         :ok="$t('sign_out')"
+        simple
         @confirm="$router.push('/logout')"
-        @close="signOutActive = false">
-        {{ $t('sign_out_confirm') }}
-      </v-modal>
+        @close="signOutActive = false"/>
 
       <focus-lock :disabled="!overlay">
         <button

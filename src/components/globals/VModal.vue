@@ -8,6 +8,7 @@
       <div class="modal-wrapper">
         <aside
           ref="modal"
+          :class="{ simple }"
           class="modal-container"
           aria-labelledby="modal-title"
           aria-describedby="modal-description"
@@ -25,10 +26,12 @@
                   id="modal-title"
                   class="style-1">{{ title }}</h1>
                 <button
-                  v-if="!actionRequired"
+                  v-if="!actionRequired && !simple"
                   @click="$emit('close')"><i class="material-icons">close</i></button>
               </header>
-              <div class="body">
+              <div
+                v-if="!simple"
+                class="body">
                 <slot />
               </div>
               <div class="footer">
@@ -85,6 +88,10 @@ export default {
       type: String,
       default: 'white',
     },
+    simple: {
+      type: Boolean,
+      default: false,
+    },
   },
   mounted() {
     disableBodyScroll(this.$refs.modal);
@@ -132,6 +139,7 @@ export default {
 .modal-container {
   position: relative;
   margin: 0 auto;
+  width: 90%;
   max-width: 600px;
   background-color: var(--white);
   border-radius: var(--border-radius);
@@ -173,10 +181,18 @@ export default {
 
   button:not(.confirm) {
     transition: var(--fast) var(--transition);
-    color: var(--dark-gray);
+    color: var(--gray);
 
     &:hover {
       color: var(--darkest-gray);
+    }
+  }
+
+  &.simple {
+    max-width: 500px;
+
+    header, .footer {
+      border: 0;
     }
   }
 }
