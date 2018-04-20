@@ -74,6 +74,7 @@
           </div>
           <v-input
             :id="`filter-${i}`"
+            :value="filter.value"
             type="text"
             @input="updateFilter(i, 'value', $event)" />
         </div>

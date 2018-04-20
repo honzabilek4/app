@@ -14,7 +14,7 @@
           @change="selectAll" />
       </div>
       <div
-        v-for="{field, name} in columns"
+        v-for="({field, name}, index) in columns"
         :key="field"
         :style="{
           flexBasis: widths && widths[field] ?
@@ -37,19 +37,18 @@
           class="style-4">{{ name }}</span>
 
         <div
-          v-if="resizeable"
+          v-if="resizeable && index !== columns.length - 1"
           class="drag-handle"
           draggable
           @drag="drag(field, $event)"
           @dragstart="hideDragImage"
-          @dragend="lastDragXPosition = 0">
+          @dragend="dragEnd">
           <div class="drag-handle-line" />
         </div>
 
       </div>
     </div>
     <div class="body">
-
       <loader
         v-if="loading"
         :delay="100"
@@ -96,6 +95,7 @@
               :id="fieldInfo.interface"
               :name="field"
               :type="fieldInfo.type"
+              :options="fieldInfo.options"
               :value="row[field]" />
             <template v-else>{{ row[field] }}</template>
           </div>
@@ -206,23 +206,14 @@ export default {
     totalWidth() {
       return Object.keys(this.widths)
         .map(field => this.widths[field])
-        .reduce((acc, val) => acc + val) + 30 + 40;
-    },
-  },
-  watch: {
-    widths: {
-      deep: true,
-      handler(newVal, oldVal) {
-        if (this.$lodash.isEmpty(oldVal)) return;
-        this.emitWidths();
-      },
+        .reduce((acc, val) => acc + val, 0) + 30 + 40;
     },
   },
   created() {
     this.drag = this.$lodash.throttle(this.drag, 20);
-    this.emitWidths = this.$lodash.debounce(this.emitWidths, 100);
 
     const widths = {};
+
     this.columns.forEach(({ field }) => {
       widths[field] = 200;
     });
@@ -270,14 +261,15 @@ export default {
 
       this.lastDragXPosition = screenX;
     },
+    dragEnd() {
+      this.lastDragXPosition = 0;
+      this.$emit('widths', this.widths);
+    },
     hideDragImage(event) {
       const img = document.createElement('img');
       img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
       event.dataTransfer.setDragImage(img, 0, 0);
       event.dataTransfer.effectAllowed = 'move';
-    },
-    emitWidths() {
-      this.$emit('widths', this.widths);
     },
   },
 };

@@ -160,17 +160,17 @@ export default {
   },
   computed: {
     noResults() {
-      return (
-        this.meta &&
-        (this.meta.result_count !== null) &&
-        this.meta.result_count === 0 &&
-      this.meta.total_count !== 0) || false;
-    },
-    emptyCollection() {
+      if (this.hydrating || this.loading) return false;
+
       return (
         this.items &&
         this.items.length === 0
       ) || false;
+    },
+    emptyCollection() {
+      if (this.hydrating || this.loading) return false;
+
+      return (this.meta && this.meta.total_count === 0) || false;
     },
     currentBookmark() {
       if (this.hydrating) return null;
@@ -270,6 +270,17 @@ export default {
         };
       }
 
+      if (params.fields) {
+        // Make sure all selected fields are retrieved one level deep (to be able to show relational
+        //  items)
+        params.fields = params.fields.split(',').map(field => (field.endsWith('.*') ? field : `${field}.*`));
+
+        // Make sure the primaryKey is always fetched
+        if (params.fields.includes(this.primaryKeyField) === false) {
+          params.fields.push(this.primaryKeyField);
+        }
+      }
+
       return params;
     },
     preferences() {
@@ -277,10 +288,12 @@ export default {
         this.$store.state.listingPreferences[this.collection].data) || {};
     },
     primaryKeyField() {
-      return this.$lodash.find(
+      const primaryKeyField = this.$lodash.find(
         this.fields,
-        { interface: 'primary-key' },
-      ).field;
+        { interface: 'primary-key' }, // TODO: check for data type instead of interface
+      );
+
+      return primaryKeyField && primaryKeyField.field;
     },
     resultCopy() {
       if (this.loading) return this.$t('loading');
@@ -318,9 +331,9 @@ export default {
         if (this.$lodash.isEmpty(oldVal) || this.$lodash.isEmpty(newVal)) return;
 
         if (
-          newVal.search_query !== oldVal.search_query ||
-          newVal.filters !== oldVal.filters ||
-          newVal.view_query !== oldVal.view_query
+          this.$lodash.isEqual(newVal.search_query, oldVal.search_query) === false ||
+          this.$lodash.isEqual(newVal.filters, oldVal.filters) === false ||
+          this.$lodash.isEqual(newVal.view_query, oldVal.view_query) === false
         ) {
           this.getItems();
         }
