@@ -21,7 +21,7 @@ export default {
   activity_log: 'Activity Log',
   additional_info: 'Additional Info',
   add_new: 'Add new',
-  add_field_filter: 'Add another field filter',
+  add_field_filter: 'Add a field filter',
   admin_settings: 'Admin Settings',
   api_url: 'API URL',
   batch_edit: 'Batch edit',
