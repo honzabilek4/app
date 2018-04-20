@@ -121,7 +121,8 @@ export default {
       if (visible) {
         document.body.classList.add(className);
       } else {
-        document.body.classList.remove(className);
+        document.body.classList.remove('info-wide-active');
+        document.body.classList.remove('info-active');
       }
     },
   },
