@@ -90,7 +90,7 @@ export default {
   no_results: 'No Results',
   no_results_body: 'The current filters do not match any collection items',
   page_not_found: 'Page Not Found',
-  page_not_found_body: 'The page you are looking for doesn\t seem to exist.',
+  page_not_found_body: 'The page you are looking for doesn\'t seem to exist.',
   name_bookmark: 'What would you like to name this bookmark?',
   not_empty: 'Is not empty',
   not_equal_to: 'Not equal to',
