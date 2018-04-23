@@ -25,6 +25,7 @@
 <script>
 import { version } from '../../package.json';
 import LoginForm from '../components/LoginForm.vue';
+import { loadLanguageAsync } from '../lang';
 
 export default {
   name: 'login',
@@ -68,16 +69,22 @@ export default {
     login(credentials) {
       this.loading = true;
       this.$store.dispatch('login', credentials)
-        .then(() => {
-          if (this.$route.params.redirect) {
-            this.$router.push(this.$route.params.redirect);
-          }
-        })
-        .then(() => this.$api.getMe({ fields: 'last_page' }))
-        .then(res => res.data.last_page)
-        .then((lastPage) => {
+        .then(() => this.$api.getMe({ fields: 'last_page,locale' }))
+        .then((res) => {
           this.loading = false;
-          this.$router.push(lastPage || '/');
+          return res;
+        })
+        .then(res => res.data)
+        .then((data) => {
+          if (data.locale !== 'en-US') loadLanguageAsync(data.locale);
+          return data.last_page;
+        })
+        .then((lastPage) => {
+          if (this.$route.params.redirect) {
+            return this.$router.push(this.$route.params.redirect);
+          }
+
+          return this.$router.push(lastPage || '/');
         })
         .catch(() => {
           this.loading = false;
