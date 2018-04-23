@@ -303,24 +303,26 @@ a, i, svg {
 }
 
 a:hover,
-.router-link-exact-active,
+.content .router-link-active,
+.user-menu .router-link-exact-active,
 .bookmark button:first-child:hover,
 .user-menu button:hover {
   color: var(--primary);
+
   i, svg {
     color: var(--primary);
     fill: var(--primary);
   }
-}
 
-.router-link-exact-active::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 3px;
-  background-color: var(--primary);
-  left: -20px;
-  top: 0;
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 3px;
+    background-color: var(--primary);
+    left: -20px;
+    top: 0;
+  }
 }
 
 ul {
