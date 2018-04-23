@@ -105,6 +105,7 @@ export default {
   powered_by_directus: 'Powered by Directus',
   related_entries: 'Heeft gerelateerde items',
   remove: 'Verwijder',
+  reset_preferences: 'Herstel alle voorkeuren',
   save: 'Sla op',
   save_and_add: 'Sla op en voeg nieuwe toe',
   save_and_stay: 'Sla op en blijf bewerken',

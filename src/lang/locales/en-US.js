@@ -105,6 +105,7 @@ export default {
   powered_by_directus: 'Powered by Directus',
   related_entries: 'Has related entries',
   remove: 'Remove',
+  reset_preferences: 'Reset all listing preferences',
   save: 'Save',
   save_and_add: 'Save and Add New',
   save_and_stay: 'Save and Stay',

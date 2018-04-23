@@ -62,22 +62,28 @@
     </portal>
 
     <portal to="info-sidebar">
-      <listing-options-extension
-        v-if="hydrating === false"
-        :id="viewType"
-        :collection="collection"
-        :primary-key-field="primaryKeyField"
-        :fields="fields"
-        :items="items"
-        :options="viewOptions"
-        :loading="loading"
-        :query="preferences.view_query"
-        :selection="selection"
-        link="__link__"
-        @query="updateListingPreferences('view_query', $event)"
-        @select="selection = $event"
-        @input="updateListingPreferences('view_options', $event)"
-      />
+      <div class="sidebar-content">
+        <listing-options-extension
+          v-if="hydrating === false"
+          :id="viewType"
+          :collection="collection"
+          :primary-key-field="primaryKeyField"
+          :fields="fields"
+          :items="items"
+          :options="viewOptions"
+          :loading="loading"
+          :query="preferences.view_query"
+          :selection="selection"
+          link="__link__"
+          @query="updateListingPreferences('view_query', $event)"
+          @select="selection = $event"
+          @input="updateListingPreferences('view_options', $event)" />
+        <button
+          :class="{ active: isUserPreference }"
+          :disabled="!isUserPreference"
+          class="reset-preferences"
+          @click="resetPreferences">{{ $t('reset_preferences') }}</button>
+      </div>
     </portal>
 
     <v-error
@@ -297,6 +303,9 @@ export default {
       return (this.$store.state.listingPreferences[this.collection] &&
         this.$store.state.listingPreferences[this.collection].data) || {};
     },
+    isUserPreference() {
+      return (this.preferences && this.preferences.user === this.$store.state.me.data.id) || false;
+    },
     primaryKeyField() {
       const primaryKeyField = this.$lodash.find(
         this.fields,
@@ -448,6 +457,10 @@ export default {
       this.$store.dispatch('setListingPreferences', info);
     },
 
+    resetPreferences() {
+      this.$store.dispatch('resetPreferences', { collection: this.collection });
+    },
+
     batchEdit() {
       let route = `/collections/${this.collection}/${this.selection.join()}`;
       if (this.collection === 'directus_users' || this.collection === 'directus_files') {
@@ -557,5 +570,31 @@ export default {
   line-height: 1.1;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.sidebar-content {
+  padding-bottom: 30px;
+}
+
+.reset-preferences {
+  color: var(--light-gray);
+  transition: var(--fast) var(--transition);
+  text-align: center;
+  font-size: 11px;
+  position: fixed;
+  bottom: 0px;
+  right: 0;
+  padding: 5px 0;
+  background-color: var(--white);
+  width: calc(var(--nav-sidebar-width) - 1px);
+  transform: translateY(100%) scaleX(0.9);
+
+  &:hover, .user-is-tabbing &:focus {
+    color: var(--dark-gray);
+  }
+
+  &.active {
+    transform: translateY(0) scaleX(1);
+  }
 }
 </style>

@@ -46,6 +46,8 @@ export default {
   background-color: var(--white);
   border-left: 1px solid var(--lightest-gray);
   padding: 20px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 
   & .system {
     padding-bottom: 30px;

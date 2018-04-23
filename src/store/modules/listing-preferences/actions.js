@@ -65,3 +65,16 @@ export function setListingPreferences({ commit, state, rootState }, { collection
     }))
     .catch(console.error);
 }
+
+export function resetPreferences({ dispatch, state }, { collection }) {
+  const preference = state[collection] && state[collection].data;
+
+  if (!preference) return Promise.reject();
+
+  const isUserPreference = preference.user != null;
+
+  if (isUserPreference === false) return Promise.reject();
+
+  return api.deleteCollectionPreset(preference.id)
+    .then(() => dispatch('getListingPreferences', collection));
+}
