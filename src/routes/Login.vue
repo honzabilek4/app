@@ -10,7 +10,7 @@
         :class="errorType"
         class="notice">
         <i class="material-icons">{{ errorType }}</i>
-        {{ $t(`errors[${error.code}]`) }}
+        {{ errorTranslationExists ? $t(`errors[${error.code}]`) : $t('something_went_wrong') }}
         <button
           class="close"
           @click="closeError">Close error</button>
@@ -41,6 +41,12 @@ export default {
       return `${this.$t('version')} ${version}`;
     },
     errorType() {
+      if (!this.error) return '';
+
+      if (this.errorTranslationExists === false) {
+        return 'error';
+      }
+
       if (+this.error.code >= 100 && +this.error.code < 200) {
         return 'warning';
       }
@@ -48,6 +54,14 @@ export default {
     },
     error() {
       return this.$store.state.auth.error;
+    },
+    errorTranslationExists() {
+      if (!this.error) return null;
+
+      const localeMessages = this.$i18n.getLocaleMessage(this.$i18n.locale);
+      const errorCode = this.error && this.error.code;
+
+      return localeMessages.errors && localeMessages.errors[errorCode] != null;
     },
   },
   methods: {
@@ -65,9 +79,8 @@ export default {
           this.loading = false;
           this.$router.push(lastPage || '/');
         })
-        .catch((err) => {
+        .catch(() => {
           this.loading = false;
-          console.error(err); // eslint-disable-line no-console
           this.$router.push('/');
         });
     },

@@ -60,6 +60,7 @@ export default {
     101: 'Logged out due to inactivity',
     102: 'Logged out due to inactivity',
     103: 'User inactive',
+    106: 'Wrong username and/or password',
   },
   esc_cancel: 'Escape will cancel and close the window.',
   equal_to: 'Equal to',
