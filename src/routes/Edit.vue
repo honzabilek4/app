@@ -134,9 +134,16 @@ export default {
       ];
     },
     fields() {
-      return this.$store.state.fields &&
+      const stateFields = (this.$store.state.fields &&
         this.$store.state.fields[this.collection] &&
-        this.$store.state.fields[this.collection].data;
+        this.$store.state.fields[this.collection].data) || {};
+
+      return this.$lodash.keyBy(
+        Object
+          .values(stateFields)
+          .filter(field => (field.hidden_input === true || field.hidden_input === 1) === false),
+        'field',
+      );
     },
     values() {
       const edits = this.$store.state.edits.values;

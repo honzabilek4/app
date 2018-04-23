@@ -201,14 +201,24 @@ export default {
       return currentBookmark || null;
     },
     fields() {
-      return this.$lodash.mapValues(
-        (this.$store.state.fields &&
-          this.$store.state.fields[this.collection] &&
-          this.$store.state.fields[this.collection].data) || {},
-        field => ({
-          ...field,
-          name: this.$t(`fields-${this.collection}-${field.field}`),
-        }),
+      const stateFields = (this.$store.state.fields &&
+        this.$store.state.fields[this.collection] &&
+        this.$store.state.fields[this.collection].data) || {};
+
+      return this.$lodash.keyBy(
+        Object
+          .values(stateFields)
+          .filter((field) => {
+            if (field.interface === 'primary-key') return true;
+
+            if (field.hidden_list === true || field.hidden_list === 1) {
+              return false;
+            }
+
+            return true;
+          })
+          .map(field => ({ ...field, name: this.$t(`fields-${this.collection}-${field.field}`) })),
+        'field',
       );
     },
     fieldNames() {
