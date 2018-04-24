@@ -39,6 +39,7 @@ export default {
   collection_count: 'No Collections | One Collection | {count} Collections',
   'collections-directus_files': 'Files',
   'collections-directus_users': 'Users',
+  'collections-directus_activity': 'Activity',
   comments: 'Comments',
   contains: 'Contains',
   delete: 'Delete',

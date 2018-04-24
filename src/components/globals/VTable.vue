@@ -355,7 +355,6 @@ export default {
   padding-right: 20px;
   position: relative;
   overflow: hidden;
-  min-width: 40px;
 }
 
 .cell:last-of-type {

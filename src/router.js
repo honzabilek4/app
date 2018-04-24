@@ -91,6 +91,14 @@ const router = new Router({
       },
     },
     {
+      path: '/activity',
+      props: {
+        collection: 'directus_activity',
+        readonly: true,
+      },
+      component: ItemListing,
+    },
+    {
       path: '/debug',
       component: Debug,
     },

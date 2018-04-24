@@ -39,6 +39,7 @@ export default {
   collection_count: 'Geen collecties | Één collectie | {count} Collecties',
   'collections-directus_files': 'Bestanden',
   'collections-directus_users': 'Gebruikers',
+  'collections-directus_activity': 'Activiteit',
   comments: 'Opmerkingen',
   contains: 'Bevat',
   delete: 'Verwijder',

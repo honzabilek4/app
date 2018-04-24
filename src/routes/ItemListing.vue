@@ -31,7 +31,9 @@
       />
     </portal>
 
-    <portal to="header-buttons">
+    <portal
+      v-if="!readonly"
+      to="header-buttons">
       <header-button
         v-if="selection.length > 1"
         icon="mode_edit"
@@ -107,7 +109,7 @@
       :options="viewOptions"
       :selection="selection"
       :query="preferences.view_query || {}"
-      link="__link__"
+      :link="readonly ? null : '__link__'"
       @select="selection = $event"
       @input="updateListingPreferences('view_options', $event)"
       @query="updateListingPreferences('view_query', $event)" />
@@ -149,6 +151,10 @@ export default {
     collection: {
       type: String,
       required: true,
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -246,6 +252,12 @@ export default {
         return [{
           name: this.$t('file_library'),
           path: '/files',
+        }];
+      }
+      if (this.collection === 'directus_activity') {
+        return [{
+          name: this.$t('activity'),
+          path: '/activity',
         }];
       }
       return [
@@ -406,6 +418,11 @@ export default {
               ...item,
               __link__: `/${this.collection.substring(9)}/${item[this.primaryKeyField]}`,
             }));
+            return;
+          }
+
+          if (this.readonly) {
+            this.items = items;
             return;
           }
 
