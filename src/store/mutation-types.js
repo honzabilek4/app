@@ -58,6 +58,7 @@ export const SET_PREFERENCES = '👀 Set Listing Preferences';
 export const ME_PENDING = '👨🏻‍💻 Fetching Me...';
 export const ME_SUCCESS = '👨🏻‍💻✅ Me Successful';
 export const ME_FAILED = '👨🏻‍💻❌ Me Failed';
+export const ME_UPDATE = '👨🏻‍💻 Current User Updated';
 
 // Settings
 export const SETTINGS_PENDING = '⚙️ Fetching Global Settings...';

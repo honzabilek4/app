@@ -31,11 +31,6 @@ const mutations = {
   },
 
   [LOGOUT](state, error) {
-    state.token = null;
-    state.url = null;
-    state.env = null;
-    state.projectName = null;
-    state.loading = false;
     state.error = error;
   },
 

@@ -84,6 +84,8 @@ export default {
             return this.$router.push(this.$route.params.redirect);
           }
 
+          console.log(lastPage);
+
           return this.$router.push(lastPage || '/');
         })
         .catch(() => {

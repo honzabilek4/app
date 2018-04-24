@@ -1,7 +1,8 @@
-import router from '../../../router';
 import hydrateStore from '../../hydrate';
 import api from '../../../api';
+import router from '../../../router';
 import extractHostname from '../../../helpers/extract-hostname';
+import { resetState } from '../../index';
 import {
   LOGIN_PENDING,
   LOGIN_SUCCESS,
@@ -45,6 +46,7 @@ export function logout({ commit }, error) {
   stopPolling();
   api.logout();
   router.push('/login');
+  resetState();
   commit(LOGOUT, error);
 }
 

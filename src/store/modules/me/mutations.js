@@ -1,4 +1,4 @@
-import { ME_PENDING, ME_SUCCESS, ME_FAILED } from '../../mutation-types';
+import { ME_PENDING, ME_SUCCESS, ME_FAILED, ME_UPDATE } from '../../mutation-types';
 
 const mutations = {
   [ME_PENDING](state) {
@@ -14,6 +14,13 @@ const mutations = {
   [ME_FAILED](state, error) {
     state.error = error;
     state.loading = false;
+  },
+
+  [ME_UPDATE](state, updates) {
+    state.data = {
+      ...state.data,
+      ...updates,
+    };
   },
 };
 

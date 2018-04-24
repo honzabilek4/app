@@ -132,9 +132,11 @@ const router = new Router({
     },
     {
       path: '/logout',
-      beforeEnter() {
+      beforeEnter(to, from, next) {
         store.dispatch('logout');
+        next('/login');
       },
+      // redirect: '/login',
     },
     {
       path: '*',
@@ -148,7 +150,7 @@ router.beforeEach((to, from, next) => {
   const publicRoute = to.matched.some(record => record.meta.publicRoute);
 
   if (loggedIn === false && publicRoute === false) {
-    if (to.fullPath === '/') {
+    if (from.fullPath === '/') {
       return next({ path: '/login' });
     }
 
@@ -181,6 +183,12 @@ router.beforeEach((to, from, next) => {
   }
 
   return next();
+});
+
+router.afterEach((to, from) => {
+  if (store.state.hydrating === false && from.path !== '/logout') {
+    store.dispatch('imAlive', { page: to.path });
+  }
 });
 
 export default router;
