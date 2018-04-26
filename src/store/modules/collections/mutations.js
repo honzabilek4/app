@@ -1,9 +1,9 @@
-import { keyBy } from 'lodash';
+import { keyBy } from "lodash";
 import {
   COLLECTIONS_PENDING,
   COLLECTIONS_SUCCESS,
-  COLLECTIONS_FAILED,
-} from '../../mutation-types';
+  COLLECTIONS_FAILED
+} from "../../mutation-types";
 
 const mutations = {
   [COLLECTIONS_PENDING](state) {
@@ -11,7 +11,7 @@ const mutations = {
   },
 
   [COLLECTIONS_SUCCESS](state, data) {
-    state.data = keyBy(data, 'collection');
+    state.data = keyBy(data, "collection");
     state.error = null;
     state.loading = false;
   },
@@ -19,7 +19,7 @@ const mutations = {
   [COLLECTIONS_FAILED](state, error) {
     state.error = error;
     state.loading = false;
-  },
+  }
 };
 
 export default mutations;

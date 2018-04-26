@@ -1,6 +1,6 @@
 .DS_Store
 dist
-static/config.js
+public/config.js
 
 # Logs
 logs

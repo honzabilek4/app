@@ -1,4 +1,4 @@
-import { keyBy } from 'lodash';
+import { keyBy } from "lodash";
 import {
   INTERFACES_PENDING,
   INTERFACES_SUCCESS,
@@ -8,8 +8,8 @@ import {
   LISTINGS_FAILED,
   PAGES_PENDING,
   PAGES_SUCCESS,
-  PAGES_FAILED,
-} from '../../mutation-types';
+  PAGES_FAILED
+} from "../../mutation-types";
 
 const mutations = {
   [INTERFACES_PENDING](state) {
@@ -18,7 +18,7 @@ const mutations = {
 
   [INTERFACES_SUCCESS](state, interfaces) {
     state.interfaces.loading = false;
-    state.interfaces.data = keyBy(interfaces, 'id');
+    state.interfaces.data = keyBy(interfaces, "id");
     state.interfaces.error = null;
   },
 
@@ -33,7 +33,7 @@ const mutations = {
 
   [LISTINGS_SUCCESS](state, listings) {
     state.listings.loading = false;
-    state.listings.data = keyBy(listings, 'id');
+    state.listings.data = keyBy(listings, "id");
     state.listings.error = null;
   },
 
@@ -48,14 +48,14 @@ const mutations = {
 
   [PAGES_SUCCESS](state, pages) {
     state.pages.loading = false;
-    state.pages.data = keyBy(pages, 'id');
+    state.pages.data = keyBy(pages, "id");
     state.pages.error = null;
   },
 
   [PAGES_FAILED](state, error) {
     state.pages.loading = false;
     state.pages.error = error;
-  },
+  }
 };
 
 export default mutations;

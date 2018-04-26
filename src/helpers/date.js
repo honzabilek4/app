@@ -14,9 +14,13 @@ function sqlToDate(sqlDate) {
  * @return {String}    SQL datetime string YYYY-MM-DD HH:MM:SS
  */
 function dateToSql(date) {
-  return date.toISOString().slice(0, 19).replace('T', ' ');
+  return date
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
 }
 
 export default {
-  sqlToDate, dateToSql,
+  sqlToDate,
+  dateToSql
 };

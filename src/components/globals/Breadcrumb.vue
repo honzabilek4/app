@@ -29,24 +29,25 @@
 
 <script>
 export default {
-  name: 'breadcrumb',
+  name: "breadcrumb",
   props: {
     links: {
       type: Array,
-      default: () => ([]),
-    },
+      default: () => []
+    }
   },
   computed: {
     _links() {
       if (this.links) return this.links;
 
-      const routeParts = this.$route.path.split('/');
+      const routeParts = this.$route.path.split("/");
       routeParts.shift();
 
       return routeParts.map((part, i) => {
-        let url = '';
+        let url = "";
 
-        for (let x = 0; x < i; x++) { // eslint-disable-line
+        for (let x = 0; x < i; x++) {
+          // eslint-disable-line
           url += `/${routeParts[x]}`;
         }
 
@@ -54,14 +55,14 @@ export default {
 
         return {
           name: this.$helpers.formatTitle(part),
-          path: url,
+          path: url
         };
       });
     },
     lastLink() {
       return this._links[this._links.length - 1]; // eslint-disable-line no-underscore-dangle
-    },
-  },
+    }
+  }
 };
 </script>
 

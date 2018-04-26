@@ -4,8 +4,8 @@ import {
   LOGIN_FAILED,
   LOGOUT,
   REFRESH_TOKEN,
-  REMOVE_AUTH_ERROR,
-} from '../../mutation-types';
+  REMOVE_AUTH_ERROR
+} from "../../mutation-types";
 
 const mutations = {
   [LOGIN_PENDING](state) {
@@ -44,7 +44,7 @@ const mutations = {
 
   [REMOVE_AUTH_ERROR](state) {
     state.error = null;
-  },
+  }
 };
 
 export default mutations;

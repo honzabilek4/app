@@ -15,29 +15,29 @@
 
 <script>
 export default {
-  name: 'v-avatar',
+  name: "v-avatar",
   props: {
     src: {
       type: String,
-      required: true,
+      required: true
     },
     alt: {
       type: String,
-      required: true,
+      required: true
     },
     indicator: {
       type: Boolean,
-      default: false,
+      default: false
     },
     color: {
       type: String,
-      default: 'primary',
+      default: "primary"
     },
     size: {
       type: Number,
-      default: 40,
-    },
-  },
+      default: 40
+    }
+  }
 };
 </script>
 

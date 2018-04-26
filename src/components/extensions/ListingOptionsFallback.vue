@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'options-fallback',
+  name: "options-fallback"
 };
 </script>

@@ -10,13 +10,13 @@
 
 <script>
 export default {
-  name: 'blocker',
+  name: "blocker",
   props: {
     zIndex: {
       type: Number,
-      default: 0,
-    },
-  },
+      default: 0
+    }
+  }
 };
 </script>
 
@@ -40,7 +40,8 @@ export default {
   transition: var(--medium) var(--transition-out);
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

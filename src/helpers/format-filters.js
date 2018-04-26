@@ -21,7 +21,7 @@
 export default function formatFilters(filters) {
   const parsedFilters = {};
 
-  filters.forEach((filter) => {
+  filters.forEach(filter => {
     parsedFilters[`filter[${filter.field}][${filter.operator}]`] = filter.value;
   });
 

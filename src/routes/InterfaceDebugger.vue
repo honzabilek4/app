@@ -124,12 +124,12 @@
 
 <script>
 export default {
-  name: 'interface-debugger',
+  name: "interface-debugger",
   props: {
     id: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -141,25 +141,25 @@ export default {
       loading: false,
       options: {},
       width: 1000,
-      newItem: false,
+      newItem: false
     };
   },
   computed: {
     links() {
       return [
         {
-          name: 'Interfaces',
-          path: '/interfaces',
+          name: "Interfaces",
+          path: "/interfaces"
         },
         {
           name: this.extension.name,
-          path: `/interfaces/${this.id}`,
-        },
+          path: `/interfaces/${this.id}`
+        }
       ];
     },
     extension() {
       return this.$store.state.extensions.interfaces.data[this.id];
-    },
+    }
   },
   watch: {
     id() {
@@ -167,7 +167,7 @@ export default {
     },
     type() {
       this.length = this.extension.dataTypes[this.type];
-    },
+    }
   },
   created() {
     this.hydrate();
@@ -180,11 +180,11 @@ export default {
       // Populate the options with the default values
       const defaults = this.$lodash.mapValues(
         this.extension.options,
-        settings => settings.default || null,
+        settings => settings.default || null
       );
       this.options = defaults;
-    },
-  },
+    }
+  }
 };
 </script>
 

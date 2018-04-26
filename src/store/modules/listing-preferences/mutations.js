@@ -1,11 +1,11 @@
-import { isEmpty } from 'lodash';
-import Vue from 'vue';
+import { isEmpty } from "lodash";
+import Vue from "vue";
 import {
   PREFERENCES_PENDING,
   PREFERENCES_SUCCESS,
   PREFERENCES_FAILED,
-  SET_PREFERENCES,
-} from '../../mutation-types';
+  SET_PREFERENCES
+} from "../../mutation-types";
 
 const mutations = {
   [PREFERENCES_PENDING](state, collection) {
@@ -13,7 +13,7 @@ const mutations = {
       Vue.set(state, collection, {
         data: null,
         error: null,
-        loading: false,
+        loading: false
       });
     }
 
@@ -21,7 +21,7 @@ const mutations = {
   },
 
   [PREFERENCES_SUCCESS](state, { data, collection }) {
-    Vue.set(state[collection], 'data', data);
+    Vue.set(state[collection], "data", data);
     state[collection].error = null;
     state[collection].loading = false;
   },
@@ -36,12 +36,12 @@ const mutations = {
       Vue.set(state, collection, {
         data: null,
         error: null,
-        loading: false,
+        loading: false
       });
     }
 
-    Vue.set(state[collection], 'data', preferences);
-  },
+    Vue.set(state[collection], "data", preferences);
+  }
 };
 
 export default mutations;

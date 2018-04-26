@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'listing-fallback',
+  name: "listing-fallback"
 };
 </script>

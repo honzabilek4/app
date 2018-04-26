@@ -1,26 +1,26 @@
-import * as actions from './actions';
-import mutations from './mutations';
+import * as actions from "./actions";
+import mutations from "./mutations";
 
 const state = {
   listings: {
     data: null,
     loading: false,
-    error: null,
+    error: null
   },
   interfaces: {
     data: null,
     loading: false,
-    error: null,
+    error: null
   },
   pages: {
     data: null,
     loading: false,
-    error: null,
-  },
+    error: null
+  }
 };
 
 export default {
   state,
   actions,
-  mutations,
+  mutations
 };

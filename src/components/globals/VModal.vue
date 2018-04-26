@@ -55,50 +55,50 @@
 </template>
 
 <script>
-import FocusLock from 'vue-focus-lock';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import FocusLock from "vue-focus-lock";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 export default {
-  name: 'v-modal',
+  name: "v-modal",
   components: {
-    FocusLock,
+    FocusLock
   },
   props: {
     actionRequired: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      required: true,
+      required: true
     },
     cancel: {
       type: String,
-      default: '',
+      default: ""
     },
     ok: {
       type: String,
-      default: '',
+      default: ""
     },
     okBg: {
       type: String,
-      default: 'primary',
+      default: "primary"
     },
     okColor: {
       type: String,
-      default: 'white',
+      default: "white"
     },
     simple: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   mounted() {
     disableBodyScroll(this.$refs.modal);
   },
   beforeDestroy() {
     enableBodyScroll(this.$refs.modal);
-  },
+  }
 };
 </script>
 
@@ -191,7 +191,8 @@ export default {
   &.simple {
     max-width: 500px;
 
-    header, .footer {
+    header,
+    .footer {
       border: 0;
     }
   }
@@ -212,7 +213,8 @@ export default {
   transition: var(--medium) var(--transition-out);
 }
 
-.slide-enter, .slide-leave-to {
+.slide-enter,
+.slide-leave-to {
   opacity: 0;
 
   .modal-container {

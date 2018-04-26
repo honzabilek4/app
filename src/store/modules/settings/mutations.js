@@ -1,5 +1,9 @@
-import { mapValues, keyBy } from 'lodash';
-import { SETTINGS_PENDING, SETTINGS_SUCCESS, SETTINGS_FAILED } from '../../mutation-types';
+import { mapValues, keyBy } from "lodash";
+import {
+  SETTINGS_PENDING,
+  SETTINGS_SUCCESS,
+  SETTINGS_FAILED
+} from "../../mutation-types";
 
 const mutations = {
   [SETTINGS_PENDING](state) {
@@ -7,7 +11,7 @@ const mutations = {
   },
 
   [SETTINGS_SUCCESS](state, data) {
-    state.data = mapValues(keyBy(data, 'key'), obj => obj.value);
+    state.data = mapValues(keyBy(data, "key"), obj => obj.value);
     state.error = null;
     state.loading = false;
   },
@@ -15,7 +19,7 @@ const mutations = {
   [SETTINGS_FAILED](state, error) {
     state.error = error;
     state.loading = false;
-  },
+  }
 };
 
 export default mutations;

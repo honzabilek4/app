@@ -76,7 +76,7 @@
 
 <script>
 export default {
-  name: 'login-form',
+  name: "login-form",
   data() {
     return {
       loading: false,
@@ -85,9 +85,9 @@ export default {
       thirdPartyAuthProviders: [],
       gettingThirdPartyAuthProviders: false,
 
-      email: '',
-      password: '',
-      url: Object.keys(window.__DirectusConfig__.api)[0] || '', // eslint-disable-line
+      email: "",
+      password: "",
+      url: Object.keys(window.__DirectusConfig__.api)[0] || "" // eslint-disable-line
     };
   },
   computed: {
@@ -102,7 +102,7 @@ export default {
     },
     allowOther() {
       return window.__DirectusConfig__.allowOtherAPI; // eslint-disable-line
-    },
+    }
   },
   watch: {
     url() {
@@ -113,7 +113,7 @@ export default {
       if (newVal === true && newVal !== oldVal) {
         this.getThirdPartyAuthProviders();
       }
-    },
+    }
   },
   created() {
     this.checkUrl = this.$lodash.debounce(this.checkUrl, 300);
@@ -128,25 +128,26 @@ export default {
       const credentials = { email, password, url };
 
       this.loading = true;
-      this.$store.dispatch('login', credentials)
+      this.$store
+        .dispatch("login", credentials)
         .then(() => {
-          this.$emit('login');
+          this.$emit("login");
         })
         .then(() => {
           if (this.$route.params.redirect) {
             this.$router.push(this.$route.params.redirect);
           }
         })
-        .then(() => this.$api.getMe({ fields: 'last_page' }))
+        .then(() => this.$api.getMe({ fields: "last_page" }))
         .then(res => res.data.last_page)
-        .then((lastPage) => {
+        .then(lastPage => {
           this.loading = false;
-          this.$router.push(lastPage || '/');
+          this.$router.push(lastPage || "/");
         })
-        .catch((err) => {
+        .catch(err => {
           this.loading = false;
           console.error(err); // eslint-disable-line no-console
-          this.$router.push('/');
+          this.$router.push("/");
         });
     },
     checkUrl() {
@@ -157,7 +158,8 @@ export default {
       this.thirdPartyAuthProviders = [];
 
       this.$api.url = this.url;
-      this.$api.ping()
+      this.$api
+        .ping()
         .then(() => {
           this.exists = true;
         })
@@ -173,17 +175,18 @@ export default {
       this.gettingThirdPartyAuthProviders = true;
       this.thirdPartyAuthProviders = [];
 
-      this.$api.getThirdPartyAuthProviders()
+      this.$api
+        .getThirdPartyAuthProviders()
         .then(res => res.data)
-        .then((thirdPartyAuthProviders) => {
+        .then(thirdPartyAuthProviders => {
           this.thirdPartyAuthProviders = thirdPartyAuthProviders;
         })
         .catch(console.error)
         .finally(() => {
           this.gettingThirdPartyAuthProviders = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -218,7 +221,8 @@ export default {
       filter: grayscale(100%) contrast(0) brightness(5);
     }
 
-    &:hover, .user-is-tabbing &:focus {
+    &:hover,
+    .user-is-tabbing &:focus {
       background-color: var(--gray);
     }
   }
@@ -232,7 +236,8 @@ export default {
   transition: var(--fast) var(--transition-out);
 }
 
-.list-enter, .list-leave-to {
+.list-enter,
+.list-leave-to {
   opacity: 0;
   transform: translateY(10px) scale(0.9);
 }

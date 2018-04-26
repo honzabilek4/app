@@ -70,21 +70,24 @@
 </template>
 
 <script>
-import { Wormhole } from 'portal-vue';
-import HeaderBar from './containers/HeaderBar.vue';
-import NavSidebar from './containers/NavSidebar.vue';
-import InfoSidebar from './components/InfoSidebar.vue';
-import VBlocker from './components/VBlocker.vue';
+import { Wormhole } from "portal-vue";
+import HeaderBar from "./containers/HeaderBar.vue";
+import NavSidebar from "./containers/NavSidebar.vue";
+import InfoSidebar from "./components/InfoSidebar.vue";
+import VBlocker from "./components/VBlocker.vue";
 
 export default {
-  name: 'directus',
+  name: "directus",
   components: {
-    HeaderBar, NavSidebar, InfoSidebar, VBlocker,
+    HeaderBar,
+    NavSidebar,
+    InfoSidebar,
+    VBlocker
   },
   data() {
     return {
       navActive: false,
-      infoActive: false,
+      infoActive: false
     };
   },
   computed: {
@@ -92,10 +95,13 @@ export default {
       return this.$route.meta.publicRoute || false;
     },
     infoSidebarHasContent() {
-      return Wormhole.hasContentFor('info-sidebar') || Wormhole.hasContentFor('info-sidebar-system');
+      return (
+        Wormhole.hasContentFor("info-sidebar") ||
+        Wormhole.hasContentFor("info-sidebar-system")
+      );
     },
     subHeaderHasContent() {
-      return Wormhole.hasContentFor('sub-header');
+      return Wormhole.hasContentFor("sub-header");
     },
     hydrating() {
       return this.$store.state.hydrating;
@@ -105,7 +111,7 @@ export default {
     },
     unsavedChanges() {
       return this.$route.query.editing === true;
-    },
+    }
   },
   watch: {
     $route() {
@@ -114,17 +120,18 @@ export default {
       this.infoActive = false;
     },
     infoActive(visible) {
-      const className = this.$route.meta && this.$route.meta.infoSidebarWidth === 'wide' ?
-        'info-wide-active' :
-        'info-active';
+      const className =
+        this.$route.meta && this.$route.meta.infoSidebarWidth === "wide"
+          ? "info-wide-active"
+          : "info-active";
 
       if (visible) {
         document.body.classList.add(className);
       } else {
-        document.body.classList.remove('info-wide-active');
-        document.body.classList.remove('info-active');
+        document.body.classList.remove("info-wide-active");
+        document.body.classList.remove("info-active");
       }
-    },
+    }
   },
   created() {
     this.bodyClass();
@@ -132,9 +139,9 @@ export default {
   methods: {
     bodyClass() {
       if (this.publicRoute) {
-        document.body.classList.add('public');
+        document.body.classList.add("public");
       } else {
-        document.body.classList.remove('public');
+        document.body.classList.remove("public");
       }
     },
     toggleNav(visible = !this.navActive) {
@@ -144,13 +151,17 @@ export default {
       this.infoActive = visible;
     },
     keepEditing() {
-      this.$router.push(`/collections/${this.$route.query.collection}/${this.$route.query.primaryKey}`);
+      this.$router.push(
+        `/collections/${this.$route.query.collection}/${
+          this.$route.query.primaryKey
+        }`
+      );
     },
     discardChanges() {
-      this.$store.dispatch('discardChanges');
+      this.$store.dispatch("discardChanges");
       this.$router.push(this.$route.path);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -159,7 +170,9 @@ body:not(.public) {
   padding-top: var(--header-height);
 
   @media (min-width: 50em) {
-    padding-left: calc(var(--nav-sidebar-width) + 1px); /* +1px = sidebar shadow */
+    padding-left: calc(
+      var(--nav-sidebar-width) + 1px
+    ); /* +1px = sidebar shadow */
   }
 
   @media (min-width: 62.5em) {
@@ -179,7 +192,9 @@ body:not(.public) {
 </style>
 
 <style lang="scss" scoped>
-.directus, .directus > div:first-child, main {
+.directus,
+.directus > div:first-child,
+main {
   height: 100%;
 }
 

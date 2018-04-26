@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'interface-loading',
+  name: "interface-loading"
 };
 </script>

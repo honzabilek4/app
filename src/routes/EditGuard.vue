@@ -7,29 +7,29 @@
 </template>
 
 <script>
-import Edit from './Edit.vue';
-import NotFound from './NotFound.vue';
+import Edit from "./Edit.vue";
+import NotFound from "./NotFound.vue";
 
 export default {
-  name: 'edit-guard',
+  name: "edit-guard",
   components: {
     Edit,
-    NotFound,
+    NotFound
   },
   props: {
     collection: {
       type: String,
-      required: true,
+      required: true
     },
     primaryKey: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       exists: null,
-      loading: false,
+      loading: false
     };
   },
   computed: {
@@ -41,23 +41,23 @@ export default {
       const itemExists = this.exists;
 
       if (collectionExists && itemExists) {
-        return 'edit';
+        return "edit";
       }
 
-      return 'not-found';
-    },
+      return "not-found";
+    }
   },
   watch: {
     $route() {
       this.checkExistence();
-    },
+    }
   },
   created() {
     this.checkExistence();
   },
   methods: {
     checkExistence() {
-      if (this.primaryKey === '+') {
+      if (this.primaryKey === "+") {
         this.exists = true;
         return;
       }
@@ -66,10 +66,11 @@ export default {
       this.loading = true;
 
       const params = {
-        fields: '-',
+        fields: "-"
       };
 
-      this.$api.getItem(this.collection, this.primaryKey, params)
+      this.$api
+        .getItem(this.collection, this.primaryKey, params)
         .then(() => {
           this.exists = true;
           this.loading = false;
@@ -78,7 +79,7 @@ export default {
           this.exists = false;
           this.loading = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>

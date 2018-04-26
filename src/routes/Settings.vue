@@ -90,13 +90,13 @@
 </template>
 
 <script>
-import { version } from '../../package.json';
-import VSignal from '../components/VSignal.vue';
+import { version } from "../../package.json";
+import VSignal from "../components/VSignal.vue";
 
 export default {
-  name: 'settings',
+  name: "settings",
   components: {
-    VSignal,
+    VSignal
   },
   computed: {
     globalNum() {
@@ -112,13 +112,15 @@ export default {
       return version;
     },
     links() {
-      return [{
-        name: this.$t('settings'),
-        path: '/settings',
-        color: 'warning',
-      }];
-    },
-  },
+      return [
+        {
+          name: this.$t("settings"),
+          path: "/settings",
+          color: "warning"
+        }
+      ];
+    }
+  }
 };
 </script>
 

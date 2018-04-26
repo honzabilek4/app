@@ -138,61 +138,66 @@
 
 <script>
 export default {
-  name: 'v-table',
+  name: "v-table",
   props: {
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     items: {
       type: Array,
-      required: true,
+      required: true
     },
     columns: {
       type: Array,
-      required: true,
+      required: true
     },
     link: {
       type: String,
-      default: null,
+      default: null
     },
     selection: {
       type: Array,
-      default: null,
+      default: null
     },
     sortVal: {
       type: Object,
-      default: null,
+      default: null
     },
     primaryKeyField: {
       type: String,
-      required: true,
+      required: true
     },
     rowHeight: {
       type: Number,
-      default: 40,
+      default: 40
     },
     columnWidths: {
       type: Object,
-      default: null,
+      default: null
     },
     useInterfaces: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       widths: {},
-      lastDragXPosition: null,
+      lastDragXPosition: null
     };
   },
   computed: {
     allSelected() {
-      const primaryKeyFields = this.items.map(item => item[this.primaryKeyField]).sort();
+      const primaryKeyFields = this.items
+        .map(item => item[this.primaryKeyField])
+        .sort();
       const selection = [...this.selection];
       selection.sort();
-      return this.selection.length > 0 && this.$lodash.isEqual(primaryKeyFields, selection);
+      return (
+        this.selection.length > 0 &&
+        this.$lodash.isEqual(primaryKeyFields, selection)
+      );
     },
     selectable() {
       return Array.isArray(this.selection);
@@ -204,10 +209,14 @@ export default {
       return this.$lodash.isObject(this.columnWidths);
     },
     totalWidth() {
-      return Object.keys(this.widths)
-        .map(field => this.widths[field])
-        .reduce((acc, val) => acc + val, 0) + 30 + 40;
-    },
+      return (
+        Object.keys(this.widths)
+          .map(field => this.widths[field])
+          .reduce((acc, val) => acc + val, 0) +
+        30 +
+        40
+      );
+    }
   },
   created() {
     this.drag = this.$lodash.throttle(this.drag, 20);
@@ -220,24 +229,26 @@ export default {
 
     this.widths = {
       ...widths,
-      ...this.columnWidths,
+      ...this.columnWidths
     };
   },
   methods: {
     selectAll() {
       if (this.allSelected) {
-        return this.$emit('select', []);
+        return this.$emit("select", []);
       }
 
-      const primaryKeyFields = this.items.map(item => item[this.primaryKeyField]);
-      return this.$emit('select', primaryKeyFields);
+      const primaryKeyFields = this.items.map(
+        item => item[this.primaryKeyField]
+      );
+      return this.$emit("select", primaryKeyFields);
     },
     updateSort(field) {
       const newSortVal = {
         field,
-        asc: field === this.sortVal.field ? !this.sortVal.asc : 'ASC',
+        asc: field === this.sortVal.field ? !this.sortVal.asc : "ASC"
       };
-      this.$emit('sort', newSortVal);
+      this.$emit("sort", newSortVal);
     },
     toggleCheckbox(primaryKeyField) {
       const selection = [...this.selection];
@@ -248,7 +259,7 @@ export default {
         selection.push(primaryKeyField);
       }
 
-      this.$emit('select', selection);
+      this.$emit("select", selection);
     },
     drag(field, event) {
       const { screenX } = event;
@@ -263,15 +274,16 @@ export default {
     },
     dragEnd() {
       this.lastDragXPosition = 0;
-      this.$emit('widths', this.widths);
+      this.$emit("widths", this.widths);
     },
     hideDragImage(event) {
-      const img = document.createElement('img');
-      img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      const img = document.createElement("img");
+      img.src =
+        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       event.dataTransfer.setDragImage(img, 0, 0);
-      event.dataTransfer.effectAllowed = 'move';
-    },
-  },
+      event.dataTransfer.effectAllowed = "move";
+    }
+  }
 };
 </script>
 
@@ -413,7 +425,8 @@ export default {
   z-index: 0;
 }
 
-.row-enter, .row-leave-to {
+.row-enter,
+.row-leave-to {
   opacity: 0;
 }
 </style>

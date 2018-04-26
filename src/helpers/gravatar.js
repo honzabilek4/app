@@ -1,9 +1,10 @@
-import md5 from 'md5';
+import md5 from "md5";
 
 export default function createGravatarLink(email, size = 40) {
   if (!email) {
-    return '';
+    return "";
   }
 
-  return `https://gravatar.com/avatar/${md5(email)}.jpg?size=${size * 2}&d=identicon`;
+  return `https://gravatar.com/avatar/${md5(email)}.jpg?size=${size *
+    2}&d=identicon`;
 }

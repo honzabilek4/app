@@ -22,40 +22,46 @@
 </template>
 
 <script>
-import VField from '../components/edit/VField.vue';
-import VGroup from '../components/edit/VGroup.vue';
+import VField from "../components/edit/VField.vue";
+import VGroup from "../components/edit/VGroup.vue";
 
 export default {
-  name: 'edit-form',
+  name: "edit-form",
   components: {
-    VField, VGroup,
+    VField,
+    VGroup
   },
   props: {
     fields: {
       type: Object,
-      required: true,
+      required: true
     },
     values: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     fieldsGrouped() {
       const fieldsArray = Object.values(this.fields);
 
       const result = fieldsArray
-        .filter(field => field.type.toLowerCase() === 'group')
+        .filter(field => field.type.toLowerCase() === "group")
         .map(group => ({
           ...group,
-          children: [],
+          children: []
         }));
 
-      const nonGroupFields = fieldsArray.filter(field => field.type.toLowerCase() !== 'group');
+      const nonGroupFields = fieldsArray.filter(
+        field => field.type.toLowerCase() !== "group"
+      );
 
-      nonGroupFields.forEach((field) => {
+      nonGroupFields.forEach(field => {
         if (field.group != null) {
-          const groupIndex = this.$lodash.findIndex(result, group => group.id === field.group);
+          const groupIndex = this.$lodash.findIndex(
+            result,
+            group => group.id === field.group
+          );
           return result[groupIndex].children.push(field);
         }
 
@@ -63,13 +69,13 @@ export default {
       });
 
       return result;
-    },
+    }
   },
   methods: {
     isGroup(field) {
       return field.children && Array.isArray(field.children);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -78,7 +84,8 @@ export default {
   max-width: 800px;
 
   @media (min-width: 800px) {
-    &.flex-group, .flex-group {
+    &.flex-group,
+    .flex-group {
       display: flex;
       flex-wrap: wrap;
       & > * {

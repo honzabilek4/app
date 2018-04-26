@@ -24,36 +24,36 @@
 
 <script>
 export default {
-  name: 'v-slider',
+  name: "v-slider",
   props: {
     id: {
       type: String,
-      default: null,
+      default: null
     },
     value: {
       type: Number,
-      required: true,
+      required: true
     },
     min: {
       type: Number,
-      default: 0,
+      default: 0
     },
     max: {
       type: Number,
-      required: true,
+      required: true
     },
     step: {
       type: [Number, String],
-      default: 1,
+      default: 1
     },
     unit: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
-      valuePos: 0,
+      valuePos: 0
     };
   },
   computed: {
@@ -65,9 +65,11 @@ export default {
       return this.value;
     },
     progress() {
-      return Math.round((this.valueOrDefault / (this.max - this.min)) * 100) / 100;
-    },
-  },
+      return (
+        Math.round(this.valueOrDefault / (this.max - this.min) * 100) / 100
+      );
+    }
+  }
 };
 </script>
 
@@ -107,7 +109,8 @@ export default {
     }
   }
 
-  input, .track-wrapper {
+  input,
+  .track-wrapper {
     grid-row: 1;
     grid-column: 1;
   }

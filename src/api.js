@@ -1,5 +1,5 @@
-import SDK, { getPayload } from 'directus-sdk-javascript/remote';
-import store from './store';
+import SDK, { getPayload } from "directus-sdk-javascript/remote";
+import store from "./store";
 
 const client = new SDK();
 
@@ -13,16 +13,16 @@ if (payload && storedUrl) {
     client.url = storedUrl;
     client.token = storedToken;
   } else {
-    store.dispatch('clearAuth');
+    store.dispatch("clearAuth");
   }
 }
 
 client.onAutoRefreshSuccess = function refresh(info) {
-  store.dispatch('refresh', info);
+  store.dispatch("refresh", info);
 };
 
 client.onAutoRefreshError = function logout(error) {
-  store.dispatch('logout', error);
+  store.dispatch("logout", error);
 };
 
 client.startInterval();

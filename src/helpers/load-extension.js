@@ -5,7 +5,7 @@
  */
 export default function loadExtension(src) {
   return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
 
     function cleanup() {
       script.remove();

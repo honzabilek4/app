@@ -1,25 +1,25 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import Vue from "vue";
+import VueI18n from "vue-i18n";
 
-import enUS, { dateTimeFormats } from './locales/en-US';
+import enUS, { dateTimeFormats } from "./locales/en-US";
 
 // Register timeago component
-import './timeago';
+import "./timeago";
 
 Vue.use(VueI18n);
 
 export const i18n = new VueI18n({
-  locale: 'en-US',
-  fallbackLocale: 'en-US',
+  locale: "en-US",
+  fallbackLocale: "en-US",
   messages: {
-    'en-US': enUS,
+    "en-US": enUS
   },
   dateTimeFormats: {
-    'en-US': dateTimeFormats,
-  },
+    "en-US": dateTimeFormats
+  }
 });
 
-const loadedLanguages = ['en-US'];
+const loadedLanguages = ["en-US"];
 
 /**
  * Change the language in the i18n plugin and set the HTML element's lang attribute
@@ -27,7 +27,7 @@ const loadedLanguages = ['en-US'];
  */
 function setI18nLanguage(lang) {
   i18n.locale = lang;
-  document.querySelector('html').setAttribute('lang', lang);
+  document.querySelector("html").setAttribute("lang", lang);
   return lang;
 }
 
@@ -41,12 +41,14 @@ function setI18nLanguage(lang) {
 export function loadLanguageAsync(lang) {
   if (i18n.locale !== lang) {
     if (!loadedLanguages.includes(lang)) {
-      return import(/* webpackChunkName: "lang-[request]" */ `@/lang/locales/${lang}`).then((msgs) => {
-        i18n.setLocaleMessage(lang, msgs.default);
-        i18n.setDateTimeFormat(lang, msgs.dateTimeFormats);
-        loadedLanguages.push(lang);
-        return setI18nLanguage(lang);
-      });
+      return import(/* webpackChunkName: "lang-[request]" */ `@/lang/locales/${lang}`).then(
+        msgs => {
+          i18n.setLocaleMessage(lang, msgs.default);
+          i18n.setDateTimeFormat(lang, msgs.dateTimeFormats);
+          loadedLanguages.push(lang);
+          return setI18nLanguage(lang);
+        }
+      );
     }
     return Promise.resolve(setI18nLanguage(lang));
   }
@@ -54,4 +56,4 @@ export function loadLanguageAsync(lang) {
 }
 
 // Array of available languages in the system
-export const availableLanguages = ['en-US'];
+export const availableLanguages = ["en-US"];

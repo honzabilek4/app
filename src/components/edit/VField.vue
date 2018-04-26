@@ -47,24 +47,26 @@
 
 <script>
 export default {
-  name: 'v-field',
+  name: "v-field",
   props: {
     field: {
       type: Object,
-      required: true,
+      required: true
     },
     values: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     fieldset() {
-      const interfaceInfo = this.$store.state.extensions.interfaces.data[this.field.interface];
+      const interfaceInfo = this.$store.state.extensions.interfaces.data[
+        this.field.interface
+      ];
 
       return (interfaceInfo && interfaceInfo.fieldset) || false;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -85,7 +87,8 @@ p {
   padding: 0;
 }
 
-fieldset > div, p {
+fieldset > div,
+p {
   display: flex;
   flex-direction: column;
 }

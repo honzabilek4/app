@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import VError from '../components/VError.vue';
+import VError from "../components/VError.vue";
 
 export default {
-  name: 'not-found',
+  name: "not-found",
   components: {
-    VError,
-  },
+    VError
+  }
 };
 </script>
 

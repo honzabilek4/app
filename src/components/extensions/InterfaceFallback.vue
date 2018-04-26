@@ -7,13 +7,13 @@
 
 <script>
 export default {
-  name: 'interface-fallback',
+  name: "interface-fallback",
   props: {
     value: {
       type: null,
-      default: '',
-    },
-  },
+      default: ""
+    }
+  }
 };
 </script>
 

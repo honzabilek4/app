@@ -20,38 +20,38 @@
 </template>
 
 <script>
-import { version } from '../../package.json';
-import LoginForm from '../containers/LoginForm.vue';
+import { version } from "../../package.json";
+import LoginForm from "../containers/LoginForm.vue";
 
 export default {
-  name: 'login',
+  name: "login",
   components: {
-    LoginForm,
+    LoginForm
   },
   data() {
     return {
-      loading: false,
+      loading: false
     };
   },
   computed: {
     version() {
-      return `${this.$t('version')} ${version}`;
+      return `${this.$t("version")} ${version}`;
     },
     errorType() {
       if (+this.error.code >= 100 && +this.error.code < 200) {
-        return 'warning';
+        return "warning";
       }
-      return 'error';
+      return "error";
     },
     error() {
       return this.$store.state.auth.error;
-    },
+    }
   },
   methods: {
     closeError() {
-      this.$store.dispatch('removeAuthError');
-    },
-  },
+      this.$store.dispatch("removeAuthError");
+    }
+  }
 };
 </script>
 
@@ -113,7 +113,8 @@ small {
   transition: var(--medium) var(--transition-out);
 }
 
-.slide-enter, .slide-leave-to {
+.slide-enter,
+.slide-leave-to {
   transform: translateY(calc(50px + 100%));
   opacity: 0;
 }

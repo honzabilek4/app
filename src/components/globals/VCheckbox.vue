@@ -17,40 +17,40 @@
 
 <script>
 export default {
-  name: 'form-checkbox',
+  name: "form-checkbox",
   model: {
-    prop: 'modelValue',
-    event: 'change',
+    prop: "modelValue",
+    event: "change"
   },
   props: {
     id: {
       type: String,
-      default: '',
+      default: ""
     },
     value: {
       type: [String, Number],
-      required: true,
+      required: true
     },
     modelValue: {
       type: null,
-      default: false,
+      default: false
     },
     label: {
       type: String,
-      default: '',
+      default: ""
     },
     trueValue: {
       type: null,
-      default: true,
+      default: true
     },
     falseValue: {
       type: null,
-      default: false,
+      default: false
     },
     checked: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     shouldBeChecked() {
@@ -58,8 +58,8 @@ export default {
         return this.modelValue.includes(this.value);
       }
 
-      return (this.modelValue === this.trueValue) || (this.checked === true);
-    },
+      return this.modelValue === this.trueValue || this.checked === true;
+    }
   },
   methods: {
     updateInput(event) {
@@ -74,12 +74,12 @@ export default {
           newValue.splice(newValue.indexOf(this.value), 1);
         }
 
-        this.$emit('change', newValue);
+        this.$emit("change", newValue);
       } else {
-        this.$emit('change', isChecked ? this.trueValue : this.falseValue);
+        this.$emit("change", isChecked ? this.trueValue : this.falseValue);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -106,5 +106,4 @@ label {
 input:checked + label {
   color: var(--primary);
 }
-
 </style>

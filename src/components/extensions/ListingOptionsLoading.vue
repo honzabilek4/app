@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'options-loading',
+  name: "options-loading"
 };
 </script>

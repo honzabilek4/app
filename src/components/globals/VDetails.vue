@@ -12,24 +12,24 @@
 
 <script>
 export default {
-  name: 'v-details',
+  name: "v-details",
   props: {
     title: {
       type: String,
-      default: null,
+      default: null
     },
     open: {
       type: Boolean,
-      default: false,
+      default: false
     },
     type: {
       type: String,
-      default: 'group',
+      default: "group",
       validator(val) {
-        return ['group', 'break'].includes(val);
-      },
-    },
-  },
+        return ["group", "break"].includes(val);
+      }
+    }
+  }
 };
 </script>
 
@@ -53,10 +53,10 @@ export default {
     cursor: pointer;
 
     &::after {
-      content: 'keyboard_arrow_left';
+      content: "keyboard_arrow_left";
       direction: ltr;
       display: inline-block;
-      font-family: 'Material Icons';
+      font-family: "Material Icons";
       font-size: 24px;
       font-style: normal;
       font-weight: normal;
@@ -65,7 +65,7 @@ export default {
       text-transform: none;
       white-space: nowrap;
       word-wrap: normal;
-      -webkit-font-feature-settings: 'liga';
+      -webkit-font-feature-settings: "liga";
       -webkit-font-smoothing: antialiased;
       transition: var(--fast) var(--transition);
     }

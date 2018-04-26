@@ -10,28 +10,34 @@
 
 <script>
 export default {
-  name: 'v-error',
+  name: "v-error",
   props: {
     color: {
       type: String,
-      default: 'primary',
+      default: "primary",
       validator(val) {
-        return ['primary', 'secondary', 'success', 'warning', 'danger'].includes(val);
-      },
+        return [
+          "primary",
+          "secondary",
+          "success",
+          "warning",
+          "danger"
+        ].includes(val);
+      }
     },
     icon: {
       type: String,
-      required: true,
+      required: true
     },
     title: {
       type: String,
-      required: true,
+      required: true
     },
     body: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

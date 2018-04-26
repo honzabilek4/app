@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'listing-loading',
+  name: "listing-loading"
 };
 </script>

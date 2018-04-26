@@ -14,41 +14,41 @@
 <script>
 export default {
   model: {
-    prop: 'modelValue',
-    event: 'change',
+    prop: "modelValue",
+    event: "change"
   },
   props: {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     id: {
       type: String,
-      required: true,
+      required: true
     },
     value: {
       type: String,
-      required: true,
+      required: true
     },
     modelValue: {
       type: String,
-      default: '',
+      default: ""
     },
     label: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     shouldBeChecked() {
       return this.modelValue === this.value;
-    },
+    }
   },
   methods: {
     updateInput() {
-      this.$emit('change', this.value);
-    },
-  },
+      this.$emit("change", this.value);
+    }
+  }
 };
 </script>
 
@@ -64,10 +64,10 @@ label {
 }
 
 label::before {
-  content: 'radio_button_unchecked';
+  content: "radio_button_unchecked";
   direction: ltr;
   display: inline-block;
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-size: 24px;
   font-style: normal;
   font-weight: normal;
@@ -76,12 +76,12 @@ label::before {
   text-transform: none;
   white-space: nowrap;
   word-wrap: normal;
-  -webkit-font-feature-settings: 'liga';
+  -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
   margin-right: 5px;
 }
 
 input:checked + label::before {
-  content: 'radio_button_checked';
+  content: "radio_button_checked";
 }
 </style>

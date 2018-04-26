@@ -64,21 +64,23 @@
 
 <script>
 export default {
-  name: 'v-signal',
+  name: "v-signal",
   computed: {
     strength() {
       return this.$store.getters.signalStrength;
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity var(--fast) var(--transition);
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

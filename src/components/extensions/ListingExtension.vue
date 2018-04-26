@@ -16,51 +16,51 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import loadExtension from '../../helpers/load-extension';
-import componentExists from '../../helpers/component-exists';
-import ListingFallback from './ListingFallback.vue';
-import ListingLoading from './ListingLoading.vue';
+import Vue from "vue";
+import loadExtension from "../../helpers/load-extension";
+import componentExists from "../../helpers/component-exists";
+import ListingFallback from "./ListingFallback.vue";
+import ListingLoading from "./ListingLoading.vue";
 
 export default {
-  name: 'listing-extension',
+  name: "listing-extension",
   props: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     primaryKeyField: {
       type: String,
-      required: true,
+      required: true
     },
     fields: {
       type: Object,
-      required: true,
+      required: true
     },
     items: {
       type: Array,
-      required: true,
+      required: true
     },
     options: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     query: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     selection: {
       type: Array,
-      default: () => ([]),
+      default: () => []
     },
     link: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   computed: {
     listings() {
@@ -71,12 +71,12 @@ export default {
     },
     componentName() {
       return `listing-${this.id}`;
-    },
+    }
   },
   watch: {
     id() {
       this.registerListing();
-    },
+    }
   },
   created() {
     this.registerListing();
@@ -96,14 +96,17 @@ export default {
         return;
       }
 
-      const filePath = `${this.$api.url}/${this.listing.path.replace('meta.json', 'Listing.js')}`;
+      const filePath = `${this.$api.url}/${this.listing.path.replace(
+        "meta.json",
+        "Listing.js"
+      )}`;
 
       Vue.component(this.componentName, () => ({
         component: loadExtension(filePath),
         error: ListingFallback,
-        loading: ListingLoading,
+        loading: ListingLoading
       }));
-    },
-  },
+    }
+  }
 };
 </script>

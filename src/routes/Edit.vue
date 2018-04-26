@@ -74,24 +74,24 @@
 </template>
 
 <script>
-import EditForm from '../containers/EditForm.vue';
-import ActivityOverview from '../containers/ActivityOverview.vue';
+import EditForm from "../containers/EditForm.vue";
+import ActivityOverview from "../containers/ActivityOverview.vue";
 
 export default {
-  name: 'edit',
+  name: "edit",
   components: {
     EditForm,
-    ActivityOverview,
+    ActivityOverview
   },
   props: {
     collection: {
       type: String,
-      required: true,
+      required: true
     },
     primaryKey: {
       type: null,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -100,49 +100,50 @@ export default {
       deleting: false,
       removeModalActive: false,
       confirmNavigation: false,
-      toPath: null,
+      toPath: null
     };
   },
   computed: {
     breadcrumb() {
-      if (this.collection.startsWith('directus_')) {
+      if (this.collection.startsWith("directus_")) {
         return [
           {
             name: this.$t(`collections-${this.collection}`),
-            path: `/${this.collection.substring(9)}`,
+            path: `/${this.collection.substring(9)}`
           },
           {
-            name: this.$t('editing_item'),
-            path: this.$route.path,
-          },
+            name: this.$t("editing_item"),
+            path: this.$route.path
+          }
         ];
       }
 
       return [
         {
-          name: this.$t('collections'),
-          path: '/collections',
+          name: this.$t("collections"),
+          path: "/collections"
         },
         {
           name: this.$t(`collections-${this.collection}`),
-          path: `/collections/${this.collection}`,
+          path: `/collections/${this.collection}`
         },
         {
-          name: this.$t('editing_item'),
-          path: this.$route.path,
-        },
+          name: this.$t("editing_item"),
+          path: this.$route.path
+        }
       ];
     },
     fields() {
-      const stateFields = (this.$store.state.fields &&
-        this.$store.state.fields[this.collection] &&
-        this.$store.state.fields[this.collection].data) || {};
+      const stateFields =
+        (this.$store.state.fields &&
+          this.$store.state.fields[this.collection] &&
+          this.$store.state.fields[this.collection].data) ||
+        {};
 
       return this.$lodash.keyBy(
-        Object
-          .values(stateFields)
-          .filter((field) => {
-            if (field.interface === 'primary-key') return true;
+        Object.values(stateFields)
+          .filter(field => {
+            if (field.interface === "primary-key") return true;
 
             if (field.hidden_list === true || field.hidden_list === 1) {
               return false;
@@ -150,15 +151,18 @@ export default {
 
             return true;
           })
-          .map(field => ({ ...field, name: this.$t(`fields-${this.collection}-${field.field}`) })),
-        'field',
+          .map(field => ({
+            ...field,
+            name: this.$t(`fields-${this.collection}-${field.field}`)
+          })),
+        "field"
       );
     },
     values() {
       const edits = this.$store.state.edits.values;
       return {
-        ...this.savedValues || {},
-        ...edits,
+        ...(this.savedValues || {}),
+        ...edits
       };
     },
     editing() {
@@ -168,14 +172,11 @@ export default {
       return this.$store.state.edits.savedValues;
     },
     newItem() {
-      return this.primaryKey === '+';
+      return this.primaryKey === "+";
     },
     primaryKeyField() {
-      return this.$lodash.find(
-        this.fields,
-        { interface: 'primary-key' },
-      ).field;
-    },
+      return this.$lodash.find(this.fields, { interface: "primary-key" }).field;
+    }
   },
   beforeRouteLeave(to, from, next) {
     if (this.editing) {
@@ -188,7 +189,7 @@ export default {
   watch: {
     $route() {
       this.hydrate();
-    },
+    }
   },
   created() {
     this.hydrate();
@@ -198,28 +199,31 @@ export default {
       this.hydrating = true;
 
       Promise.all([
-        this.$store.dispatch('getFields', this.collection),
-        this.newItem ? null : this.$api.getItem(this.collection, this.primaryKey),
+        this.$store.dispatch("getFields", this.collection),
+        this.newItem
+          ? null
+          : this.$api.getItem(this.collection, this.primaryKey)
       ])
-        .then((values) => {
+        .then(values => {
           const savedValues = this.newItem ? {} : values[1];
 
           this.hydrating = false;
 
-          this.$store.dispatch('startEditing', {
+          this.$store.dispatch("startEditing", {
             collection: this.collection,
             primaryKey: this.primaryKey,
-            savedValues: savedValues.data || {},
+            savedValues: savedValues.data || {}
           });
         })
         .catch(console.error);
     },
     stageValue({ field, value }) {
-      this.$store.dispatch('stageValue', { field, value });
+      this.$store.dispatch("stageValue", { field, value });
     },
     remove() {
       this.deleting = true;
-      this.$api.deleteItem(this.collection, this.primaryKey)
+      this.$api
+        .deleteItem(this.collection, this.primaryKey)
         .then(() => {
           this.deleting = false;
           this.$router.push(`/collections/${this.collection}`);
@@ -231,7 +235,8 @@ export default {
     },
     saveAndStay() {
       this.saving = true;
-      this.$store.dispatch('save')
+      this.$store
+        .dispatch("save")
         .then(() => {
           this.saving = false;
           this.hydrate();
@@ -240,12 +245,13 @@ export default {
     },
     saveAndLeave() {
       this.saving = true;
-      this.$store.dispatch('save')
+      this.$store
+        .dispatch("save")
         .then(() => {
           this.saving = false;
         })
         .then(() => {
-          if (this.collection.startsWith('directus_')) {
+          if (this.collection.startsWith("directus_")) {
             return this.$router.push(`/${this.collection.substring(9)}`);
           }
 
@@ -255,12 +261,13 @@ export default {
     },
     saveAndAdd() {
       this.saving = true;
-      this.$store.dispatch('save')
+      this.$store
+        .dispatch("save")
         .then(() => {
           this.saving = false;
         })
         .then(() => {
-          if (this.collection.startsWith('directus_')) {
+          if (this.collection.startsWith("directus_")) {
             return this.$router.push(`/${this.collection.substring(9)}/+`);
           }
 
@@ -270,16 +277,17 @@ export default {
     },
     saveAsCopy() {
       this.saving = true;
-      this.$store.dispatch('save', {
-        primaryKey: '+',
-        values: this.values,
-      })
-        .then((res) => {
+      this.$store
+        .dispatch("save", {
+          primaryKey: "+",
+          values: this.values
+        })
+        .then(res => {
           this.saving = false;
           return res.data[this.primaryKeyField];
         })
-        .then((pk) => {
-          if (this.collection.startsWith('directus_')) {
+        .then(pk => {
+          if (this.collection.startsWith("directus_")) {
             return this.$router.push(`/${this.collection.substring(9)}/${pk}`);
           }
 
@@ -289,12 +297,12 @@ export default {
     },
     discardChanges() {
       this.confirmNavigation = false;
-      this.$store.dispatch('discardChanges');
+      this.$store.dispatch("discardChanges");
       this.$router.push({
-        path: this.toPath,
+        path: this.toPath
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

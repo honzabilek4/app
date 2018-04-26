@@ -21,39 +21,40 @@
 
 <script>
 export default {
-  name: 'form-button',
+  name: "form-button",
   props: {
     fullwidth: {
       type: Boolean,
-      default: false,
+      default: false
     },
     icon: {
       type: String,
-      default: '',
+      default: ""
     },
     type: {
       type: String,
-      default: '',
+      default: ""
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     color: {
       type: String,
-      default: 'white',
-      validator: value => ['white', 'black'].includes(value),
+      default: "white",
+      validator: value => ["white", "black"].includes(value)
     },
     bg: {
       type: String,
-      default: 'primary',
-      validator: value => ['primary', 'secondary', 'warning', 'danger'].includes(value),
-    },
-  },
+      default: "primary",
+      validator: value =>
+        ["primary", "secondary", "warning", "danger"].includes(value)
+    }
+  }
 };
 </script>
 
@@ -82,8 +83,12 @@ button.danger {
     background-color: var(--danger-dark);
   }
 }
-button.black { color: var(--black); }
-button.white { color: var(--white); }
+button.black {
+  color: var(--black);
+}
+button.white {
+  color: var(--white);
+}
 
 button {
   border: none;

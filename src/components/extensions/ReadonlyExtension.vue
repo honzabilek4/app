@@ -13,51 +13,51 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import loadExtension from '../../helpers/load-extension';
-import componentExists from '../../helpers/component-exists';
-import ReadonlyFallback from './ReadonlyFallback.vue';
-import ReadonlyLoading from './ReadonlyLoading.vue';
+import Vue from "vue";
+import loadExtension from "../../helpers/load-extension";
+import componentExists from "../../helpers/component-exists";
+import ReadonlyFallback from "./ReadonlyFallback.vue";
+import ReadonlyLoading from "./ReadonlyLoading.vue";
 
 export default {
-  name: 'readonly-extension',
+  name: "readonly-extension",
   props: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     value: {
       type: null,
-      default: null,
+      default: null
     },
     type: {
       type: String,
-      required: true,
+      required: true
     },
     length: {
       type: [String, Number],
-      default: null,
+      default: null
     },
     readonly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     required: {
       type: Boolean,
-      default: false,
+      default: false
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     options: {
       type: Object,
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
   computed: {
     interfaces() {
@@ -74,19 +74,19 @@ export default {
 
       const defaults = this.$lodash.mapValues(
         this.interface.options,
-        settings => settings.default || null,
+        settings => settings.default || null
       );
 
       return {
         ...defaults,
-        ...this.options,
+        ...this.options
       };
-    },
+    }
   },
   watch: {
     id() {
       this.registerReadonly();
-    },
+    }
   },
   created() {
     this.registerReadonly();
@@ -106,14 +106,17 @@ export default {
         return;
       }
 
-      const filePath = `${this.$api.url}/${this.interface.path.replace('meta.json', 'Readonly.js')}`;
+      const filePath = `${this.$api.url}/${this.interface.path.replace(
+        "meta.json",
+        "Readonly.js"
+      )}`;
 
       Vue.component(this.componentName, () => ({
         component: loadExtension(filePath),
         error: ReadonlyFallback,
-        loading: ReadonlyLoading,
+        loading: ReadonlyLoading
       }));
-    },
-  },
+    }
+  }
 };
 </script>

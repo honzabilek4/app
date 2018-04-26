@@ -1,4 +1,4 @@
-import { STORE_HYDRATED, HYDRATING_FAILED, LATENCY } from './mutation-types';
+import { STORE_HYDRATED, HYDRATING_FAILED, LATENCY } from "./mutation-types";
 
 const mutations = {
   [STORE_HYDRATED](state) {
@@ -19,7 +19,7 @@ const mutations = {
     }
 
     state.latency = latencies;
-  },
+  }
 };
 
 export default mutations;

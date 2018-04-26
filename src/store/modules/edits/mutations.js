@@ -1,11 +1,11 @@
-import Vue from 'vue';
+import Vue from "vue";
 import {
   DISCARD_CHANGES,
   ITEM_CREATED,
   START_EDITING,
   UNSTAGE_VALUE,
-  STAGE_VALUE,
-} from '../../mutation-types';
+  STAGE_VALUE
+} from "../../mutation-types";
 
 const mutations = {
   [DISCARD_CHANGES](state) {
@@ -36,7 +36,7 @@ const mutations = {
 
   [STAGE_VALUE](state, { field, value }) {
     Vue.set(state.values, field, value);
-  },
+  }
 };
 
 export default mutations;

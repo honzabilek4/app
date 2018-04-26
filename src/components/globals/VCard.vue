@@ -52,72 +52,72 @@
 
 <script>
 export default {
-  name: 'v-card',
+  name: "v-card",
   props: {
     element: {
       type: String,
-      default: 'article',
+      default: "article"
     },
     titleElement: {
       type: String,
-      default: 'h2',
+      default: "h2"
     },
     icon: {
       type: String,
-      default: null,
+      default: null
     },
     src: {
       type: String,
-      default: null,
+      default: null
     },
     title: {
       type: String,
-      required: true,
+      required: true
     },
     subtitle: {
       type: String,
-      default: null,
+      default: null
     },
     body: {
       type: String,
-      default: null,
+      default: null
     },
     to: {
       type: String,
-      default: null,
+      default: null
     },
     href: {
       type: String,
-      default: null,
+      default: null
     },
     label: {
       type: String,
-      default: null,
+      default: null
     },
     opacity: {
       type: String,
-      default: 'full',
+      default: "full",
       validator(val) {
-        return ['full', 'half'].includes(val);
-      },
-    },
+        return ["full", "half"].includes(val);
+      }
+    }
   },
   data() {
     return {
-      error: null,
+      error: null
     };
   },
   computed: {
     wrapperTag() {
       if (this.to) {
-        return 'router-link';
+        return "router-link";
       }
 
       if (this.href) {
-        return 'a';
+        return "a";
       }
 
-      return 'div';
+      return "div";
     },
     link() {
       if (this.to || this.href) {
@@ -125,13 +125,13 @@ export default {
       }
 
       return false;
-    },
+    }
   },
   methods: {
     onImageError(error) {
       this.error = error;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -182,7 +182,9 @@ export default {
       height: 64px;
     }
 
-    img, i, .icon {
+    img,
+    i,
+    .icon {
       grid-row: 1;
       grid-column: 1;
     }

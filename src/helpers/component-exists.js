@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from "vue";
 
 /**
  * Check if component is registered before. Can be used to prevent registering components that have
@@ -7,5 +7,8 @@ import Vue from 'vue';
  * @return {Boolean}     Exists or not
  */
 export default function componentExists(name) {
-  return Vue.options.components[name] && Object.keys(Vue.options.components[name]).length > 0;
+  return (
+    Vue.options.components[name] &&
+    Object.keys(Vue.options.components[name]).length > 0
+  );
 }

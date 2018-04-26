@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  name: 'readonly-fallback',
+  name: "readonly-fallback",
   props: {
     value: {
       type: null,
-      default: '',
-    },
-  },
+      default: ""
+    }
+  }
 };
 </script>

@@ -28,13 +28,13 @@
 
 <script>
 export default {
-  name: 'header-bar',
+  name: "header-bar",
   props: {
     showInfoButton: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>
 

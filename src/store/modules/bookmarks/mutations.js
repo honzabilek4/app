@@ -3,8 +3,8 @@ import {
   BOOKMARKS_SUCCESS,
   BOOKMARKS_FAILED,
   BOOKMARKS_NEW,
-  BOOKMARKS_DELETE,
-} from '../../mutation-types';
+  BOOKMARKS_DELETE
+} from "../../mutation-types";
 
 export default {
   [BOOKMARKS_PENDING](state) {
@@ -25,5 +25,5 @@ export default {
   },
   [BOOKMARKS_DELETE](state, bookmarkID) {
     state.data = state.data.filter(bookmark => bookmark.id !== bookmarkID);
-  },
+  }
 };

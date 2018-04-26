@@ -43,37 +43,37 @@
 
 <script>
 export default {
-  name: 'activity-overview',
+  name: "activity-overview",
   props: {
     collection: {
       type: String,
-      required: true,
+      required: true
     },
     primaryKey: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      show: 'both',
+      show: "both",
       data: null,
       error: null,
-      loading: false,
+      loading: false
     };
   },
   computed: {
     activity() {
       switch (this.show) {
-        case 'comments':
+        case "comments":
           return this.data.filter(item => item.message !== null);
-        case 'activity':
+        case "activity":
           return this.data.filter(item => item.message === null);
-        case 'both':
+        case "both":
         default:
           return this.data;
       }
-    },
+    }
   },
   watch: {
     collection() {
@@ -81,7 +81,7 @@ export default {
     },
     primaryKey() {
       this.getActivity();
-    },
+    }
   },
   created() {
     this.getActivity();
@@ -90,20 +90,21 @@ export default {
     getActivity() {
       this.loading = true;
 
-      this.$api.getActivity({
-        'filter[collection][eq]': this.collection,
-        'filter[item][eq]': this.primaryKey,
-        fields: 'action,datetime,message,user.first_name,user.last_name',
-        sort: '-datetime',
-      })
+      this.$api
+        .getActivity({
+          "filter[collection][eq]": this.collection,
+          "filter[item][eq]": this.primaryKey,
+          fields: "action,datetime,message,user.first_name,user.last_name",
+          sort: "-datetime"
+        })
         .then(res => res.data)
         .then(data => data.map(this.formatItem))
-        .then((data) => {
+        .then(data => {
           this.error = null;
           this.data = data;
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           this.error = err;
           this.loading = false;
         });
@@ -115,10 +116,10 @@ export default {
         date,
         name,
         action: item.action.toLowerCase(),
-        message: item.message,
+        message: item.message
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -140,7 +141,7 @@ export default {
     overflow: visible;
 
     &::after {
-      content: '';
+      content: "";
       display: block;
       bottom: -2px;
       left: 0;
@@ -168,7 +169,7 @@ export default {
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 6px;
     height: 100%;
@@ -189,9 +190,15 @@ export default {
     box-shadow: 0 0 0 5px var(--white);
     flex-shrink: 0;
 
-    &.update { border-color: var(--primary) }
-    &.delete { border-color: var(--danger) }
-    &.create { border-color: var(--success) }
+    &.update {
+      border-color: var(--primary);
+    }
+    &.delete {
+      border-color: var(--danger);
+    }
+    &.create {
+      border-color: var(--success);
+    }
   }
 
   article {
@@ -210,7 +217,8 @@ export default {
         display: none;
       }
 
-      span, .date {
+      span,
+      .date {
         color: var(--light-gray);
       }
 

@@ -1,8 +1,8 @@
-import { forEach, mapKeys, isObject, mapValues } from 'lodash';
-import api from '../../../api';
-import { i18n } from '../../../lang/';
+import { forEach, mapKeys, isObject, mapValues } from "lodash";
+import api from "../../../api";
+import { i18n } from "../../../lang/";
 
-import * as mutationTypes from '../../mutation-types';
+import * as mutationTypes from "../../mutation-types";
 
 /**
  * Recursively loop over object values and replace each string value that starts with $t: with it's
@@ -13,16 +13,21 @@ import * as mutationTypes from '../../mutation-types';
  * @return {Object}      Formatted object
  */
 function translateFields(meta, type, id) {
-  const format = (value) => {
+  const format = value => {
     if (value == null) return value;
 
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       // split up the sentence into separate words to allow multiple translations in one value
       //   like $t:option $t:or $t:value
       return value
-        .split(' ')
-        .map(word => (word.startsWith('$t:') ? i18n.t(`${type}-${id}-${word.substring(3)}`) : word))
-        .join(' ');
+        .split(" ")
+        .map(
+          word =>
+            word.startsWith("$t:")
+              ? i18n.t(`${type}-${id}-${word.substring(3)}`)
+              : word
+        )
+        .join(" ");
     }
 
     if (
@@ -50,13 +55,13 @@ export function getExtensions({ commit }, type) {
   let request = null;
 
   switch (type) {
-    case 'interfaces':
+    case "interfaces":
       request = api.getInterfaces();
       break;
-    case 'listings':
+    case "listings":
       request = api.getListings();
       break;
-    case 'pages':
+    case "pages":
       request = api.getPages();
       break;
     default:
@@ -64,43 +69,52 @@ export function getExtensions({ commit }, type) {
 
   commit(mutationTypes[`${typeUpper}_PENDING`]);
 
-  return request
-    .then(res => res.data)
+  return (
+    request
+      .then(res => res.data)
 
-    /**
+      /**
       Merge all available translations into vue-i18n
 
       Prefix by type and id
     */
-    .then((extensions) => {
-      extensions.forEach((extension) => {
-        const { id, translation } = extension;
+      .then(extensions => {
+        extensions.forEach(extension => {
+          const { id, translation } = extension;
 
-        if (translation) {
-          forEach(translation, (messages, locale) => {
-            i18n.mergeLocaleMessage(locale, mapKeys(messages, (value, key) => `${type}-${id}-${key}`));
-          });
-        }
-      });
+          if (translation) {
+            forEach(translation, (messages, locale) => {
+              i18n.mergeLocaleMessage(
+                locale,
+                mapKeys(messages, (value, key) => `${type}-${id}-${key}`)
+              );
+            });
+          }
+        });
 
-      return extensions;
-    })
+        return extensions;
+      })
 
-    /**
-     * Replace all to-be-translated strings (prefixed with $t: )
-     *   with previously registered translations
-     */
-    .then(extensions => extensions.map(extension => translateFields(extension, type, extension.id)))
+      /**
+       * Replace all to-be-translated strings (prefixed with $t: )
+       *   with previously registered translations
+       */
+      .then(extensions =>
+        extensions.map(extension =>
+          translateFields(extension, type, extension.id)
+        )
+      )
 
-    /**
-     * Commit parsed extensions to the store
-     */
-    .then((extensions) => {
-      commit(mutationTypes[`${typeUpper}_SUCCESS`], extensions);
-    })
-    .catch((error) => {
-      commit(mutationTypes[`${typeUpper}_FAILED`], error);
-    });
+      /**
+       * Commit parsed extensions to the store
+       */
+      .then(extensions => {
+        commit(mutationTypes[`${typeUpper}_SUCCESS`], extensions);
+      })
+      .catch(error => {
+        commit(mutationTypes[`${typeUpper}_FAILED`], error);
+      })
+  );
 }
 
 /**
@@ -110,8 +124,8 @@ export function getExtensions({ commit }, type) {
  */
 export function getAllExtensions({ dispatch }) {
   return Promise.all([
-    dispatch('getExtensions', 'interfaces'),
-    dispatch('getExtensions', 'listings'),
-    dispatch('getExtensions', 'pages'),
+    dispatch("getExtensions", "interfaces"),
+    dispatch("getExtensions", "listings"),
+    dispatch("getExtensions", "pages")
   ]);
 }

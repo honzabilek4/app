@@ -19,28 +19,30 @@
 
 <script>
 export default {
-  name: 'collections',
+  name: "collections",
   computed: {
     items() {
       const collections = this.$store.state.collections.data || {};
 
       return Object.keys(collections).map(collection => ({
         collection: this.$t(`collections-${collection}`),
-        __link__: `/collections/${collection}`,
+        __link__: `/collections/${collection}`
       }));
     },
     fields() {
-      return [{
-        field: 'collection',
-        name: this.$t('collection'),
-      }];
-    },
+      return [
+        {
+          field: "collection",
+          name: this.$t("collection")
+        }
+      ];
+    }
   },
   methods: {
     select(selection) {
       this.selection = selection;
-    },
-  },
+    }
+  }
 };
 </script>
 

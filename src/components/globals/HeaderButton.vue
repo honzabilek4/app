@@ -44,53 +44,53 @@
 
 <script>
 export default {
-  name: 'header-button',
+  name: "header-button",
   props: {
     icon: {
       type: String,
-      required: true,
+      required: true
     },
     color: {
       type: String,
-      default: 'white',
-      validator: value => ['white', 'black'].includes(value),
+      default: "white",
+      validator: value => ["white", "black"].includes(value)
     },
     bg: {
       type: [String, Boolean],
       default: false,
-      validator: (value) => {
+      validator: value => {
         if (value === false) return true;
-        return ['primary', 'secondary', 'warning', 'danger'].includes(value);
-      },
+        return ["primary", "secondary", "warning", "danger"].includes(value);
+      }
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     options: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     seekAttention: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      choice: null,
+      choice: null
     };
   },
   methods: {
     emitChange(event) {
-      this.$emit('input', event.target.value);
+      this.$emit("input", event.target.value);
       this.choice = null;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -141,7 +141,7 @@ button {
   }
 
   &::after {
-    content: '';
+    content: "";
     display: block;
     width: 10px;
     height: 10px;
@@ -161,11 +161,21 @@ button {
   }
 }
 
-button.primary { background-color: var(--primary); }
-button.secondary { background-color: var(--secondary); }
-button.warning { background-color: var(--warning); }
-button.danger { background-color: var(--danger); }
-button.no-bg { border-left: 1px solid #444444; }
+button.primary {
+  background-color: var(--primary);
+}
+button.secondary {
+  background-color: var(--secondary);
+}
+button.warning {
+  background-color: var(--warning);
+}
+button.danger {
+  background-color: var(--danger);
+}
+button.no-bg {
+  border-left: 1px solid #444444;
+}
 
 button[disabled] {
   background-color: var(--darker-gray);

@@ -1,9 +1,9 @@
 export default {
-  listing: 'ls',
-  listingOptions: 'lso',
+  listing: "ls",
+  listingOptions: "lso",
 
-  interface: 'in',
-  interfaceReadonly: 'inr',
+  interface: "in",
+  interfaceReadonly: "inr",
 
-  page: 'pa',
+  page: "pa"
 };

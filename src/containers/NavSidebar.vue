@@ -23,7 +23,7 @@
           @click="$emit('toggleNav', false)">Close nav</button>
         <section class="logo">
           <img
-            src="@/assets/logo.svg"
+            src="../assets/logo.svg"
             alt="Directus Logo">
         </section>
         <section class="content">
@@ -146,31 +146,34 @@
 </template>
 
 <script>
-import FocusLock from 'vue-focus-lock';
-import VSignal from '../components/VSignal.vue';
-import createGravatarLink from '../helpers/gravatar';
+import FocusLock from "vue-focus-lock";
+import VSignal from "../components/VSignal.vue";
+import createGravatarLink from "../helpers/gravatar";
 
 export default {
-  name: 'nav-sidebar',
+  name: "nav-sidebar",
   components: {
-    FocusLock, VSignal,
+    FocusLock,
+    VSignal
   },
   props: {
     active: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       projectSwitcherActive: false,
-      signOutActive: false,
+      signOutActive: false
     };
   },
   computed: {
     collectionNames() {
-      return this.$store.state.collections.data &&
-        Object.keys(this.$store.state.collections.data);
+      return (
+        this.$store.state.collections.data &&
+        Object.keys(this.$store.state.collections.data)
+      );
     },
     bookmarks() {
       return this.$store.state.bookmarks.data;
@@ -186,50 +189,58 @@ export default {
       return createGravatarLink(this.email, 40);
     },
     email() {
-      return this.$store.state.me.data &&
-        this.$store.state.me.data.email;
+      return this.$store.state.me.data && this.$store.state.me.data.email;
     },
     fullName() {
-      const firstName = this.$store.state.me.data &&
-        this.$store.state.me.data.first_name;
+      const firstName =
+        this.$store.state.me.data && this.$store.state.me.data.first_name;
 
-      const lastName = this.$store.state.me.data &&
-        this.$store.state.me.data.last_name;
+      const lastName =
+        this.$store.state.me.data && this.$store.state.me.data.last_name;
 
       return `${firstName} ${lastName}`;
     },
     currentUserID() {
-      return this.$store.state.me.data &&
-       this.$store.state.me.data.id;
+      return this.$store.state.me.data && this.$store.state.me.data.id;
     },
     overlay() {
-      return this.$mq === 'small';
-    },
+      return this.$mq === "small";
+    }
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout');
+      this.$store.dispatch("logout");
     },
     deleteBookmark(id) {
-      this.$store.dispatch('deleteBookmark', id);
+      this.$store.dispatch("deleteBookmark", id);
     },
     toBookmark(bookmark) {
       /* eslint-disable camelcase */
       const {
-        collection, search_query, filters, view_options, view_type, view_query,
+        collection,
+        search_query,
+        filters,
+        view_options,
+        view_type,
+        view_query
       } = bookmark;
 
-      this.$store.dispatch('setListingPreferences', {
-        collection,
-        updates: {
-          search_query, filters, view_options, view_type, view_query,
-        },
-      })
+      this.$store
+        .dispatch("setListingPreferences", {
+          collection,
+          updates: {
+            search_query,
+            filters,
+            view_options,
+            view_type,
+            view_query
+          }
+        })
         .then(() => {
           this.$router.push(`/collections/${collection}`);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -298,7 +309,9 @@ a {
   position: relative;
 }
 
-a, i, svg {
+a,
+i,
+svg {
   transition: var(--fast) var(--transition);
 }
 
@@ -309,13 +322,14 @@ a:hover,
 .user-menu button:hover {
   color: var(--primary);
 
-  i, svg {
+  i,
+  svg {
     color: var(--primary);
     fill: var(--primary);
   }
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     height: 100%;
     width: 3px;
@@ -460,13 +474,15 @@ nav:not(:last-child) {
     }
   }
   .warning {
-    a, i {
+    a,
+    i {
       color: var(--warning);
     }
   }
 
   .warning:hover {
-    a, i {
+    a,
+    i {
       color: var(--warning-dark);
     }
   }

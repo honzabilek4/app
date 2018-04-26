@@ -34,97 +34,109 @@
 
 <script>
 export default {
-  name: 'v-input',
+  name: "v-input",
   props: {
     type: {
       type: String,
-      default: 'text',
+      default: "text"
     },
     autocomplete: {
       type: String,
-      default: 'on',
+      default: "on"
     },
     max: {
       type: [Number, Boolean],
-      default: false,
+      default: false
     },
     maxlength: {
       type: [Number, Boolean],
-      default: false,
+      default: false
     },
     min: {
       type: [Number, Boolean],
-      default: false,
+      default: false
     },
     minlength: {
       type: [Number, Boolean],
-      default: false,
+      default: false
     },
     name: {
       type: String,
-      default: '',
+      default: ""
     },
     placeholder: {
       type: String,
-      default: '',
+      default: ""
     },
     readonly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     required: {
       type: Boolean,
-      default: false,
+      default: false
     },
     spellcheck: {
       type: Boolean,
-      default: true,
+      default: true
     },
     id: {
       type: String,
-      default: '',
+      default: ""
     },
     value: {
       type: null,
-      default: '',
+      default: ""
     },
 
     iconLeft: {
       type: String,
-      default: '',
+      default: ""
     },
     iconLeftColor: {
       type: String,
       default: null,
       validator(val) {
-        return ['primary', 'secondary', 'success', 'warning', 'danger'].includes(val);
-      },
+        return [
+          "primary",
+          "secondary",
+          "success",
+          "warning",
+          "danger"
+        ].includes(val);
+      }
     },
     iconRight: {
       type: String,
-      default: '',
+      default: ""
     },
     iconRightColor: {
       type: String,
-      default: 'primary',
+      default: "primary",
       validator(val) {
-        return ['primary', 'secondary', 'success', 'warning', 'danger'].includes(val);
-      },
+        return [
+          "primary",
+          "secondary",
+          "success",
+          "warning",
+          "danger"
+        ].includes(val);
+      }
     },
     valid: {
       type: Boolean,
-      default: true,
+      default: true
     },
     charactercount: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     charsRemaining() {
       return this.maxlength - this.value.length;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -198,7 +210,8 @@ export default {
     padding-right: 33px;
   }
 
-  &.icon-left i, &.icon-right i {
+  &.icon-left i,
+  &.icon-right i {
     position: absolute;
     top: 50%;
     color: var(--light-gray);

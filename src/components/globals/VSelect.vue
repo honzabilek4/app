@@ -64,87 +64,87 @@
 
 <script>
 export default {
-  name: 'v-select',
+  name: "v-select",
   props: {
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     name: {
       type: String,
-      default: '',
+      default: ""
     },
     id: {
       type: String,
-      default: '',
+      default: ""
     },
     value: {
       type: String,
-      default: '',
+      default: ""
     },
 
     other: {
       type: Boolean,
-      default: false,
+      default: false
     },
     icon: {
       type: String,
-      default: '',
+      default: ""
     },
     type: {
       type: String,
-      default: '',
+      default: ""
     },
     options: {
       type: [Object, String],
-      required: true,
+      required: true
     },
     placeholder: {
       type: String,
-      default: '',
+      default: ""
     },
 
     defaultValue: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       otherActive: false,
-      customValue: '',
+      customValue: ""
     };
   },
   computed: {
     parsedOptions() {
-      if (typeof this.options === 'string') {
+      if (typeof this.options === "string") {
         return JSON.parse(this.options);
       }
 
       return this.options;
-    },
+    }
   },
   methods: {
     change(value) {
-      if (value === this.customValue || value === '__other') {
-        this.$emit('input', this.customValue);
+      if (value === this.customValue || value === "__other") {
+        this.$emit("input", this.customValue);
         this.otherActive = true;
         return;
       }
 
       this.otherActive = false;
-      this.$emit('input', value);
+      this.$emit("input", value);
 
       if (this.defaultValue === true) {
-        this.$refs.default.setAttribute('selected', 'selected');
-        this.$refs.select.value = '';
+        this.$refs.default.setAttribute("selected", "selected");
+        this.$refs.select.value = "";
       }
     },
     changeCustom(event) {
       this.customValue = event.target.value;
-      this.$emit('input', this.customValue);
-    },
-  },
+      this.$emit("input", this.customValue);
+    }
+  }
 };
 </script>
 
@@ -163,7 +163,8 @@ export default {
     cursor: pointer;
   }
 
-  .value, input {
+  .value,
+  input {
     background-color: var(--white);
     height: var(--input-height);
     border: var(--input-border-width) solid var(--lighter-gray);

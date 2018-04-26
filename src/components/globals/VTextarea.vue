@@ -20,61 +20,61 @@
 
 <script>
 export default {
-  name: 'v-textarea',
+  name: "v-textarea",
   props: {
     cols: {
       type: Number,
-      default: 20,
+      default: 20
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     maxlength: {
       type: Number,
-      default: null,
+      default: null
     },
     minlength: {
       type: Number,
-      default: null,
+      default: null
     },
     name: {
       type: String,
-      default: null,
+      default: null
     },
     id: {
       type: String,
-      default: null,
+      default: null
     },
     placeholder: {
       type: String,
-      default: null,
+      default: null
     },
     readonly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     required: {
       type: Boolean,
-      default: false,
+      default: false
     },
     rows: {
       type: Number,
-      default: null,
+      default: null
     },
     spellcheck: {
       type: Boolean,
-      default: null,
+      default: null
     },
     wrap: {
       type: String,
-      default: null,
+      default: null
     },
     value: {
       type: String,
-      default: null,
-    },
-  },
+      default: null
+    }
+  }
 };
 </script>
 
@@ -111,11 +111,9 @@ textarea {
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus
-  input:-webkit-autofill,
+  input:-webkit-autofill:focus input:-webkit-autofill,
   textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover
-  textarea:-webkit-autofill:focus {
+  textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus {
     border: var(--input-border-width) solid var(--lighter-gray);
     background-color: var(--white);
     box-shadow: inset 0 0 0 2000px var(--white);

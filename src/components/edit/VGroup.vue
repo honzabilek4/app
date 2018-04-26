@@ -29,27 +29,27 @@
 </template>
 
 <script>
-import VField from './VField.vue';
+import VField from "./VField.vue";
 
 export default {
-  name: 'v-group',
+  name: "v-group",
   components: {
-    VField,
+    VField
   },
   props: {
     values: {
       type: Object,
-      required: true,
+      required: true
     },
     field: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     isGroup(field) {
       return field.children && Array.isArray(field.children);
-    },
-  },
+    }
+  }
 };
 </script>

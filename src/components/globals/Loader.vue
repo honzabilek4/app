@@ -18,33 +18,33 @@
 
 <script>
 export default {
-  name: 'loader',
+  name: "loader",
   props: {
     area: {
       type: String,
       default: null,
       validator(val) {
-        const validAreas = ['content', 'full-page'];
+        const validAreas = ["content", "full-page"];
         return validAreas.includes(val);
-      },
+      }
     },
     transparent: {
       type: Boolean,
-      default: false,
+      default: false
     },
     delay: {
       type: Number,
-      default: 0,
+      default: 0
     },
     spinnerDelay: {
       type: Number,
-      default: 1000,
-    },
+      default: 1000
+    }
   },
   data() {
     return {
       active: false,
-      spinnerActive: false,
+      spinnerActive: false
     };
   },
   created() {
@@ -55,7 +55,7 @@ export default {
     setTimeout(() => {
       this.spinnerActive = true;
     }, this.delay + this.spinnerDelay);
-  },
+  }
 };
 </script>
 
@@ -109,11 +109,13 @@ export default {
   }
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity var(--medium) var(--transition-in);
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

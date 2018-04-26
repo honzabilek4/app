@@ -100,70 +100,68 @@
 </template>
 
 <script>
-import VBlocker from './VBlocker.vue';
+import VBlocker from "./VBlocker.vue";
 
 export default {
-  name: 'search-filter',
+  name: "search-filter",
   components: {
-    VBlocker,
+    VBlocker
   },
   props: {
     fields: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     filters: {
       type: Array,
-      default: () => ([]),
+      default: () => []
     },
     searchQuery: {
       type: String,
-      default: '',
+      default: ""
     },
     placeholder: {
       type: String,
-      default: () => this.$t('search'),
-    },
+      default: () => this.$t("search")
+    }
   },
   data() {
     return {
-      open: false,
+      open: false
     };
   },
   computed: {
     operators() {
       return {
-        eq: 'equal_to',
-        neq: 'not_equal_to',
-        lt: 'less_than',
-        lte: 'less_than_equal',
-        gt: 'greater_than',
-        gte: 'greater_than_equal',
-        in: 'in_list',
-        nin: 'not_in_list',
-        null: 'is_null',
-        nnull: 'is_not_null',
-        contains: 'contains',
-        ncontains: 'not_contains',
-        between: 'between',
-        nbetween: 'not_between',
-        empty: 'is_empty',
-        nempty: 'not_empty',
-        has: 'related_entries',
-        nhas: 'no_related_entries',
+        eq: "equal_to",
+        neq: "not_equal_to",
+        lt: "less_than",
+        lte: "less_than_equal",
+        gt: "greater_than",
+        gte: "greater_than_equal",
+        in: "in_list",
+        nin: "not_in_list",
+        null: "is_null",
+        nnull: "is_not_null",
+        contains: "contains",
+        ncontains: "not_contains",
+        between: "between",
+        nbetween: "not_between",
+        empty: "is_empty",
+        nempty: "not_empty",
+        has: "related_entries",
+        nhas: "no_related_entries"
       };
     },
     hasFilters() {
-      if (
-        (this.filters && this.filters.length > 0) ||
-        this.searchQuery
-      ) return true;
+      if ((this.filters && this.filters.length > 0) || this.searchQuery)
+        return true;
 
       return false;
     },
     full() {
-      return this.$mq === 'extraLarge';
-    },
+      return this.$mq === "extraLarge";
+    }
   },
   created() {
     this.search = this.$lodash.debounce(this.search, 300);
@@ -171,35 +169,35 @@ export default {
   },
   methods: {
     search(value) {
-      this.$emit('search', value);
+      this.$emit("search", value);
     },
     addFilter(field) {
-      this.$emit('filter', [
+      this.$emit("filter", [
         ...this.filters,
         {
           field,
-          operator: 'eq',
-          value: '',
-        },
+          operator: "eq",
+          value: ""
+        }
       ]);
     },
     updateFilter(index, key, value) {
       const filters = this.$lodash.cloneDeep(this.filters);
       filters[index][key] = value;
 
-      this.$emit('filter', filters);
+      this.$emit("filter", filters);
     },
     deleteFilter(index) {
       const filters = this.$lodash.cloneDeep(this.filters);
       filters.splice(index, 1);
 
-      this.$emit('filter', filters);
+      this.$emit("filter", filters);
     },
     clearFilters() {
-      this.$emit('clearFilters');
+      this.$emit("clearFilters");
       if (this.open) this.open = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -267,14 +265,17 @@ export default {
       transition-property: color, opacity;
       color: var(--gray);
 
-      &:hover, .user-is-tabbing &:focus {
+      &:hover,
+      .user-is-tabbing &:focus {
         color: var(--danger);
         opacity: 1;
       }
     }
   }
 
-  &:hover, .user-is-tabbing:focus, .user-is-tabbing:focus-within {
+  &:hover,
+  .user-is-tabbing:focus,
+  .user-is-tabbing:focus-within {
     .remove {
       opacity: 1;
     }
@@ -289,7 +290,8 @@ export default {
   transition: var(--fast) var(--transition-out);
 }
 
-.slide-enter, .slide-leave-to {
+.slide-enter,
+.slide-leave-to {
   transform: scaleY(0);
   opacity: 0;
 }
@@ -347,7 +349,8 @@ export default {
   .wrapper {
     position: relative;
 
-    > i, > button {
+    > i,
+    > button {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -367,12 +370,13 @@ export default {
       right: 10px;
       color: var(--gray);
 
-      &:hover, .user-is-tabbing &:focus {
+      &:hover,
+      .user-is-tabbing &:focus {
         color: var(--primary);
       }
 
       &::after {
-        content: '';
+        content: "";
         display: block;
         width: 8px;
         height: 8px;
@@ -397,7 +401,8 @@ export default {
       right: 40px;
       color: var(--gray);
 
-      &:hover, .user-is-tabbing &:focus {
+      &:hover,
+      .user-is-tabbing &:focus {
         color: var(--danger);
       }
     }
@@ -429,7 +434,8 @@ export default {
   transition: var(--fast) var(--transition-out);
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

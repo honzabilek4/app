@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import EditForm from '../containers/EditForm.vue';
+import EditForm from "../containers/EditForm.vue";
 
 export default {
-  name: 'settings-global',
+  name: "settings-global",
   components: {
-    EditForm,
+    EditForm
   },
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
       deleting: false,
       confirmNavigation: false,
       toPath: null,
-      editing: false,
+      editing: false
     };
   },
   computed: {
@@ -52,20 +52,22 @@ export default {
     links() {
       return [
         {
-          name: this.$t('settings'),
-          path: '/settings',
-          color: 'warning',
+          name: this.$t("settings"),
+          path: "/settings",
+          color: "warning"
         },
         {
-          name: this.$t('settings_global'),
-          path: '/settings/global',
-        },
+          name: this.$t("settings_global"),
+          path: "/settings/global"
+        }
       ];
     },
     fields() {
-      return this.$store.state.fields.directus_settings &&
-        this.$store.state.fields.directus_settings.data;
-    },
+      return (
+        this.$store.state.fields.directus_settings &&
+        this.$store.state.fields.directus_settings.data
+      );
+    }
   },
   created() {
     this.hydrate();
@@ -78,14 +80,14 @@ export default {
       this.hydrating = true;
 
       Promise.all([
-        this.$store.dispatch('getFields', 'directus_settings'),
-        this.$store.dispatch('getSettings'),
+        this.$store.dispatch("getFields", "directus_settings"),
+        this.$store.dispatch("getSettings")
       ])
         .then(() => {
           this.hydrating = false;
         })
         .catch(console.error);
-    },
+    }
   },
   beforeRouteLeave(to, from, next) {
     if (this.editing) {
@@ -94,7 +96,7 @@ export default {
       return next(false);
     }
     return next();
-  },
+  }
 };
 </script>
 

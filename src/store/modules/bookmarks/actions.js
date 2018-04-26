@@ -1,33 +1,33 @@
-import api from '../../../api';
+import api from "../../../api";
 
 import {
   BOOKMARKS_PENDING,
   BOOKMARKS_SUCCESS,
   BOOKMARKS_FAILED,
   BOOKMARKS_NEW,
-  BOOKMARKS_DELETE,
-} from '../../mutation-types';
+  BOOKMARKS_DELETE
+} from "../../mutation-types";
 
 export function getBookmarks({ commit }) {
   commit(BOOKMARKS_PENDING);
-  return api.getMyBookmarks()
-    .then((bookmarks) => {
+  return api
+    .getMyBookmarks()
+    .then(bookmarks => {
       commit(BOOKMARKS_SUCCESS, bookmarks);
       return bookmarks;
     })
-    .catch((error) => {
+    .catch(error => {
       commit(BOOKMARKS_FAILED, error);
       throw error;
     });
 }
 
 export function saveBookmark({ commit }, bookmark) {
-  return api.createCollectionPreset(bookmark)
-    .then((res) => {
-      const savedBookmark = res.data;
-      commit(BOOKMARKS_NEW, savedBookmark);
-      return savedBookmark;
-    });
+  return api.createCollectionPreset(bookmark).then(res => {
+    const savedBookmark = res.data;
+    commit(BOOKMARKS_NEW, savedBookmark);
+    return savedBookmark;
+  });
 }
 
 export function deleteBookmark({ commit }, bookmarkID) {

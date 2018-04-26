@@ -1,4 +1,5 @@
-export function signalStrength(state) { // eslint-disable-line
+export function signalStrength(state) {
+  // eslint-disable-line
   let lastLatency = state.latency[state.latency.length - 1];
 
   if (!lastLatency) {

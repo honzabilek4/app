@@ -18,55 +18,55 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import loadExtension from '../../helpers/load-extension';
-import componentExists from '../../helpers/component-exists';
-import InterfaceFallback from './InterfaceFallback.vue';
-import InterfaceLoading from './InterfaceLoading.vue';
+import Vue from "vue";
+import loadExtension from "../../helpers/load-extension";
+import componentExists from "../../helpers/component-exists";
+import InterfaceFallback from "./InterfaceFallback.vue";
+import InterfaceLoading from "./InterfaceLoading.vue";
 
 export default {
-  name: 'interface-extension',
+  name: "interface-extension",
   props: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     value: {
       type: null,
-      default: null,
+      default: null
     },
     type: {
       type: String,
-      default: null,
+      default: null
     },
     length: {
       type: [String, Number],
-      default: null,
+      default: null
     },
     readonly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     required: {
       type: Boolean,
-      default: false,
+      default: false
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     options: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     newItem: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     interfaces() {
@@ -84,26 +84,28 @@ export default {
     },
     lengthOrDefault() {
       if (!this.interface) return null;
-      return this.length ? this.length : this.interface.dataTypes[this.typeOrDefault];
+      return this.length
+        ? this.length
+        : this.interface.dataTypes[this.typeOrDefault];
     },
     optionsWithDefaults() {
       if (!this.interface) return {};
 
       const defaults = this.$lodash.mapValues(
         this.interface.options,
-        settings => settings.default || null,
+        settings => settings.default || null
       );
 
       return {
         ...defaults,
-        ...this.options,
+        ...this.options
       };
-    },
+    }
   },
   watch: {
     id() {
       this.registerInterface();
-    },
+    }
   },
   created() {
     this.registerInterface();
@@ -123,14 +125,17 @@ export default {
         return;
       }
 
-      const filePath = `${this.$api.url}/${this.interface.path.replace('meta.json', 'Interface.js')}`;
+      const filePath = `${this.$api.url}/${this.interface.path.replace(
+        "meta.json",
+        "Interface.js"
+      )}`;
 
       Vue.component(this.componentName, () => ({
         component: loadExtension(filePath),
         error: InterfaceFallback,
-        loading: InterfaceLoading,
+        loading: InterfaceLoading
       }));
-    },
-  },
+    }
+  }
 };
 </script>

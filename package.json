@@ -9,56 +9,19 @@
     "Rijk van Zanten <rijk@rngr.org>"
   ],
   "scripts": {
-    "dev": "node build/dev-server.js",
-    "start": "node build/dev-server.js",
-    "build": "node build/build.js",
-    "test": "eslint src"
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test": "vue-cli-service lint"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.3",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "chalk": "^2.3.2",
-    "compression-webpack-plugin": "^1.1.11",
-    "connect-history-api-fallback": "^1.5.0",
-    "copy-webpack-plugin": "^4.5.1",
-    "css-loader": "^0.28.11",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-vue": "^4.4.0",
-    "eventsource-polyfill": "^0.9.6",
-    "express": "^4.16.3",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.11",
-    "friendly-errors-webpack-plugin": "^1.7.0",
-    "html-webpack-plugin": "^2.30.1",
-    "http-proxy-middleware": "^0.17.4",
-    "ignore-loader": "^0.1.2",
-    "node-sass": "^4.8.3",
-    "opn": "^5.3.0",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "ora": "^1.4.0",
-    "rimraf": "^2.6.2",
-    "sass-loader": "^6.0.7",
-    "semver": "^5.5.0",
-    "shelljs": "^0.8.1",
-    "sw-precache-webpack-plugin": "^0.11.5",
-    "uglify-es": "^3.3.10",
-    "uglifyjs-webpack-plugin": "^1.2.4",
-    "url-loader": "^0.6.2",
-    "vue-loader": "^14.2.2",
-    "vue-template-compiler": "^2.5.16",
-    "webpack": "^3.11.0",
-    "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-middleware": "^2.0.6",
-    "webpack-hot-middleware": "^2.22.0",
-    "webpack-merge": "^4.1.2"
+    "@vue/cli-plugin-babel": "^3.0.0-beta.7",
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.7",
+    "@vue/cli-plugin-pwa": "^3.0.0-beta.7",
+    "@vue/cli-service": "^3.0.0-beta.7",
+    "@vue/eslint-config-prettier": "^3.0.0-beta.7",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "vue-template-compiler": "^2.5.13"
   },
   "dependencies": {
     "@directus/format-title": "^1.1.0",
@@ -70,6 +33,7 @@
     "lodash": "^4.17.5",
     "md5": "^2.2.1",
     "portal-vue": "^1.3.0",
+    "register-service-worker": "^1.2.0",
     "vue": "^2.5.16",
     "vue-focus-lock": "^1.0.5",
     "vue-i18n": "^7.6.0",
@@ -81,5 +45,25 @@
     "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.2"
-  }
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/prettier"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

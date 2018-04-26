@@ -11,26 +11,26 @@
 </template>
 
 <script>
-import { Wormhole } from 'portal-vue';
-import FocusLock from 'vue-focus-lock';
+import { Wormhole } from "portal-vue";
+import FocusLock from "vue-focus-lock";
 
 export default {
-  name: 'info-sidebar',
+  name: "info-sidebar",
   components: { FocusLock },
   props: {
     active: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     hasSystemContent() {
-      return Wormhole.hasContentFor('info-sidebar-system');
+      return Wormhole.hasContentFor("info-sidebar-system");
     },
     overlay() {
-      return this.$mq === 'small' || this.$mq === 'medium';
-    },
-  },
+      return this.$mq === "small" || this.$mq === "medium";
+    }
+  }
 };
 </script>
 

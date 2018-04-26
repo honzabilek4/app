@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'readonly-loading',
+  name: "readonly-loading"
 };
 </script>
