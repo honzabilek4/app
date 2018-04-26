@@ -1,16 +1,13 @@
 <template>
   <div class="login">
-    <login-form
-      :loading="loading"
-      class="form"
-      @submit="login" />
+    <login-form class="form" />
     <transition name="slide">
       <div
         v-if="error"
         :class="errorType"
         class="notice">
         <i class="material-icons">{{ errorType }}</i>
-        {{ errorTranslationExists ? $t(`errors[${error.code}]`) : $t('something_went_wrong') }}
+        {{ $t(`errors[${error.code}]`) }}
         <button
           class="close"
           @click="closeError">Close error</button>
@@ -24,8 +21,7 @@
 
 <script>
 import { version } from '../../package.json';
-import LoginForm from '../components/LoginForm.vue';
-import { loadLanguageAsync } from '../lang';
+import LoginForm from '../containers/LoginForm.vue';
 
 export default {
   name: 'login',
@@ -42,12 +38,6 @@ export default {
       return `${this.$t('version')} ${version}`;
     },
     errorType() {
-      if (!this.error) return '';
-
-      if (this.errorTranslationExists === false) {
-        return 'error';
-      }
-
       if (+this.error.code >= 100 && +this.error.code < 200) {
         return 'warning';
       }
@@ -56,43 +46,8 @@ export default {
     error() {
       return this.$store.state.auth.error;
     },
-    errorTranslationExists() {
-      if (!this.error) return null;
-
-      const localeMessages = this.$i18n.getLocaleMessage(this.$i18n.locale);
-      const errorCode = this.error && this.error.code;
-
-      return localeMessages.errors && localeMessages.errors[errorCode] != null;
-    },
   },
   methods: {
-    login(credentials) {
-      this.loading = true;
-      this.$store.dispatch('login', credentials)
-        .then(() => this.$api.getMe({ fields: 'last_page,locale' }))
-        .then((res) => {
-          this.loading = false;
-          return res;
-        })
-        .then(res => res.data)
-        .then((data) => {
-          if (data.locale !== 'en-US') loadLanguageAsync(data.locale);
-          return data.last_page;
-        })
-        .then((lastPage) => {
-          if (this.$route.params.redirect) {
-            return this.$router.push(this.$route.params.redirect);
-          }
-
-          console.log(lastPage);
-
-          return this.$router.push(lastPage || '/');
-        })
-        .catch(() => {
-          this.loading = false;
-          this.$router.push('/');
-        });
-    },
     closeError() {
       this.$store.dispatch('removeAuthError');
     },
@@ -103,14 +58,13 @@ export default {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .form {
   width: 100%;
   max-width: 260px;
+  margin: 0 auto;
+  margin-top: calc(50vh - 150px); /* visually centered */
 }
 
 small {
@@ -118,6 +72,10 @@ small {
   bottom: 20px;
   text-align: center;
   cursor: help;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .notice {
