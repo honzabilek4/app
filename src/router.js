@@ -189,7 +189,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   if (store.state.hydrating === false && from.path !== "/logout") {
-    store.dispatch("imAlive", { page: to.path });
+    store.dispatch("track", { page: to.path });
   }
 });
 

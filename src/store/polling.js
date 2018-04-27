@@ -6,7 +6,7 @@ let fastInterval = null;
 export function startPolling() {
   fastInterval = setInterval(() => {
     store.dispatch("latency");
-    store.dispatch("imAlive", { page: router.currentRoute.path });
+    store.dispatch("track", { page: router.currentRoute.path });
   }, 5000);
 }
 

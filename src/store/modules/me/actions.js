@@ -1,5 +1,4 @@
 import api from "../../../api";
-import helpers from "../../../helpers";
 
 import {
   ME_PENDING,
@@ -19,13 +18,18 @@ export function getMe({ commit }) {
     .catch(error => commit(ME_FAILED, Object(error)));
 }
 
-export function imAlive({ commit, state }, { page }) {
-  const nowSQL = helpers.date.dateToSql(new Date());
+export function track({ commit, state }, { page }) {
+  const currentUserID = state.data.id;
+
   const data = {
-    last_access: nowSQL,
     last_page: page
   };
 
   commit(ME_UPDATE, data);
-  return api.updateUser(state.data.id, data);
+  return api.request(
+    "PATCH",
+    `/users/${currentUserID}/tracking/page`,
+    {},
+    data
+  );
 }
