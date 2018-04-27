@@ -13,7 +13,7 @@
       :line-size="2"
       size="13"
       line-foreground-color="#fff"
-      line-background-color="var(--primary)"
+      line-background-color="var(--accent)"
       class="spinner" />
     <slot />
   </button>
@@ -50,19 +50,19 @@ export default {
     },
     bg: {
       type: String,
-      default: "primary",
+      default: "action",
       validator: value =>
-        ["primary", "secondary", "warning", "danger"].includes(value)
+        ["action", "secondary", "warning", "danger"].includes(value)
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-button.primary {
-  background-color: var(--primary);
+button.action {
+  background-color: var(--action);
   &:hover {
-    background-color: var(--primary-dark);
+    background-color: var(--action-dark);
   }
 }
 button.secondary {

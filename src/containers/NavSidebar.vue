@@ -275,7 +275,7 @@ aside {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary);
+  background-color: var(--accent);
   height: var(--header-height);
 
   img {
@@ -320,12 +320,12 @@ a:hover,
 .user-menu .router-link-exact-active,
 .bookmark button:first-child:hover,
 .user-menu button:hover {
-  color: var(--primary);
+  color: var(--accent);
 
   i,
   svg {
-    color: var(--primary);
-    fill: var(--primary);
+    color: var(--accent);
+    fill: var(--accent);
   }
 
   &::before {
@@ -333,7 +333,7 @@ a:hover,
     position: absolute;
     height: 100%;
     width: 3px;
-    background-color: var(--primary);
+    background-color: var(--accent);
     left: -20px;
     top: 0;
   }
@@ -381,15 +381,15 @@ nav:not(:last-child) {
   border-bottom: 1px solid var(--lightest-gray);
   display: flex;
   align-items: center;
-  color: var(--primary);
+  color: var(--accent);
   margin-bottom: 10px;
 
   svg {
-    fill: var(--primary);
+    fill: var(--accent);
   }
 
   i {
-    color: var(--primary);
+    color: var(--accent);
   }
 
   span {

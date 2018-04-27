@@ -101,7 +101,7 @@ export default {
     position: relative;
 
     .track-fill {
-      background-color: var(--primary);
+      background-color: var(--accent);
       width: 100%;
       height: 100%;
       transform-origin: left;
@@ -133,7 +133,7 @@ export default {
       height: 14px;
       width: 14px;
       border-radius: 50%;
-      background: var(--primary);
+      background: var(--accent);
       margin-top: -5px;
       cursor: ew-resize;
       box-shadow: 0 0 0 2px var(--white);
@@ -147,7 +147,7 @@ export default {
     left: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%);
-    color: var(--primary);
+    color: var(--accent);
     opacity: 0;
     transition: var(--fast) var(--transition-out);
   }

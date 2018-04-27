@@ -14,15 +14,11 @@ export default {
   props: {
     color: {
       type: String,
-      default: "primary",
+      default: "accent",
       validator(val) {
-        return [
-          "primary",
-          "secondary",
-          "success",
-          "warning",
-          "danger"
-        ].includes(val);
+        return ["accent", "secondary", "success", "warning", "danger"].includes(
+          val
+        );
       }
     },
     icon: {
@@ -52,7 +48,7 @@ export default {
     font-size: 48px;
     background-color: var(--white);
     box-shadow: var(--box-shadow);
-    color: var(--primary);
+    color: var(--accent);
     border-radius: 50%;
     padding: 20px;
     margin-bottom: 10px;
@@ -69,8 +65,8 @@ export default {
     text-align: center;
   }
 
-  .primary {
-    color: var(--primary);
+  .accent {
+    color: var(--accent);
   }
 
   .secondary {

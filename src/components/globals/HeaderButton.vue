@@ -60,7 +60,7 @@ export default {
       default: false,
       validator: value => {
         if (value === false) return true;
-        return ["primary", "secondary", "warning", "danger"].includes(value);
+        return ["action", "success", "warning", "danger"].includes(value);
       }
     },
     disabled: {
@@ -161,18 +161,22 @@ button {
   }
 }
 
-button.primary {
-  background-color: var(--primary);
+button.action {
+  background-color: var(--action);
 }
-button.secondary {
-  background-color: var(--secondary);
+
+button.success {
+  background-color: var(--success);
 }
+
 button.warning {
   background-color: var(--warning);
 }
+
 button.danger {
   background-color: var(--danger);
 }
+
 button.no-bg {
   border-left: 1px solid #444444;
 }

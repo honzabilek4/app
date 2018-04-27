@@ -240,7 +240,7 @@ export default {
       left: 0;
       width: 100%;
       height: 3px;
-      background-color: var(--primary);
+      background-color: var(--action);
       position: absolute;
       transform: scaleY(0);
       transition: transform var(--fast) var(--transition-out);
@@ -248,7 +248,7 @@ export default {
     }
 
     &.active {
-      border-color: var(--primary);
+      border-color: var(--action);
     }
 
     &.active::after {
@@ -284,7 +284,7 @@ export default {
     flex-shrink: 0;
 
     &.update {
-      border-color: var(--primary);
+      border-color: var(--action);
     }
     &.delete {
       border-color: var(--danger);
@@ -360,7 +360,7 @@ export default {
     }
 
     .rollback {
-      color: var(--primary);
+      color: var(--action);
       margin-top: 20px;
     }
   }

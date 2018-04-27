@@ -205,7 +205,7 @@ export default {
   input:focus + div,
   input:focus {
     color: var(--darker-gray);
-    border-color: var(--primary);
+    border-color: var(--accent);
     outline: 0;
   }
 
@@ -237,7 +237,7 @@ export default {
     select:focus ~ div i,
     input:focus + div i,
     input:focus i {
-      color: var(--primary);
+      color: var(--accent);
     }
   }
 

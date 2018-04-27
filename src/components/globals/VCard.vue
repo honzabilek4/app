@@ -160,7 +160,7 @@ export default {
     display: grid;
     grid-template-columns: 1;
     grid-template-rows: 1;
-    background-color: var(--primary);
+    background-color: var(--accent);
     align-items: center;
     justify-content: center;
     position: relative;

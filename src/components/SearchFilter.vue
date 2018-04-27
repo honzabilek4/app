@@ -235,7 +235,7 @@ export default {
 
     span {
       position: relative;
-      color: var(--primary);
+      color: var(--accent);
       margin-left: 5px;
       padding-right: 2em;
       flex-grow: 1;
@@ -321,12 +321,12 @@ export default {
 
     &:focus {
       color: var(--darker-gray);
-      border-color: var(--primary);
+      border-color: var(--accent);
       outline: 0;
     }
 
     &:focus + i {
-      color: var(--primary);
+      color: var(--accent);
     }
 
     &:-webkit-autofill {
@@ -372,7 +372,7 @@ export default {
 
       &:hover,
       .user-is-tabbing &:focus {
-        color: var(--primary);
+        color: var(--accent);
       }
 
       &::after {
@@ -415,7 +415,7 @@ export default {
   &.open {
     .toggle {
       i {
-        color: var(--primary);
+        color: var(--accent);
       }
     }
 

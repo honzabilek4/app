@@ -95,12 +95,12 @@ textarea {
 
   &:focus {
     color: var(--darker-gray);
-    border-color: var(--primary);
+    border-color: var(--accent);
     outline: 0;
   }
 
   &:focus + i {
-    color: var(--primary);
+    color: var(--accent);
   }
 
   &:-webkit-autofill {

@@ -24,7 +24,7 @@
           saveAsCopy: $t('save_as_copy'),
         }"
         icon="check"
-        bg="primary"
+        bg="action"
         @click="saveAndLeave"
         @input="saveSpecial">{{ $t('save') }}</header-button>
     </portal>

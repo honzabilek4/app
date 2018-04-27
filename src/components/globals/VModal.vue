@@ -82,7 +82,7 @@ export default {
     },
     okBg: {
       type: String,
-      default: "primary"
+      default: "accent"
     },
     okColor: {
       type: String,

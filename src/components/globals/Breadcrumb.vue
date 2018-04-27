@@ -89,8 +89,8 @@ i {
   user-select: none;
 }
 
-.primary {
-  color: var(--primary);
+.accent {
+  color: var(--accent);
 }
 
 .secondary {

@@ -97,13 +97,9 @@ export default {
       type: String,
       default: null,
       validator(val) {
-        return [
-          "primary",
-          "secondary",
-          "success",
-          "warning",
-          "danger"
-        ].includes(val);
+        return ["accent", "secondary", "success", "warning", "danger"].includes(
+          val
+        );
       }
     },
     iconRight: {
@@ -112,15 +108,11 @@ export default {
     },
     iconRightColor: {
       type: String,
-      default: "primary",
+      default: "accent",
       validator(val) {
-        return [
-          "primary",
-          "secondary",
-          "success",
-          "warning",
-          "danger"
-        ].includes(val);
+        return ["accent", "secondary", "success", "warning", "danger"].includes(
+          val
+        );
       }
     },
     valid: {
@@ -161,12 +153,12 @@ export default {
 
     &:focus {
       color: var(--darker-gray);
-      border-color: var(--primary);
+      border-color: var(--accent);
       outline: 0;
     }
 
     &:focus + i {
-      color: var(--primary);
+      color: var(--accent);
     }
 
     &:-webkit-autofill {
@@ -218,8 +210,8 @@ export default {
     transform: translateY(-50%);
     font-size: 18px;
 
-    &.primary {
-      color: var(--primary);
+    &.accent {
+      color: var(--accent);
     }
 
     &.secondary {

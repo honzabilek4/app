@@ -48,7 +48,7 @@
       </header-button>
       <header-button
         icon="add"
-        bg="primary"
+        bg="action"
         @click="add"
       >{{ $t('new') }}</header-button>
     </portal>
@@ -616,12 +616,12 @@ export default {
   opacity: 1;
 
   i {
-    color: var(--primary);
+    color: var(--accent);
   }
 }
 
 .bookmark-name {
-  color: var(--primary);
+  color: var(--accent);
   margin-left: 5px;
   margin-top: 3px;
   font-size: 0.77em;

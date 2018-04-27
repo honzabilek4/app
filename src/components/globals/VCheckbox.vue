@@ -99,11 +99,11 @@ label {
 
   &:hover i,
   .user-is-tabbing &:focus i {
-    color: var(--primary);
+    color: var(--accent);
   }
 }
 
 input:checked + label {
-  color: var(--primary);
+  color: var(--accent);
 }
 </style>
