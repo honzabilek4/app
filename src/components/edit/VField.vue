@@ -3,44 +3,44 @@
     <fieldset v-if="fieldset">
       <div>
         <legend>{{ $t(`fields-${field.collection}-${field.field}`) }}</legend>
-        <small v-if="field.comment">{{ field.comment }}</small>
+        <small v-if="!readonly && field.comment">{{ field.comment }}</small>
         <interface-extension
           :id="field.interface"
           :name="field.field"
           :required="Boolean(field.required)"
+          :readonly="readonly"
           :options="field.options"
           :type="field.type"
           :value="values[field.field]"
-          @input="$emit('stageValue', {
+          @input="readonly ? null : $emit('stageValue', {
             field: field.field,
             value: $event
           })"
-          @setfield="$emit('stageValue', {
+          @setfield="readonly ? null : $emit('stageValue', {
             field: $event.field,
             value: $event.value,
-          })"
-        />
+          })" />
       </div>
     </fieldset>
     <p v-else>
       <label :for="field.field">{{ $t(`fields-${field.collection}-${field.field}`) }}</label>
-      <small v-if="field.comment">{{ field.comment }}</small>
+      <small v-if="!readonly && field.comment">{{ field.comment }}</small>
       <interface-extension
         :id="field.interface"
         :name="field.field"
         :required="Boolean(field.required)"
+        :readonly="readonly"
         :options="field.options"
         :type="field.type"
         :value="values[field.field]"
-        @input="$emit('stageValue', {
+        @input="readonly ? null : $emit('stageValue', {
           field: field.field,
           value: $event
         })"
-        @setfield="$emit('stageValue', {
+        @setfield="readonly ? null : $emit('stageValue', {
           field: $event.field,
           value: $event.value,
-        })"
-      />
+        })" />
     </p>
   </div>
 </template>
@@ -56,6 +56,10 @@ export default {
     values: {
       type: Object,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

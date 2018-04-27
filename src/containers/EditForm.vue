@@ -11,11 +11,13 @@
         v-if="isGroup(field)"
         :values="values"
         :field="field"
+        :readonly="readonly"
         @stageValue="$emit('stageValue', $event)" />
       <v-field
         v-else
         :values="values"
         :field="field"
+        :readonly="readonly"
         @stageValue="$emit('stageValue', $event)" />
     </div>
   </form>
@@ -39,6 +41,10 @@ export default {
     values: {
       type: Object,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

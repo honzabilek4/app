@@ -20,6 +20,7 @@
           @stageValue="$emit('stageValue', $event)" />
         <v-field
           v-else
+          :readonly="readonly"
           :values="values"
           :field="child"
           @stageValue="$emit('stageValue', $event)" />
@@ -44,6 +45,10 @@ export default {
     field: {
       type: Object,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

@@ -13,37 +13,67 @@
     </div>
     <div class="activity">
       <article
-        v-for="item in activity"
-        :key="item.id">
+        v-for="(activity, index) in activityWithChanges"
+        :key="activity.id">
         <i
-          v-if="item.message"
+          v-if="activity.message"
           class="material-icons">message</i>
         <span
           v-else
-          :title="item.action"
-          :class="item.action"
+          :title="activity.action"
+          :class="activity.action"
           class="indicator" />
+
         <details>
-          <summary>
-            {{ item.name }}
-            <span>•</span>
-            <timeago
-              :since="item.date"
-              :locale="$i18n.locale"
-              class="date" />
-          </summary>
-          <p>
-            {{ item }}
-          </p>
+          <summary>{{ activity.name }}<span>•</span><timeago
+            :auto-update="1"
+            :since="activity.date"
+            :locale="$i18n.locale"
+            class="date" /></summary>
+          <div
+            v-for="({ field, before, after }) in activity.changes"
+            class="change"
+            :key="field.field">
+            <p>{{ field.name }}</p>
+            <div class="diff">
+              <div
+                :class="{ empty: !before }"
+                class="before">{{ before || '--' }}</div>
+              <div
+                :class="{ empty: !after }"
+                class="after">{{ after || '--' }}</div>
+            </div>
+          </div>
+          <button
+            v-if="index !== 0"
+            class="rollback"
+            @click="previewing = activity">{{ $t("rollback") }}</button>
         </details>
       </article>
     </div>
+    <v-modal
+      v-if="previewing !== null"
+      :title="$t('preview_and_rollback')"
+      :ok="$t('rollback')"
+      @confirm="rollback"
+      @close="previewing = null">
+      <edit-form
+        :fields="fields"
+        :values="previewing.revision.data"
+        :readonly="true"
+        :collection="collection" />
+    </v-modal>
   </div>
 </template>
 
 <script>
+import EditForm from "./EditForm.vue";
+
 export default {
   name: "activity-overview",
+  components: {
+    EditForm
+  },
   props: {
     collection: {
       type: String,
@@ -52,6 +82,10 @@ export default {
     primaryKey: {
       type: String,
       required: true
+    },
+    fields: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -59,7 +93,10 @@ export default {
       show: "both",
       data: null,
       error: null,
-      loading: false
+      loading: false,
+      revisions: {},
+      revisionsLoading: true,
+      previewing: null
     };
   },
   computed: {
@@ -73,28 +110,39 @@ export default {
         default:
           return this.data;
       }
+    },
+    activityWithChanges() {
+      if (!this.activity) return [];
+
+      return this.activity.map((activity, i) => ({
+        ...activity,
+        changes: this.getChanges(activity.id, i),
+        revision: this.revisions[activity.id]
+      }));
     }
   },
   watch: {
     collection() {
-      this.getActivity();
+      this.hydrate();
     },
     primaryKey() {
-      this.getActivity();
+      this.hydrate();
     }
   },
   created() {
-    this.getActivity();
+    this.hydrate();
   },
   methods: {
-    getActivity() {
+    hydrate() {
       this.loading = true;
+      this.revisionsLoading = true;
 
       this.$api
         .getActivity({
           "filter[collection][eq]": this.collection,
           "filter[item][eq]": this.primaryKey,
-          fields: "action,datetime,message,user.first_name,user.last_name",
+          "filter[type][eq]": "ENTRY",
+          fields: "id,action,datetime,message,user.first_name,user.last_name",
           sort: "-datetime"
         })
         .then(res => res.data)
@@ -108,16 +156,61 @@ export default {
           this.error = err;
           this.loading = false;
         });
+
+      this.$api
+        .getItemRevisions(this.collection, this.primaryKey)
+        .then(res => res.data)
+        .then(revisions => {
+          this.revisionsLoading = false;
+          this.revisions = this.$lodash.keyBy(revisions, "activity");
+        });
     },
     formatItem(item) {
-      const date = this.$helpers.date.sqlToDate(item.datetime);
+      const date = new Date(item.datetime);
       const name = `${item.user.first_name} ${item.user.last_name}`;
       return {
+        id: item.id,
         date,
         name,
         action: item.action.toLowerCase(),
         message: item.message
       };
+    },
+    getChanges(activityID, index) {
+      const revision = this.revisions[activityID];
+      let previousUpdate = null;
+
+      for (let i = index + 1; i < this.activity.length; i++) {
+        if (
+          this.activity[i].action === "update" ||
+          this.activity[i].action === "add"
+        ) {
+          previousUpdate = this.activity[i];
+          break;
+        }
+      }
+
+      if (!previousUpdate) return null;
+
+      const previousRevision = this.revisions[previousUpdate.id];
+      const previousData = previousRevision.data;
+      const currentDelta = revision.delta;
+
+      return this.$lodash.mapValues(currentDelta, (value, field) => ({
+        before: previousData[field],
+        after: value,
+        field: this.fields[field]
+      }));
+    },
+    rollback() {
+      this.$api
+        .rollback(this.collection, this.primaryKey, this.previewing.revision.id)
+        .then(() => {
+          this.previewing = null;
+          this.$emit("reload");
+          this.hydrate();
+        })
+        .catch(console.error);
     }
   }
 };
@@ -196,7 +289,7 @@ export default {
     &.delete {
       border-color: var(--danger);
     }
-    &.create {
+    &.add {
       border-color: var(--success);
     }
   }
@@ -208,6 +301,7 @@ export default {
 
   details {
     margin-left: 10px;
+    flex-grow: 1;
 
     summary {
       cursor: pointer;
@@ -229,6 +323,45 @@ export default {
 
     > *:not(:first-child) {
       margin-top: 10px;
+    }
+
+    .change {
+      width: 100%;
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      .diff {
+        width: 100%;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+
+        > div {
+          width: 100%;
+          padding: 4px;
+        }
+      }
+
+      .before {
+        color: var(--danger);
+        background-color: #fdefed;
+      }
+
+      .after {
+        color: var(--success);
+        background-color: #f6faf0;
+      }
+
+      .empty {
+        background-color: var(--lightest-gray);
+        color: var(--gray);
+      }
+    }
+
+    .rollback {
+      color: var(--primary);
+      margin-top: 20px;
     }
   }
 }

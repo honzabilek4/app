@@ -31,8 +31,11 @@
 
     <portal to="info-sidebar">
       <activity-overview
+        v-if="fields && collection && primaryKey"
         :collection="collection"
         :primary-key="primaryKey"
+        :fields="fields"
+        @reload="hydrate"
       />
     </portal>
 
