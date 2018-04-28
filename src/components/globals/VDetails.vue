@@ -36,7 +36,8 @@ export default {
 <style lang="scss" scoped>
 .v-details {
   width: 100%;
-  margin-bottom: 20px;
+  margin-top: 40px;
+  margin-bottom: 60px;
 
   summary {
     border-top: 1px solid var(--lighter-gray);
@@ -44,13 +45,14 @@ export default {
     padding: 10px 0;
     margin-bottom: 20px;
     font-size: 18px;
-    color: var(--darker-gray);
+    color: var(--gray);
     list-style-type: none;
     font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    transition: var(--fast) var(--transition);
 
     &::after {
       content: "keyboard_arrow_left";
@@ -58,6 +60,7 @@ export default {
       display: inline-block;
       font-family: "Material Icons";
       font-size: 24px;
+      color: var(--gray);
       font-style: normal;
       font-weight: normal;
       letter-spacing: normal;
@@ -76,7 +79,10 @@ export default {
 
     &:hover,
     .user-is-tabbing &:focus {
-      color: var(--darkest-gray);
+      color: var(--dark-gray);
+      &::after {
+        color: var(--dark-gray);
+      }
     }
   }
 

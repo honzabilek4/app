@@ -82,7 +82,7 @@ export default {
     },
     okBg: {
       type: String,
-      default: "accent"
+      default: "action"
     },
     okColor: {
       type: String,
@@ -181,10 +181,10 @@ export default {
 
   button:not(.confirm) {
     transition: var(--fast) var(--transition);
-    color: var(--gray);
+    color: var(--lighter-gray);
 
     &:hover {
-      color: var(--darkest-gray);
+      color: var(--dark-gray);
     }
   }
 

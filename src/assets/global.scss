@@ -249,23 +249,23 @@
 
   /* App used colors */
   --darkest-gray: var(--blue-grey-900);
-  --darker-gray: var(--grey-800);
-  --dark-gray: var(--grey-600);
-  --gray: var(--grey-500);
-  --light-gray: var(--grey-400);
-  --lighter-gray: var(--grey-300);
-  --lightest-gray: var(--grey-100);
+  --darker-gray: var(--blue-grey-800);
+  --dark-gray: var(--blue-grey-600);
+  --gray: var(--blue-grey-400);
+  --light-gray: var(--blue-grey-300);
+  --lighter-gray: var(--blue-grey-100);
+  --lightest-gray: var(--blue-grey-50);
 
-  --accent: var(--blue);
+  --accent: var(--light-blue-600);
 
-  --action: var(--blue);
+  --action: var(--light-blue-600);
   --success: var(--green);
-  --warning: var(--orange);
+  --warning: var(--amber);
   --danger: var(--red);
 
-  --action-dark: var(--blue-800);
+  --action-dark: var(--light-blue-800);
   --success-dark: var(--green-800);
-  --warning-dark: var(--orange-800);
+  --warning-dark: var(--amber-800);
   --danger-dark: var(--red-800);
 }
 
@@ -336,7 +336,7 @@ body {
   font-weight: 500;
   line-height: 1.3;
   color: var(--dark-gray);
-  background-color: #f9f9f9;
+  background-color: #f9fafa; // f9f9f9
 }
 
 body:not(.user-is-tabbing) * {

@@ -183,7 +183,7 @@ export default {
     transform: translateY(-50%);
     opacity: 0;
     transition: var(--fast) var(--transition);
-    color: var(--gray);
+    color: var(--light-gray);
   }
 
   input.charactercount:focus {

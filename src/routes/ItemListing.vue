@@ -117,6 +117,7 @@
     <v-modal
       v-if="bookmarkModal"
       :title="$t('save_as_bookmark')"
+      :simple=false
       @confirm="saveBookmark"
       @close="bookmarkModal = false">
       <label for="bookmark">{{ $t('name_bookmark') }}</label>

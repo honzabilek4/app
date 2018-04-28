@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "form-button",
+  name: "v-button",
   props: {
     fullwidth: {
       type: Boolean,

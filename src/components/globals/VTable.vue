@@ -301,7 +301,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 20px;
-  border-bottom: 1px solid var(--lighter-gray);
+  border-bottom: 1px solid var(--lightest-gray);
   box-sizing: content-box;
 }
 
@@ -328,7 +328,7 @@ export default {
 }
 
 .drag-handle-line {
-  background-color: var(--lighter-gray);
+  background-color: var(--lightest-gray);
   width: 1px;
   height: 60%;
   transition: background-color var(--fast) var(--transition);
