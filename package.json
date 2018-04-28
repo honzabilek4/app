@@ -1,8 +1,9 @@
 {
   "name": "directus",
-  "version": "7.0.0-alpha.1",
+  "version": "7.0.0-alpha.2",
   "private": true,
-  "description": "Directus is an Open-Source Headless CMS & API for Managing Custom Databases",
+  "description":
+    "Directus is an Open-Source Headless CMS & API for Managing Custom Databases",
   "contributors": [
     "Welling Guzmán <welling@rngr.org>",
     "Ben Haynes <ben@rngr.org>",
@@ -29,7 +30,8 @@
     "body-scroll-lock": "^2.3.3",
     "convert-range": "^1.1.0",
     "deep-object-diff": "^1.1.0",
-    "directus-sdk-javascript": "git+https://github.com/directus/directus-sdk-javascript.git#next",
+    "directus-sdk-javascript":
+      "git+https://github.com/directus/directus-sdk-javascript.git#next",
     "lodash": "^4.17.5",
     "md5": "^2.2.1",
     "portal-vue": "^1.3.0",
@@ -47,23 +49,16 @@
     "vuex-persistedstate": "^2.5.2"
   },
   "babel": {
-    "presets": [
-      "@vue/app"
-    ]
+    "presets": ["@vue/app"]
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
-    ]
+    "extends": ["plugin:vue/essential", "@vue/prettier"]
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "defaults"
-  ]
+  "browserslist": ["defaults"]
 }
