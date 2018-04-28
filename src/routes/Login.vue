@@ -88,6 +88,11 @@ small {
   justify-content: center;
   align-items: center;
   padding: 10px 13px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
 
   i {
     margin-right: 5px;
