@@ -46,16 +46,16 @@
           </div>
           <button
             v-if="index !== 0"
-            class="rollback"
-            @click="previewing = activity">{{ $t("rollback") }}</button>
+            class="revert"
+            @click="previewing = activity">{{ $t("revert") }}</button>
         </details>
       </article>
     </div>
     <v-modal
       v-if="previewing !== null"
       :title="$t('preview_and_rollback')"
-      :ok="$t('rollback')"
-      @confirm="rollback"
+      :ok="$t('revert')"
+      @confirm="revert"
       @close="previewing = null">
       <edit-form
         :fields="fields"
@@ -202,9 +202,9 @@ export default {
         field: this.fields[field]
       }));
     },
-    rollback() {
+    revert() {
       this.$api
-        .rollback(this.collection, this.primaryKey, this.previewing.revision.id)
+        .revert(this.collection, this.primaryKey, this.previewing.revision.id)
         .then(() => {
           this.previewing = null;
           this.$emit("reload");
@@ -359,7 +359,7 @@ export default {
       }
     }
 
-    .rollback {
+    .revert {
       color: var(--action);
       margin-top: 20px;
     }
