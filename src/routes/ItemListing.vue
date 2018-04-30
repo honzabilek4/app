@@ -176,6 +176,9 @@ export default {
     noResults() {
       if (this.hydrating || this.loading) return false;
 
+      // Don't show no-results if there aren't any items in the db to begin with
+      if (this.emptyCollection) return false;
+
       return (this.items && this.items.length === 0) || false;
     },
     emptyCollection() {
