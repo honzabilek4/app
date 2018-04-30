@@ -13,6 +13,15 @@ export default function hydrateStore() {
     store.dispatch("getBookmarks")
   ])
     .then(() => {
+      // Set accent color
+      const customColor = store.state.settings.data.color;
+      if (customColor) {
+        document.documentElement.style.setProperty(
+          "--accent",
+          `var(--${customColor}-600)`
+        );
+      }
+
       store.commit(STORE_HYDRATED);
       startPolling();
     })

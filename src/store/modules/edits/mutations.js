@@ -28,6 +28,7 @@ const mutations = {
     state.collection = collection;
     state.primaryKey = primaryKey;
     state.savedValues = savedValues;
+    state.values = {};
   },
 
   [UNSTAGE_VALUE](state, { field }) {

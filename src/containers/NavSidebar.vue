@@ -22,9 +22,20 @@
           class="close"
           @click="$emit('toggleNav', false)">Close nav</button>
         <section class="logo">
-          <img
-            src="../assets/logo.svg"
-            alt="Directus Logo">
+          <transition name="fade">
+            <img
+              v-show="customLogo && customLogoLoaded"
+              @load="customLogoLoaded = true"
+              :src="customLogo"
+              :alt="projectName">
+          </transition>
+          <transition name="fade">
+            <img
+              v-show="logoLoaded && !customLogoExists"
+              @load="logoLoaded = true"
+              src="../assets/logo.svg"
+              alt="Directus Logo">
+          </transition>
         </section>
         <section class="content">
           <button
@@ -165,10 +176,28 @@ export default {
   data() {
     return {
       projectSwitcherActive: false,
-      signOutActive: false
+      signOutActive: false,
+      customLogo: null,
+      customLogoLoaded: false,
+      logoLoaded: false
     };
   },
+  created() {
+    const logoID = this.$store.state.settings.data.logo;
+
+    if (logoID) {
+      // NOTE: this should be handled by the API. directus/api#112
+      this.$api
+        .getItem("directus_files", logoID)
+        .then(res => res.data.storage.full_url)
+        .then(url => (this.customLogo = url))
+        .catch(console.error);
+    }
+  },
   computed: {
+    customLogoExists() {
+      return Boolean(this.$store.state.settings.data.logo);
+    },
     collectionNames() {
       return (
         this.$store.state.collections.data &&
@@ -177,6 +206,9 @@ export default {
     },
     bookmarks() {
       return this.$store.state.bookmarks.data;
+    },
+    projectName() {
+      return this.$store.state.auth.projectName;
     },
     avatarURL() {
       if (this.$store.state.me.avatar) {
@@ -272,14 +304,17 @@ aside {
 
 .logo {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: var(--accent);
   height: var(--header-height);
+  padding: 10px;
+  display: grid;
 
   img {
-    width: 66px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    grid-row: 1;
+    grid-column: 1;
   }
 }
 
@@ -511,5 +546,18 @@ nav:not(:last-child) {
   .user-menu {
     box-shadow: 1px 0 0 -0px var(--lightest-gray);
   }
+}
+
+.fade-enter-active {
+  transition: opacity var(--fast) var(--transition-in);
+}
+
+.fade-leave-active {
+  transition: opacity var(--fast) var(--transition-out);
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
