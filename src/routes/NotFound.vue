@@ -24,6 +24,6 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100%;
+  min-height: calc(100vh - var(--header-height));
 }
 </style>

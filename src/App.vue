@@ -192,12 +192,6 @@ body:not(.public) {
 </style>
 
 <style lang="scss" scoped>
-.directus,
-.directus > div:first-child,
-main {
-  height: 100%;
-}
-
 main {
   width: 100%;
   overflow-x: scroll;

@@ -1,11 +1,13 @@
 <template>
-  <div class="v-error">
-    <i
-      :class="color"
-      class="material-icons">{{ icon }}</i>
-    <h2 class="style-1">{{ title }}</h2>
-    <p>{{ body }}</p>
-  </div>
+  <transition name="error">
+    <div class="v-error">
+      <i
+        :class="color"
+        class="material-icons">{{ icon }}</i>
+      <h2 class="style-1">{{ title }}</h2>
+      <p>{{ body }}</p>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -83,6 +85,38 @@ export default {
 
   .danger {
     color: var(--danger);
+  }
+}
+
+.error-enter-active {
+  transition: var(--slow) var(--transition-in);
+
+  > * {
+    transition: var(--slow) var(--transition-in);
+
+    &:nth-child(2) {
+      transition-delay: 50ms;
+    }
+
+    &:nth-child(3) {
+      transition-delay: 100ms;
+    }
+  }
+}
+
+.error-leave-active {
+  transition: var(--slow) var(--transition-out);
+
+  > * {
+    transition: var(--slow) var(--transition-out);
+  }
+}
+
+.error-enter,
+.error-leave-to {
+  > * {
+    opacity: 0;
+    transform: translateY(15px);
   }
 }
 </style>

@@ -595,7 +595,7 @@ export default {
 }
 
 .no-results {
-  height: 100%;
+  min-height: calc(100vh - var(--header-height));
   display: flex;
   justify-content: center;
   align-items: center;
