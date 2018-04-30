@@ -13,6 +13,7 @@
       class="wrapper">
       <i class="material-icons">search</i>
       <input
+        ref="searchInput"
         :placeholder="placeholder"
         :value="searchQuery"
         :class="{ 'has-filters': hasFilters }"
@@ -166,6 +167,14 @@ export default {
   created() {
     this.search = this.$lodash.debounce(this.search, 300);
     this.updateFilter = this.$lodash.debounce(this.updateFilter, 300);
+  },
+  mounted() {
+    this.$refs.searchInput.focus();
+  },
+  watch: {
+    $route() {
+      this.$refs.searchInput.focus();
+    }
   },
   methods: {
     search(value) {
