@@ -4,7 +4,6 @@ function handleFirstTab(e) {
 
     window.removeEventListener("keydown", handleFirstTab);
     window.addEventListener("mousedown", handleMouseDownOnce); // eslint-disable-line no-use-before-define
-    e.preventDefault();
   }
 }
 
