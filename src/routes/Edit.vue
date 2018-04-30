@@ -2,8 +2,7 @@
   <div class="edit">
     <loader
       v-if="hydrating"
-      area="content"
-    />
+      area="content" />
 
     <portal to="header-title">
       <h1 class="style-1"><breadcrumb :links="breadcrumb" /></h1>
@@ -240,8 +239,16 @@ export default {
       this.saving = true;
       this.$store
         .dispatch("save")
-        .then(() => {
+        .then(res => {
           this.saving = false;
+
+          if (this.newItem) {
+            const primaryKey = res.data[this.primaryKeyField];
+            return this.$router.push(
+              `/collections/${this.collection}/${primaryKey}`
+            );
+          }
+
           this.hydrate();
         })
         .catch(console.error);
