@@ -19,6 +19,7 @@ export default {
   about_directus: "About Directus",
   activity: "Activity",
   activity_log: "Activity Log",
+  activity_outside_directus: "This item was created outside of Directus.",
   additional_info: "Additional Info",
   add_new: "Add new",
   add_field_filter: "Add a field filter",

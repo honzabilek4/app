@@ -16,7 +16,7 @@
         v-for="(activity, index) in activityWithChanges"
         :key="activity.id">
         <i
-          v-if="activity.message"
+          v-if="activity.message && activity.type === 'message'"
           class="material-icons">message</i>
         <span
           v-else
@@ -24,31 +24,36 @@
           :class="activity.action"
           class="indicator" />
 
-        <details>
-          <summary>{{ activity.name }}<span>•</span><timeago
-            :auto-update="1"
-            :since="activity.date"
-            :locale="$i18n.locale"
-            class="date" /></summary>
-          <div
-            v-for="({ field, before, after }) in activity.changes"
-            class="change"
-            :key="field.field">
-            <p>{{ field.name }}</p>
-            <div class="diff">
+        <div class="content">
+          <details v-if="activity.action !== 'external'">
+            <summary>{{ activity.name }}<span>•</span><timeago
+              :auto-update="1"
+              :since="activity.date"
+              :locale="$i18n.locale"
+              class="date" /></summary>
+            <div v-if="activity.changes">
               <div
-                :class="{ empty: !before }"
-                class="before">{{ before || '--' }}</div>
-              <div
-                :class="{ empty: !after }"
-                class="after">{{ after || '--' }}</div>
+                v-for="({ field, before, after }) in activity.changes"
+                class="change"
+                :key="field.field">
+                <p>{{ field.name }}</p>
+                <div class="diff">
+                  <div
+                    :class="{ empty: !before }"
+                    class="before">{{ before || '--' }}</div>
+                  <div
+                    :class="{ empty: !after }"
+                    class="after">{{ after || '--' }}</div>
+                </div>
+              </div>
+              <button
+                v-if="index !== 0"
+                class="revert"
+                @click="previewing = activity">{{ $t("revert") }}</button>
             </div>
-          </div>
-          <button
-            v-if="index !== 0"
-            class="revert"
-            @click="previewing = activity">{{ $t("revert") }}</button>
-        </details>
+          </details>
+          <p v-if="activity.message">{{ activity.message }}</p>
+        </div>
       </article>
     </div>
     <v-modal
@@ -101,6 +106,8 @@ export default {
   },
   computed: {
     activity() {
+      if (!this.data) return [];
+
       switch (this.show) {
         case "comments":
           return this.data.filter(item => item.message !== null);
@@ -112,13 +119,24 @@ export default {
       }
     },
     activityWithChanges() {
-      if (!this.activity) return [];
+      if (!this.activity || this.activity.length === 0) return [];
 
-      return this.activity.map((activity, i) => ({
+      const activityWithChanges = this.activity.map((activity, i) => ({
         ...activity,
         changes: this.getChanges(activity.id, i),
         revision: this.revisions[activity.id]
       }));
+
+      const lastItem = activityWithChanges[activityWithChanges.length - 1];
+
+      if (lastItem.action.toLowerCase() !== "add") {
+        activityWithChanges.push({
+          action: "external",
+          message: this.$t("activity_outside_directus")
+        });
+      }
+
+      return activityWithChanges;
     }
   },
   watch: {
@@ -136,13 +154,17 @@ export default {
     hydrate() {
       this.loading = true;
       this.revisionsLoading = true;
+      this.error = null;
+      this.data = null;
+      this.revisions = {};
+      this.previewing = null;
 
       this.$api
         .getActivity({
           "filter[collection][eq]": this.collection,
           "filter[item][eq]": this.primaryKey,
-          "filter[type][eq]": "ENTRY",
-          fields: "id,action,datetime,message,user.first_name,user.last_name",
+          fields:
+            "id,action,type,datetime,message,user.first_name,user.last_name",
           sort: "-datetime"
         })
         .then(res => res.data)
@@ -155,6 +177,7 @@ export default {
         .catch(err => {
           this.error = err;
           this.loading = false;
+          console.error(err);
         });
 
       this.$api
@@ -163,7 +186,8 @@ export default {
         .then(revisions => {
           this.revisionsLoading = false;
           this.revisions = this.$lodash.keyBy(revisions, "activity");
-        });
+        })
+        .catch(console.error);
     },
     formatItem(item) {
       const date = new Date(item.datetime);
@@ -173,11 +197,15 @@ export default {
         date,
         name,
         action: item.action.toLowerCase(),
+        type: item.type.toLowerCase(),
         message: item.message
       };
     },
     getChanges(activityID, index) {
       const revision = this.revisions[activityID];
+
+      if (!revision) return null;
+
       let previousUpdate = null;
 
       for (let i = index + 1; i < this.activity.length; i++) {
@@ -292,6 +320,17 @@ export default {
     &.add {
       border-color: var(--success);
     }
+    &.external {
+      border-color: var(--gray);
+    }
+  }
+
+  i.material-icons {
+    width: 13px;
+    background-color: var(--white);
+    font-size: 20px;
+    transform: translateX(-2px);
+    height: 20px;
   }
 
   article {
@@ -299,7 +338,7 @@ export default {
     margin-bottom: 40px;
   }
 
-  details {
+  .content {
     margin-left: 10px;
     flex-grow: 1;
 
