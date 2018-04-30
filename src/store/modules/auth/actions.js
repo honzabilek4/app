@@ -46,8 +46,8 @@ export function refresh({ commit }, { token, url }) {
 export function logout({ commit }, error) {
   stopPolling();
   api.logout();
-  router.push("/login");
   resetState();
+  router.push("/login");
   commit(LOGOUT, error);
 }
 

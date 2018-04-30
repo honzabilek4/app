@@ -2,7 +2,6 @@ import api from "../api";
 import { LATENCY } from "./mutation-types";
 
 export function latency({ commit }) {
-  // eslint-disable-line
   const start = performance.now();
   const now = Date.now();
 
