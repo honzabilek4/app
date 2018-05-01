@@ -9,21 +9,6 @@
       :fields="fields"
       :values="settings"
       @stageValue="stageValue" />
-
-    <v-modal
-      v-if="confirmNavigation"
-      :action-required="true"
-      :title="$t('unsaved_changes')">
-      <p>
-        {{ $t('navigate_changes') }}
-      </p>
-      <template slot="footer">
-        <v-button
-          bg="danger"
-          @click="discardChanges">{{ $t('discard_changes') }}</v-button>
-        <v-button @click="confirmNavigation = false">{{ $t('keep_editing') }}</v-button>
-      </template>
-    </v-modal>
   </div>
 </template>
 
@@ -39,10 +24,7 @@ export default {
     return {
       hydrating: false,
       saving: false,
-      deleting: false,
-      confirmNavigation: false,
-      toPath: null,
-      editing: false
+      deleting: false
     };
   },
   computed: {

@@ -1,9 +1,18 @@
 <template>
-  <component
-    v-if="!loading"
-    :is="component"
-    :collection="collection"
-    :primary-key="primaryKey" />
+  <div class="edit-guard">
+    <component
+      v-if="!loading"
+      :is="component"
+      :collection="collection"
+      :primary-key="primaryKey" />
+    <v-confirm
+      v-if="confirmNavigation"
+      :message="$t('navigate_changes')"
+      :confirm-text="$t('keep_editing')"
+      :cancel-text="$t('discard_changes')"
+      @confirm="confirmNavigation = false"
+      @cancel="discardChanges" />
+  </div>
 </template>
 
 <script>
@@ -29,7 +38,9 @@ export default {
   data() {
     return {
       exists: null,
-      loading: false
+      loading: false,
+      confirmNavigation: false,
+      toPath: ""
     };
   },
   computed: {
@@ -45,7 +56,18 @@ export default {
       }
 
       return "not-found";
+    },
+    editing() {
+      return this.$store.getters.editing;
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.editing) {
+      this.confirmNavigation = true;
+      this.toPath = to.fullPath;
+      return next(false);
+    }
+    return next();
   },
   watch: {
     $route() {

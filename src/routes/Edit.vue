@@ -38,33 +38,12 @@
       />
     </portal>
 
-    <v-modal
-      v-if="removeModalActive"
-      :title="$t('delete_confirmation')"
-      :ok="$t('delete')"
-      :loading="deleting"
-      ok-bg="danger"
+    <v-confirm
+      v-show="removeModalActive"
+      :message="$t('delete_are_you_sure')"
+      :confirm-text="$t('delete')"
       @confirm="remove"
-      @close="removeModalActive = false">
-      <p>
-        {{ $t('delete_are_you_sure') }}
-      </p>
-    </v-modal>
-
-    <v-modal
-      v-if="confirmNavigation"
-      :action-required="true"
-      :title="$t('unsaved_changes')">
-      <p>
-        {{ $t('navigate_changes') }}
-      </p>
-      <template slot="footer">
-        <v-button
-          bg="danger"
-          @click="discardChanges">{{ $t('discard_changes') }}</v-button>
-        <v-button @click="confirmNavigation = false">{{ $t('keep_editing') }}</v-button>
-      </template>
-    </v-modal>
+      @cancel="removeModalActive = false" />
 
     <edit-form
       v-if="!hydrating"
@@ -101,7 +80,6 @@ export default {
       saving: false,
       deleting: false,
       removeModalActive: false,
-      confirmNavigation: false,
       toPath: null
     };
   },
@@ -179,14 +157,6 @@ export default {
     primaryKeyField() {
       return this.$lodash.find(this.fields, { interface: "primary-key" }).field;
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    if (this.editing) {
-      this.confirmNavigation = true;
-      this.toPath = to.fullPath;
-      return next(false);
-    }
-    return next();
   },
   watch: {
     $route() {

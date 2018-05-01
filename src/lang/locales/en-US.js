@@ -133,9 +133,8 @@ export default {
     "We're having some trouble processing your request.. Please try again by refreshing this page. If the problem persist, please contact your system administrator.",
   sign_out: "Sign Out",
   sign_out_confirm: "Are you sure you want to sign out?",
-  unsaved_changes: "Unsaved Changes",
   unsaved_changes_copy:
-    "It seems like you have some unsaved changes. Would you like to keep editing or discard the changes you made?",
+    "You have unsaved changes! Are you sure you want to leave this page?",
   user_directory: "User Directory",
   value: "Value",
   values: "Values",

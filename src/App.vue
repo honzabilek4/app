@@ -44,21 +44,13 @@
           @close="toggleInfo(false)" />
       </main>
 
-      <v-modal
+      <v-confirm
         v-if="unsavedChanges"
-        :action-required="true"
-        :title="$t('unsaved_changes')">
-        <p>
-          {{ $t('unsaved_changes_copy') }}
-        </p>
-        <template slot="footer">
-          <v-button
-            bg="danger"
-            @click="discardChanges">{{ $t('discard_changes') }}</v-button>
-          <v-button
-            @click="keepEditing">{{ $t('keep_editing') }}</v-button>
-        </template>
-      </v-modal>
+        :message="$t('unsaved_changes_copy')"
+        :confirm-text="$t('keep_editing')"
+        :cancel-text="$t('discard_changes')"
+        @confirm="keepEditing"
+        @cancel="discardChanges" />
 
     </div>
 

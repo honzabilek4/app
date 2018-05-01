@@ -8,13 +8,12 @@
         Project changer form
       </v-modal>
 
-      <v-modal
+      <v-confirm
         v-if="signOutActive"
-        :title="$t('sign_out_confirm')"
-        :ok="$t('sign_out')"
-        simple
+        :message="$t('sign_out_confirm')"
+        :confirm-text="$t('sign_out')"
         @confirm="$router.push('/logout')"
-        @close="signOutActive = false"/>
+        @cancel="signOutActive = false"/>
 
       <focus-lock :disabled="!overlay">
         <button

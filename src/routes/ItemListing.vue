@@ -114,27 +114,19 @@
       @input="updateListingPreferences('view_options', $event)"
       @query="updateListingPreferences('view_query', $event)" />
 
-    <v-modal
+    <v-prompt
       v-if="bookmarkModal"
-      :title="$t('save_as_bookmark')"
-      :simple=false
+      v-model="bookmarkTitle"
+      :message="$t('name_bookmark')"
       @confirm="saveBookmark"
-      @close="bookmarkModal = false">
-      <label for="bookmark">{{ $t('name_bookmark') }}</label>
-      <v-input
-        v-model="bookmarkTitle"
-        type="text" />
-    </v-modal>
+      @cancel="bookmarkModal = false" />
 
-    <v-modal
+    <v-confirm
       v-if="batchDeleteModal"
-      :title="$t('batch_delete')"
-      :ok="$t('delete')"
-      ok-bg="danger"
+      :message="$tc('batch_delete_confirm', selection.length, { count: selection.length })"
+      :confirm-text="$t('delete')"
       @confirm="batchDelete"
-      @close="batchDeleteModal = false">
-      <p>{{ $tc('batch_delete_confirm', selection.length, { count: selection.length }) }}</p>
-    </v-modal>
+      @cancel="batchDeleteModal = false" />
   </div>
 </template>
 
@@ -573,6 +565,11 @@ export default {
       preferences.title = this.bookmarkTitle;
       delete preferences.id;
       delete preferences.group;
+
+      if (!preferences.collection) {
+        preferences.collection = this.collection;
+      }
+
       this.$store
         .dispatch("saveBookmark", preferences)
         .then(() => {
