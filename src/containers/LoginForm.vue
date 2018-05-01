@@ -247,7 +247,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   max-width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 0;
   list-style: none;
 
@@ -278,8 +278,8 @@ export default {
 .toggle-reset {
   text-align: center;
   width: 100%;
-  margin: 30px 0 10px;
-  color: var(--light-gray);
+  margin: 20px 0 10px;
+  color: var(--lighter-gray);
   transition: color var(--fast) var(--transition);
 
   &:hover {
