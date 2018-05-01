@@ -1,6 +1,26 @@
 <template>
   <div class="login-form">
-    <form @submit.prevent="login">
+    <form v-if="reset" @submit.prevent="resetPassword">
+      <invisible-label html-for="email">{{ $t('email_address') }}</invisible-label>
+      <v-input
+        id="email"
+        v-model="email"
+        :placeholder="$t('email')"
+        :disabled="exists !== true"
+        icon-left="person"
+        class="input"
+        type="email"
+        name="email" />
+
+      <v-button
+        :fullwidth="true"
+        :loading="resetLoading"
+        :disabled="resetButtonDisabled"
+        type="submit">{{ $t('reset_password') }}</v-button>
+
+      <button class="toggle-reset" @click="reset = false">{{ $t('login') }}</button>
+    </form>
+    <form v-else @submit.prevent="login">
       <div v-if="apiUrls.length === 0">
         <invisible-label html-for="url">{{ $t('api_url') }}</invisible-label>
         <v-input
@@ -54,6 +74,8 @@
         :disabled="disabled"
         :loading="loading"
         type="submit">{{ $t('login') }}</v-button>
+
+      <button class="toggle-reset" @click="reset = true">{{ $t('forgot_password') }}</button>
     </form>
     <nav>
       <transition-group
@@ -87,12 +109,18 @@ export default {
 
       email: "",
       password: "",
-      url: Object.keys(window.__DirectusConfig__.api)[0] || "" // eslint-disable-line
+      url: Object.keys(window.__DirectusConfig__.api)[0] || "", // eslint-disable-line
+
+      reset: false,
+      resetLoading: false
     };
   },
   computed: {
     disabled() {
       return !(this.email.length && this.password.length && this.url.length);
+    },
+    resetButtonDisabled() {
+      return this.email.length === 0;
     },
     apiConfig() {
       return window.__DirectusConfig__.api; // eslint-disable-line
@@ -185,6 +213,25 @@ export default {
         .finally(() => {
           this.gettingThirdPartyAuthProviders = false;
         });
+    },
+    resetPassword() {
+      this.resetLoading = true;
+
+      this.$api
+        .request(
+          "POST",
+          "/auth/reset-request",
+          {},
+          {
+            email: this.email
+          }
+        )
+        .then(() => {
+          this.resetLoading = false;
+        })
+        .catch(err => {
+          alert(JSON.stringify(err, "    ", false));
+        });
     }
   }
 };
@@ -225,6 +272,18 @@ export default {
     .user-is-tabbing &:focus {
       background-color: var(--gray);
     }
+  }
+}
+
+.toggle-reset {
+  text-align: center;
+  width: 100%;
+  margin: 30px 0 10px;
+  color: var(--light-gray);
+  transition: color var(--fast) var(--transition);
+
+  &:hover {
+    color: var(--dark-gray);
   }
 }
 
