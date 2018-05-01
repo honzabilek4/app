@@ -63,7 +63,7 @@ export default {
 
   p {
     line-height: 1.4;
-    color: var(--gray);
+    color: var(--light-gray);
     max-width: 200px;
     text-align: center;
   }
