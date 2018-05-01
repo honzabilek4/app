@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="v-modal-base">
-      <div class="mask" />
+      <div class="mask" @click="$emit('cancel')" />
       <div class="wrapper">
         <aside class="modal">
           <focus-lock>
@@ -57,6 +57,7 @@ export default {
   bottom: 0;
   background-color: var(--black);
   opacity: 0.6;
+  cursor: pointer;
 
   &.pointer {
     cursor: pointer;

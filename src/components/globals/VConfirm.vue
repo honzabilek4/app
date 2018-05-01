@@ -1,6 +1,6 @@
 <template>
-  <v-modal-base :message="message">
-    <div class="buttons">
+  <v-modal-base :message="message" @cancel="$emit('cancel')">
+    <div class="buttons" @keydown.esc="$emit('cancel')">
       <button class="cancel" @click="$emit('cancel')">{{ cancelText || $t('cancel') }}</button>
       <v-button class="confirm" @click="$emit('confirm')">{{ confirmText || $t('ok') }}</v-button>
     </div>

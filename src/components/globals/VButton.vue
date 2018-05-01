@@ -61,31 +61,48 @@ export default {
 <style lang="scss" scoped>
 button.action {
   background-color: var(--action);
+  border-color: var(--action);
+
   &:hover {
     background-color: var(--action-dark);
+    border-color: var(--action-dark);
   }
 }
+
 button.secondary {
   background-color: var(--secondary);
+  border-color: var(--secondary);
+
   &:hover {
     background-color: var(--secondary-dark);
+    border-color: var(--secondary-dark);
   }
 }
+
 button.warning {
   background-color: var(--warning);
+  border-color: var(--warning);
+
   &:hover {
     background-color: var(--warning-dark);
+    border-color: var(--warning-dark);
   }
 }
+
 button.danger {
   background-color: var(--danger);
+  border-color: var(--danger);
+
   &:hover {
     background-color: var(--danger-dark);
+    border-color: var(--danger-dark);
   }
 }
+
 button.black {
   color: var(--black);
 }
+
 button.white {
   color: var(--white);
 }
@@ -94,12 +111,14 @@ button {
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color var(--fast) var(--transition);
+  transition: var(--fast) var(--transition);
+  transition-property: border-color, background-color, color;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
   min-width: 160px;
+  border: var(--input-border-width) solid var(--action);
 
   &:disabled:not(.loading) {
     background-color: var(--lightest-gray);

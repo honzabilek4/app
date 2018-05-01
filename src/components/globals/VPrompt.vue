@@ -1,10 +1,23 @@
 <template>
-  <v-modal-base :message="message">
-    <v-textarea v-if="multiline" class="input multiline" @input="$emit('input', $event)" :value="value" />
-    <v-input v-else class="input" @input="$emit('input', $event)" :value="value" />
-    <div class="buttons">
-      <button class="cancel" @click="$emit('cancel')">{{ cancelText || $t('cancel') }}</button>
-      <v-button class="confirm" @click="$emit('confirm')">{{ confirmText || $t('ok') }}</v-button>
+  <v-modal-base :message="message" @cancel="$emit('cancel')">
+    <div class="v-prompt" @keydown.esc="$emit('cancel')">
+      <v-textarea
+        v-if="multiline"
+        class="input multiline"
+        :value="value"
+        @input="$emit('input', $event)" />
+      <v-input
+        v-else
+        class="input"
+        :value="value"
+        @input="$emit('input', $event)" />
+      <div class="buttons">
+        <button class="cancel" @click="$emit('cancel')">{{ cancelText || $t('cancel') }}</button>
+        <v-button
+          class="confirm"
+          :disabled="required && disabled"
+          @click="$emit('confirm')">{{ confirmText || $t('ok') }}</v-button>
+      </div>
     </div>
   </v-modal-base>
 </template>
@@ -34,10 +47,19 @@ export default {
     multiline: {
       type: Boolean,
       default: false
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
     VModalBase
+  },
+  computed: {
+    disabled() {
+      return this.value == null || this.value.length === 0;
+    }
   }
 };
 </script>
