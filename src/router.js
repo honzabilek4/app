@@ -15,11 +15,17 @@ import Debug from "./routes/Debug.vue";
 import Settings from "./routes/Settings.vue";
 import SettingsGlobal from "./routes/SettingsGlobal.vue";
 
+import ModalDebug from "./routes/ModalDebug.vue";
+
 Vue.use(Router);
 
 const router = new Router({
   mode: "history",
   routes: [
+    {
+      path: "/modals",
+      component: ModalDebug
+    },
     {
       path: "/",
       redirect: "/collections"
