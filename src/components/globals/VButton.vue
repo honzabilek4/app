@@ -94,12 +94,12 @@ button {
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: var(--fast) var(--transition);
+  transition: background-color var(--fast) var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--input-height);
-  padding: 0 20px;
+  padding: 10px 20px;
+  min-width: 100px;
 
   &:disabled:not(.loading) {
     background-color: var(--lightest-gray);
