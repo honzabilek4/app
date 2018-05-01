@@ -34,10 +34,10 @@ export default {
       alert: false,
       confirm: false,
       prompt: false,
-      title: "",
-      confirmText: "",
-      cancelText: "",
-      promptText: ""
+      title: "Are you sure you want to log out?",
+      confirmText: "Yes",
+      cancelText: "Cancel",
+      promptText: "I love Directus!"
     };
   }
 };

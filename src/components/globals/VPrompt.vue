@@ -1,6 +1,7 @@
 <template>
   <v-modal-base :message="message">
-    <v-input class="input" @input="$emit('input', $event)" :value="value" />
+    <v-textarea v-if="multiline" class="input multiline" @input="$emit('input', $event)" :value="value" />
+    <v-input v-else class="input" @input="$emit('input', $event)" :value="value" />
     <div class="buttons">
       <button class="cancel" @click="$emit('cancel')">{{ cancelText || $t('cancel') }}</button>
       <v-button class="confirm" @click="$emit('confirm')">{{ confirmText || $t('ok') }}</v-button>
@@ -29,6 +30,10 @@ export default {
     value: {
       type: String,
       default: null
+    },
+    multiline: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -46,6 +51,10 @@ export default {
 }
 .input {
   margin-top: 20px;
+
+  &.multiline {
+    min-height: 100px;
+  }
 }
 
 .cancel {
