@@ -174,6 +174,7 @@ export default {
   watch: {
     $route() {
       this.$refs.searchInput.focus();
+      this.open = false;
     }
   },
   methods: {
