@@ -158,7 +158,6 @@
 <script>
 import FocusLock from "vue-focus-lock";
 import VSignal from "../components/VSignal.vue";
-import createGravatarLink from "../helpers/gravatar";
 
 export default {
   name: "nav-sidebar",
@@ -217,7 +216,7 @@ export default {
         return `${url}/${filename}`;
       }
 
-      return createGravatarLink(this.email, 40);
+      return this.$helpers.gravatar(this.email, { size: 40 });
     },
     email() {
       return this.$store.state.me.data && this.$store.state.me.data.email;
