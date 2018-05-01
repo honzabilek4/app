@@ -45,6 +45,7 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  min-height: calc(100vh - var(--header-height));
 
   i {
     font-size: 48px;
@@ -105,10 +106,18 @@ export default {
 }
 
 .error-leave-active {
-  transition: var(--slow) var(--transition-out);
+  transition: var(--slow) var(--transition-in);
 
   > * {
-    transition: var(--slow) var(--transition-out);
+    transition: var(--slow) var(--transition-in);
+
+    &:nth-child(1) {
+      transition-delay: 100ms;
+    }
+
+    &:nth-child(2) {
+      transition-delay: 50ms;
+    }
   }
 }
 

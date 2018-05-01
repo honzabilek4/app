@@ -211,6 +211,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-filter {
+  width: 240px;
+
+  transition: width var(--slow) var(--transition);
+
+  &.open,
+  &:focus-within {
+    width: 340px;
+  }
+}
+
 .dropdown {
   position: absolute;
   top: var(--header-height);
@@ -310,7 +321,7 @@ export default {
   position: relative;
 
   .search {
-    width: 300px;
+    width: 100%;
     height: var(--input-height);
     border-radius: var(--border-radius);
     display: block;

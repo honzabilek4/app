@@ -591,13 +591,6 @@ export default {
   padding-bottom: var(--page-padding-bottom);
 }
 
-.no-results {
-  min-height: calc(100vh - var(--header-height));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .bookmark {
   margin-left: 10px;
   opacity: 0.4;
