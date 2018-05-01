@@ -39,7 +39,7 @@
     </portal>
 
     <v-confirm
-      v-show="removeModalActive"
+      v-if="removeModalActive"
       :message="$t('delete_are_you_sure')"
       :confirm-text="$t('delete')"
       @confirm="remove"
