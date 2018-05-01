@@ -99,7 +99,7 @@ button {
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  min-width: 100px;
+  min-width: 160px;
 
   &:disabled:not(.loading) {
     background-color: var(--lightest-gray);

@@ -1,6 +1,8 @@
 <template>
   <v-modal-base :message="message">
+  <div class="buttons">
     <v-button class="confirm" @click="$emit('confirm')">{{ confirmText || $t('ok') }}</v-button>
+  </div>
   </v-modal-base>
 </template>
 
@@ -26,7 +28,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.confirm {
-  float: right;
+.buttons {
+  margin-top: 30px;
+
+  .confirm {
+    float: right;
+  }
 }
 </style>

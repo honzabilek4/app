@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="v-alert">
+    <div class="v-modal-base">
       <div class="mask" />
       <div class="wrapper">
         <aside class="modal">
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-alert {
+.v-modal-base {
   display: table;
   position: fixed;
   z-index: 500;
@@ -83,16 +83,11 @@ aside {
   transition: inherit;
   pointer-events: painted;
   cursor: default;
-  padding: 20px;
+  padding: 30px;
   overflow: auto;
 
   p {
     font-size: 16px;
-    margin-bottom: 20px;
-  }
-
-  button {
-    float: right;
   }
 }
 
