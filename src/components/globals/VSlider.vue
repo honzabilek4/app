@@ -18,7 +18,11 @@
           class="track-fill" />
       </div>
     </div>
-    <output :for="id">{{ valueOrDefault }} {{ unit }}</output>
+    <output
+      :for="id"
+      :class="{
+        'output-shown': alwaysShowOutput
+      }">{{ valueOrDefault }} {{ unit }}</output>
   </div>
 </template>
 
@@ -49,6 +53,10 @@ export default {
     unit: {
       type: String,
       default: null
+    },
+    alwaysShowOutput: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -150,6 +158,9 @@ export default {
     color: var(--accent);
     opacity: 0;
     transition: var(--fast) var(--transition-out);
+    &.output-shown {
+      opacity: 1;
+    }
   }
 
   .input:hover ~ output,
