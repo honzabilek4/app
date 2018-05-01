@@ -13,9 +13,7 @@
           @click="closeError">Close error</button>
       </div>
     </transition>
-    <small
-      :title="version"
-      class="style-4">{{ $t('powered_by_directus') }}</small>
+    <small v-tooltip="version" class="style-4">{{ $t('powered_by_directus') }}</small>
   </div>
 </template>
 

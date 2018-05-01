@@ -85,7 +85,7 @@
         <li
           v-for="provider in thirdPartyAuthProviders"
           :key="provider.name">
-          <a :href="url + '/_/auth/sso/' + provider.name">
+          <a v-tooltip.bottom="$helpers.formatTitle(provider.name)" :href="url + '/_/auth/sso/' + provider.name">
             <img
               :alt="provider.name"
               :src="provider.icon">

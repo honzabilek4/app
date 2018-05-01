@@ -4,8 +4,10 @@ import PortalVue from "portal-vue";
 import lodash from "lodash";
 import Notifications from "vue-notification";
 import VueDraggable from "vuedraggable";
+import VTooltip from "v-tooltip";
 
 import "./assets/global.scss";
+import "./assets/tooltip.scss";
 import "./globals";
 import "./registerServiceWorker";
 import App from "./App.vue";
@@ -50,6 +52,9 @@ Vue.use(VueMQ, {
 });
 Vue.use(Notifications);
 Vue.component("draggable", VueDraggable);
+Vue.use(VTooltip, {
+  defaultDelay: 500
+});
 
 /* eslint-disable no-new */
 new Vue({

@@ -74,7 +74,7 @@
                   class="no-wrap"
                   @click="toBookmark(bookmark)">
                 <i class="material-icons icon">bookmark_outline</i>{{ bookmark.title }}</button>
-                <button @click="deleteBookmark(bookmark.id)">
+                <button v-tooltip="$t('delete_bookmark')" @click="deleteBookmark(bookmark.id)">
                   <i class="material-icons">remove_circle_outline</i>
                 </button>
               </li>
