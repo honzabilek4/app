@@ -2,6 +2,9 @@
   <div
     :class="{ 'no-results': noResults || emptyCollection }"
     class="item-listing">
+
+    <loader v-if="loading || hydrating" area="content" transparent :z-index="9" />
+
     <portal to="header-title">
       <h1 class="style-1"><breadcrumb :links="links" /></h1>
       <button

@@ -3,6 +3,7 @@
     <div
       v-show="active"
       :class="area"
+      :style="{ zIndex }"
       class="loader">
       <div
         :class="{ transparent }"
@@ -38,7 +39,11 @@ export default {
     },
     spinnerDelay: {
       type: Number,
-      default: 1000
+      default: 0
+    },
+    zIndex: {
+      type: Number,
+      default: 500
     }
   },
   data() {
@@ -61,7 +66,6 @@ export default {
 
 <style lang="scss" scoped>
 .loader {
-  z-index: 500;
   position: absolute;
   width: 100%;
   height: 100%;

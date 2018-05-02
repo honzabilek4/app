@@ -4,7 +4,7 @@
     :is="component"
     :primary-key="primaryKey"
     :collection="collection" />
-  <div v-else-if="loading" />
+  <loader v-else-if="loading" area="content" transparent/>
   <component
     v-else
     :is="component"

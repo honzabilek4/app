@@ -49,12 +49,6 @@
       </div>
     </div>
     <div class="body">
-      <loader
-        v-if="loading"
-        :delay="100"
-        :spinner-delay="50"
-        transparent />
-
       <transition-group
         v-if="link"
         name="row">
