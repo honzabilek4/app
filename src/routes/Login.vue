@@ -37,6 +37,10 @@ export default {
     },
     errorType() {
       if (+this.error.code >= 100 && +this.error.code < 200) {
+        if (+this.error.code === 101 || +this.error.code === 102) {
+          return null;
+        }
+
         return "warning";
       }
       return "error";

@@ -3,6 +3,14 @@
     v-if="publicRoute"
     class="directus" />
 
+  <div v-else-if="hydratingError">
+    <v-error
+      icon="warning"
+      :title="$t('server_error')"
+      :body="$t('server_error_copy')"
+      color="danger" />
+  </div>
+
   <div
     v-else
     class="directus">
@@ -10,12 +18,6 @@
     <loader
       v-if="hydrating"
       area="full-page" />
-
-    <div v-else-if="hydratingError">
-      Oops... something went terribly wrong. Please try refreshing the page.
-
-      <pre>{{ hydratingError }}</pre>
-    </div>
 
     <div v-else>
       <header-bar
@@ -67,6 +69,7 @@ import HeaderBar from "./containers/HeaderBar.vue";
 import NavSidebar from "./containers/NavSidebar.vue";
 import InfoSidebar from "./components/InfoSidebar.vue";
 import VBlocker from "./components/VBlocker.vue";
+import VError from "./components/VError.vue";
 
 export default {
   name: "directus",
@@ -74,7 +77,8 @@ export default {
     HeaderBar,
     NavSidebar,
     InfoSidebar,
-    VBlocker
+    VBlocker,
+    VError
   },
   data() {
     return {
@@ -123,6 +127,11 @@ export default {
         document.body.classList.remove("info-wide-active");
         document.body.classList.remove("info-active");
       }
+    },
+    hydratingError(newVal) {
+      if (newVal) {
+        document.body.classList.add("no-padding");
+      }
     }
   },
   created() {
@@ -131,9 +140,9 @@ export default {
   methods: {
     bodyClass() {
       if (this.publicRoute) {
-        document.body.classList.add("public");
+        document.body.classList.add("no-padding");
       } else {
-        document.body.classList.remove("public");
+        document.body.classList.remove("no-padding");
       }
     },
     toggleNav(visible = !this.navActive) {
@@ -158,7 +167,7 @@ export default {
 </script>
 
 <style lang="scss">
-body:not(.public) {
+body:not(.no-padding) {
   padding-top: var(--header-height);
 
   @media (min-width: 50em) {

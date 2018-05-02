@@ -131,6 +131,9 @@ export default {
   settings_permissions: "Group Permissions",
   settings_extensions: "Extensions",
   server_details: "Server Details",
+  server_error: "Server Error",
+  server_error_copy:
+    "Something is wrong with this instance’s server or database.",
   something_went_wrong: "Something went wrong..",
   something_went_wrong_body:
     "We're having some trouble processing your request.. Please try again by refreshing this page. If the problem persist, please contact your system administrator.",

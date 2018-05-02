@@ -197,10 +197,13 @@ export default {
       return Boolean(this.$store.state.settings.data.logo);
     },
     collectionNames() {
-      return (
-        this.$store.state.collections.data &&
-        Object.keys(this.$store.state.collections.data)
-      );
+      const collections = this.$store.state.collections.data;
+
+      if (collections == null) return [];
+
+      return Object.values(collections)
+        .filter(collection => collection.hidden === false)
+        .map(collection => collection.collection);
     },
     bookmarks() {
       return this.$store.state.bookmarks.data;

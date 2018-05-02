@@ -212,17 +212,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search-filter {
-  width: 240px;
-
-  transition: width var(--slow) var(--transition);
-
-  &.open,
-  &:focus-within {
-    width: 340px;
-  }
-}
-
 .dropdown {
   position: absolute;
   top: var(--header-height);
@@ -443,6 +432,19 @@ export default {
     .search {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .search-filter {
+    width: 240px;
+
+    transition: width var(--slow) var(--transition);
+
+    &.open,
+    &:focus-within {
+      width: 340px;
     }
   }
 }

@@ -6,9 +6,9 @@ import startIdleTracking from "../idle";
 export default function hydrateStore() {
   return Promise.all([
     store.dispatch("latency"),
+    store.dispatch("getMe"),
     store.dispatch("getAllUserListingPreferences"),
     store.dispatch("getCollections"),
-    store.dispatch("getMe"),
     store.dispatch("getSettings"),
     store.dispatch("getAllExtensions"),
     store.dispatch("getBookmarks")

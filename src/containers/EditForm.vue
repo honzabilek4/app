@@ -74,7 +74,7 @@ export default {
         return result.push(field);
       });
 
-      return result;
+      return result.filter(field => field.hidden_input === false);
     }
   },
   methods: {

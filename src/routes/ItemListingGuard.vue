@@ -87,23 +87,33 @@ export default {
     }
   },
   created() {
-    if (this.component === "edit") {
-      this.loading = true;
+    this.hydrate();
+  },
+  watch: {
+    $route() {
+      this.hydrate();
+    }
+  },
+  methods: {
+    hydrate() {
+      if (this.component === "edit") {
+        this.loading = true;
 
-      this.$store
-        .dispatch("getFields", this.collection)
-        .then(() => {
-          return this.$api.getItems(this.collection, {
-            limit: 1,
-            fields: [this.primaryKeyField]
-          });
-        })
-        .then(res => res.data)
-        .then(data => {
-          this.primaryKey = String(data[0][this.primaryKeyField]);
-          this.loading = false;
-        })
-        .catch(console.error);
+        this.$store
+          .dispatch("getFields", this.collection)
+          .then(() => {
+            return this.$api.getItems(this.collection, {
+              limit: 1,
+              fields: [this.primaryKeyField]
+            });
+          })
+          .then(res => res.data)
+          .then(data => {
+            this.primaryKey = String(data[0][this.primaryKeyField]);
+            this.loading = false;
+          })
+          .catch(console.error);
+      }
     }
   }
 };

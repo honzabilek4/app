@@ -221,16 +221,15 @@ export default {
   created() {
     this.drag = this.$lodash.throttle(this.drag, 20);
 
-    const widths = {};
-
-    this.columns.forEach(({ field }) => {
-      widths[field] = 200;
-    });
-
-    this.widths = {
-      ...widths,
-      ...this.columnWidths
-    };
+    this.initWidths();
+  },
+  watch: {
+    columnWidths() {
+      this.initWidths();
+    },
+    columns() {
+      this.initWidths();
+    }
   },
   methods: {
     selectAll() {
@@ -266,6 +265,7 @@ export default {
 
       if (screenX !== 0 && this.lastDragXPosition) {
         const delta = screenX - this.lastDragXPosition;
+
         const newPos = this.widths[field] + delta;
         this.widths[field] = newPos;
       }
@@ -282,6 +282,18 @@ export default {
         "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       event.dataTransfer.setDragImage(img, 0, 0);
       event.dataTransfer.effectAllowed = "move";
+    },
+    initWidths() {
+      const widths = {};
+
+      this.columns.forEach(({ field }) => {
+        widths[field] = 200;
+      });
+
+      this.widths = {
+        ...widths,
+        ...this.columnWidths
+      };
     }
   }
 };
@@ -367,6 +379,7 @@ export default {
   padding-right: 20px;
   position: relative;
   overflow: hidden;
+  max-height: 100%;
 }
 
 .cell:last-of-type {

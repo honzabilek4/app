@@ -24,10 +24,12 @@ export default {
     items() {
       const collections = this.$store.state.collections.data || {};
 
-      return Object.keys(collections).map(collection => ({
-        collection: this.$t(`collections-${collection}`),
-        __link__: `/collections/${collection}`
-      }));
+      return Object.values(collections)
+        .filter(collection => collection.hidden === false)
+        .map(collection => ({
+          collection: this.$t(`collections-${collection.collection}`),
+          __link__: `/collections/${collection.collection}`
+        }));
     },
     fields() {
       return [

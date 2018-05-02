@@ -16,7 +16,8 @@ export const i18n = new VueI18n({
   },
   dateTimeFormats: {
     "en-US": dateTimeFormats
-  }
+  },
+  silentTranslationWarn: true
 });
 
 const loadedLanguages = ["en-US"];
