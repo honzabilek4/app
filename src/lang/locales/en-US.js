@@ -46,7 +46,7 @@ export default {
   contains: "Contains",
   delete: "Delete",
   delete_are_you_sure:
-  "Are you sure to delete this item? This action cannot be undone.",
+    "Are you sure to delete this item? This action cannot be undone.",
   delete_bookmark: "Delete Bookmark",
   delete_confirmation: "Delete Confirmation",
   dialog_beginning: "Beginning of dialog window.",

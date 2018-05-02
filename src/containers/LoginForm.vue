@@ -18,7 +18,7 @@
         :disabled="resetButtonDisabled"
         type="submit">{{ $t('reset_password') }}</v-button>
 
-      <button class="toggle-reset" @click="reset = false">{{ $t('login') }}</button>
+      <button class="toggle-reset" @click.prevent="reset = false">{{ $t('login') }}</button>
     </form>
     <form v-else @submit.prevent="login">
       <div v-if="apiUrls.length === 0">
@@ -75,7 +75,7 @@
         :loading="loading"
         type="submit">{{ $t('login') }}</v-button>
 
-      <button class="toggle-reset" @click="reset = true">{{ $t('forgot_password') }}</button>
+      <button class="toggle-reset" @click.prevent="reset = true">{{ $t('forgot_password') }}</button>
     </form>
     <nav>
       <transition-group

@@ -1,6 +1,7 @@
 import store from "./index";
 import { STORE_HYDRATED, HYDRATING_FAILED } from "./mutation-types";
 import { startPolling } from "./polling";
+import startIdleTracking from "../idle";
 
 export default function hydrateStore() {
   return Promise.all([
@@ -24,6 +25,8 @@ export default function hydrateStore() {
 
       store.commit(STORE_HYDRATED);
       startPolling();
+
+      startIdleTracking(store);
     })
     .catch(error => {
       store.commit(HYDRATING_FAILED, error);
