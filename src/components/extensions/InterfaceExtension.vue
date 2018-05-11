@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     interfaces() {
-      return this.$store.state.extensions.interfaces.data;
+      return this.$store.state.extensions.interfaces;
     },
     interface() {
       return this.interfaces && this.interfaces[this.id];

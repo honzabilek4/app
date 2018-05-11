@@ -181,7 +181,7 @@ export default {
     };
   },
   created() {
-    const logoID = this.$store.state.settings.data.logo;
+    const logoID = this.$store.state.settings.logo;
 
     if (logoID) {
       // NOTE: this should be handled by the API. directus/api#112
@@ -194,47 +194,56 @@ export default {
   },
   computed: {
     customLogoExists() {
-      return Boolean(this.$store.state.settings.data.logo);
+      return Boolean(this.$store.state.settings.logo);
     },
     collectionNames() {
-      const collections = this.$store.state.collections.data;
+      const collections = this.$store.state.collections;
 
       if (collections == null) return [];
 
       return Object.values(collections)
-        .filter(collection => collection.hidden === false)
+        .filter(
+          collection =>
+            collection.hidden === 0 ||
+            collection.hidden === "0" ||
+            collection.hidden === false
+        )
         .map(collection => collection.collection);
     },
     bookmarks() {
-      return this.$store.state.bookmarks.data;
+      return this.$store.state.bookmarks;
     },
     projectName() {
       return this.$store.state.auth.projectName;
     },
     avatarURL() {
-      if (this.$store.state.me.avatar) {
+      if (this.$store.state.currentUser.avatar) {
         // TODO: This is basically pseudo code. Hasn't been tested yet
         const { url } = this.$store.state.auth;
-        const { filename } = this.$store.state.me.data.avatar;
+        const { filename } = this.$store.state.currentUser.avatar;
         return `${url}/${filename}`;
       }
 
       return this.$helpers.gravatar(this.email, { size: 40 });
     },
     email() {
-      return this.$store.state.me.data && this.$store.state.me.data.email;
+      return (
+        this.$store.state.currentUser && this.$store.state.currentUser.email
+      );
     },
     fullName() {
       const firstName =
-        this.$store.state.me.data && this.$store.state.me.data.first_name;
+        this.$store.state.currentUser &&
+        this.$store.state.currentUser.first_name;
 
       const lastName =
-        this.$store.state.me.data && this.$store.state.me.data.last_name;
+        this.$store.state.currentUser &&
+        this.$store.state.currentUser.last_name;
 
       return `${firstName} ${lastName}`;
     },
     currentUserID() {
-      return this.$store.state.me.data && this.$store.state.me.data.id;
+      return this.$store.state.currentUser && this.$store.state.currentUser.id;
     },
     overlay() {
       return this.$mq === "small";

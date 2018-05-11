@@ -3,7 +3,7 @@ import { Idle } from "idlejs/dist";
 let idle = null;
 
 export default function startIdleTracking(store) {
-  const minutesUntilLogout = +store.state.settings.data.auto_sign_out || 60;
+  const minutesUntilLogout = +store.state.settings.auto_sign_out || 60;
 
   idle = new Idle()
     .whenNotInteractive()

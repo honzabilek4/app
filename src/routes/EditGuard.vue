@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     collections() {
-      return Object.keys(this.$store.state.collections.data);
+      return Object.keys(this.$store.state.collections);
     },
     component() {
       const collectionExists = this.collections.includes(this.collection);

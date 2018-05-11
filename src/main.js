@@ -68,6 +68,6 @@ new Vue({
 
 if (api.loggedIn) {
   hydrateStore().then(() => {
-    loadLanguageAsync(store.state.me.data.locale);
+    loadLanguageAsync(store.state.currentUser.locale);
   });
 }

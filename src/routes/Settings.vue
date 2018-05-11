@@ -100,10 +100,10 @@ export default {
   },
   computed: {
     globalNum() {
-      return Object.keys(this.$store.state.settings.data).length;
+      return Object.keys(this.$store.state.settings).length;
     },
     collectionsNum() {
-      return Object.keys(this.$store.state.collections.data).length;
+      return Object.keys(this.$store.state.collections).length;
     },
     projectName() {
       return this.$store.state.auth.projectName;

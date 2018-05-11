@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     settings() {
-      return this.$store.state.settings.data;
+      return this.$store.state.settings;
     },
     links() {
       return [
@@ -47,7 +47,7 @@ export default {
     fields() {
       return (
         this.$store.state.fields.directus_settings &&
-        this.$store.state.fields.directus_settings.data
+        this.$store.state.fields.directus_settings
       );
     }
   },

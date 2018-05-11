@@ -7,16 +7,12 @@ export const REFRESH_TOKEN = "🔒 Refresh Token";
 export const REMOVE_AUTH_ERROR = "🔒 Remove Auth Error";
 
 // Bookmarks
-export const BOOKMARKS_PENDING = "🔖 Fetching Bookmarks...";
-export const BOOKMARKS_SUCCESS = "🔖✅ Bookmarks Successful";
-export const BOOKMARKS_FAILED = "🔖❌ Bookmarks Failed";
-export const BOOKMARKS_NEW = "🔖 New Bookmark";
-export const BOOKMARKS_DELETE = "🔖 Delete Bookmark";
+export const SET_BOOKMARKS = "🔖 Set Bookmarks";
+export const ADD_BOOKMARK = "🔖 Add Bookmark";
+export const DELETE_BOOKMARK = "🔖 Delete Bookmark";
 
 // Collections
-export const COLLECTIONS_PENDING = "🗄 Fetching Collections...";
-export const COLLECTIONS_SUCCESS = "🗄✅ Collections Successful";
-export const COLLECTIONS_FAILED = "🗄❌ Collections Failed";
+export const SET_COLLECTIONS = "🗄 Set Collections";
 
 // Edits
 export const DISCARD_CHANGES = "📝 Discard Changes";
@@ -26,47 +22,27 @@ export const UNSTAGE_VALUE = "📝 Unstage Value";
 export const STAGE_VALUE = "📝 Stage Value";
 
 // Extensions
-export const INTERFACES_PENDING = "📦 Fetching Interfaces...";
-export const INTERFACES_SUCCESS = "📦✅ Interfaces Successful";
-export const INTERFACES_FAILED = "📦❌ Interfaces Failed";
-export const LISTINGS_PENDING = "📦 Fetching Listings...";
-export const LISTINGS_SUCCESS = "📦✅ Listings Successful";
-export const LISTINGS_FAILED = "📦❌ Listings Failed";
-export const PAGES_PENDING = "📦 Fetching Pages...";
-export const PAGES_SUCCESS = "📦✅ Pages Successful";
-export const PAGES_FAILED = "📦❌ Pages Failed";
+export const SET_INTERFACES = "📦 Set Interfaces";
+export const SET_LISTINGS = "📦 Set Listings";
 
 // Fields
-export const FIELDS_PENDING = "📌 Fetching Fields...";
-export const FIELDS_SUCCESS = "📌✅ Fields Successful";
-export const FIELDS_FAILED = "📌❌ Fields Failed";
+export const SET_FIELDS = "📌 Set Fields";
 
 // Hydrate
 export const STORE_HYDRATED = "🏪 Store Hydrated";
 export const HYDRATING_FAILED = "🏪❌ Store Hydration Failed";
 
 // Listing Preferences
-export const PREFERENCES_ALL_PENDING =
-  "👀 Fetching All User Listing Preferences...";
-export const PREFERENCES_ALL_SUCCESS =
-  "👀✅ Listing All User Preferences Successful";
-export const PREFERENCES_ALL_FAILED =
-  "👀❌ Listing All User Preferences Failed";
-export const PREFERENCES_PENDING = "👀 Fetching Listing Preferences...";
-export const PREFERENCES_SUCCESS = "👀✅ Listing Preferences Successful";
-export const PREFERENCES_FAILED = "👀❌ Listing Preferences Failed";
 export const SET_PREFERENCES = "👀 Set Listing Preferences";
+export const SET_PREFERENCE = "👀 Set Listing Preference";
+export const UPDATE_PREFERENCE = "👀 Update Listing Preference";
 
 // Me
-export const ME_PENDING = "👨🏻‍💻 Fetching Me...";
-export const ME_SUCCESS = "👨🏻‍💻✅ Me Successful";
-export const ME_FAILED = "👨🏻‍💻❌ Me Failed";
-export const ME_UPDATE = "👨🏻‍💻 Current User Updated";
+export const SET_CURRENT_USER = "👨🏻‍💻✅ Set Current User";
+export const UPDATE_CURRENT_USER = "👨🏻‍💻 Current User Updated";
 
 // Settings
-export const SETTINGS_PENDING = "⚙️ Fetching Global Settings...";
-export const SETTINGS_SUCCESS = "⚙️✅ Global Settings Successful";
-export const SETTINGS_FAILED = "⚙️❌ Global Settings Failed";
+export const SET_SETTINGS = "⚙️ Set Global Settings";
 
 // Latency Check
 export const LATENCY = "⏱ Latency Check";

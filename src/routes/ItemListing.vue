@@ -184,7 +184,7 @@ export default {
     currentBookmark() {
       if (this.hydrating) return null;
 
-      const bookmarks = this.$store.state.bookmarks.data;
+      const bookmarks = this.$store.state.bookmarks;
       const preferences = {
         collection: this.preferences.collection,
         search_query: this.preferences.search_query,
@@ -212,8 +212,7 @@ export default {
     fields() {
       const stateFields =
         (this.$store.state.fields &&
-          this.$store.state.fields[this.collection] &&
-          this.$store.state.fields[this.collection].data) ||
+          this.$store.state.fields[this.collection]) ||
         {};
 
       return this.$lodash.keyBy(
@@ -279,12 +278,10 @@ export default {
       ];
     },
     listingNames() {
-      if (!this.$store.state.extensions.listings.data) return {};
+      if (!this.$store.state.extensions.listings) return {};
       const translatedNames = {};
-      Object.keys(this.$store.state.extensions.listings.data).forEach(id => {
-        translatedNames[id] = this.$store.state.extensions.listings.data[
-          id
-        ].name;
+      Object.keys(this.$store.state.extensions.listings).forEach(id => {
+        translatedNames[id] = this.$store.state.extensions.listings[id].name;
       });
       return translatedNames;
     },
@@ -323,16 +320,12 @@ export default {
       return params;
     },
     preferences() {
-      return (
-        (this.$store.state.listingPreferences[this.collection] &&
-          this.$store.state.listingPreferences[this.collection].data) ||
-        {}
-      );
+      return this.$store.state.listingPreferences[this.collection] || {};
     },
     isUserPreference() {
       return (
         (this.preferences &&
-          this.preferences.user === this.$store.state.me.data.id) ||
+          this.preferences.user === this.$store.state.currentUser.id) ||
         false
       );
     },
@@ -564,7 +557,7 @@ export default {
 
     saveBookmark() {
       const preferences = { ...this.preferences };
-      preferences.user = this.$store.state.me.data.id;
+      preferences.user = this.$store.state.currentUser.id;
       preferences.title = this.bookmarkTitle;
       delete preferences.id;
       delete preferences.group;

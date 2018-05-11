@@ -116,8 +116,7 @@ export default {
     fields() {
       const stateFields =
         (this.$store.state.fields &&
-          this.$store.state.fields[this.collection] &&
-          this.$store.state.fields[this.collection].data) ||
+          this.$store.state.fields[this.collection]) ||
         {};
 
       return this.$lodash.keyBy(

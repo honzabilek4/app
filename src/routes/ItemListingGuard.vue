@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     collections() {
-      return this.$store.state.collections.data;
+      return this.$store.state.collections;
     },
     collectionNames() {
       return Object.keys(this.collections);
@@ -55,8 +55,7 @@ export default {
     fields() {
       const stateFields =
         (this.$store.state.fields &&
-          this.$store.state.fields[this.collection] &&
-          this.$store.state.fields[this.collection].data) ||
+          this.$store.state.fields[this.collection]) ||
         {};
 
       return this.$lodash.keyBy(

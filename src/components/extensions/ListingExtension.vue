@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     listings() {
-      return this.$store.state.extensions.listings.data;
+      return this.$store.state.extensions.listings;
     },
     listing() {
       return this.listings && this.listings[this.id];

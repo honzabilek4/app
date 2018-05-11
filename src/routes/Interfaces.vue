@@ -10,9 +10,9 @@
 export default {
   computed: {
     items() {
-      return Object.keys(this.$store.state.extensions.interfaces.data).map(
+      return Object.keys(this.$store.state.extensions.interfaces).map(
         id => ({
-          ...this.$store.state.extensions.interfaces.data[id],
+          ...this.$store.state.extensions.interfaces[id],
           __link: `/interfaces/${id}`
         })
       );

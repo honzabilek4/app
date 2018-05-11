@@ -182,7 +182,7 @@ export default {
       ];
     },
     extension() {
-      return this.$store.state.extensions.interfaces.data[this.id];
+      return this.$store.state.extensions.interfaces[this.id];
     }
   },
   watch: {

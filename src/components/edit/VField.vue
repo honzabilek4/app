@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     fieldset() {
-      const interfaceInfo = this.$store.state.extensions.interfaces.data[
+      const interfaceInfo = this.$store.state.extensions.interfaces[
         this.field.interface
       ];
 

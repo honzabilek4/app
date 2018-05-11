@@ -6,7 +6,7 @@ import startIdleTracking from "../idle";
 export default function hydrateStore() {
   return Promise.all([
     store.dispatch("latency"),
-    store.dispatch("getMe"),
+    store.dispatch("getCurrentUser"),
     store.dispatch("getAllUserListingPreferences"),
     store.dispatch("getCollections"),
     store.dispatch("getSettings"),
@@ -15,7 +15,7 @@ export default function hydrateStore() {
   ])
     .then(() => {
       // Set accent color
-      const customColor = store.state.settings.data.color;
+      const customColor = store.state.settings.color;
       if (customColor) {
         document.documentElement.style.setProperty(
           "--accent",

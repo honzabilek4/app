@@ -67,8 +67,6 @@ export function getExtensions({ commit }, type) {
     default:
   }
 
-  commit(mutationTypes[`${typeUpper}_PENDING`]);
-
   return (
     request
       .then(res => res.data)
@@ -109,10 +107,7 @@ export function getExtensions({ commit }, type) {
        * Commit parsed extensions to the store
        */
       .then(extensions => {
-        commit(mutationTypes[`${typeUpper}_SUCCESS`], extensions);
-      })
-      .catch(error => {
-        commit(mutationTypes[`${typeUpper}_FAILED`], error);
+        commit(mutationTypes[`SET_${typeUpper}`], extensions);
       })
   );
 }
@@ -125,7 +120,6 @@ export function getExtensions({ commit }, type) {
 export function getAllExtensions({ dispatch }) {
   return Promise.all([
     dispatch("getExtensions", "interfaces"),
-    dispatch("getExtensions", "listings"),
-    dispatch("getExtensions", "pages")
+    dispatch("getExtensions", "listings")
   ]);
 }
