@@ -82,7 +82,7 @@ export default {
   is_empty: "Is empty",
   is_not_null: "Is not NULL",
   is_null: "Is NULL",
-  item_count: "No Item | One Item | {count} Items",
+  item_count: "No Items | One Item | {count} Items",
   item_count_filter:
     "No Filtered Items | One Filtered Item | {count} Filtered Items",
   learn_more: "Learn More",
