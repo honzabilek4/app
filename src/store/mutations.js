@@ -77,8 +77,11 @@ const mutations = {
     state.bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== id);
   },
 
-  [UPDATE_PREFERENCE](state, { data, collection }) {
-    Vue.set(state, collection, data);
+  [UPDATE_PREFERENCE](state, { preference, collection }) {
+    Vue.set(state.listingPreferences, collection, {
+      ...(state.listingPreferences[collection] || {}),
+      ...preference
+    });
   },
 
   [SET_PREFERENCES](state, preferences) {

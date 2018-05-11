@@ -165,14 +165,15 @@ export function setListingPreferences(
   { collection, updates }
 ) {
   const preferences = state.listingPreferences[collection];
+
   const userPreferencesExist =
-    Boolean(preferences.id) && Boolean(preferences.user);
+    preferences && Boolean(preferences.id) && Boolean(preferences.user);
 
   // Call setter without waiting for the api to respond with local data, so the view updates
   //   right away
   commit(UPDATE_PREFERENCE, {
     collection,
-    preferences
+    preference: updates
   });
 
   if (userPreferencesExist) {
@@ -193,7 +194,7 @@ export function setListingPreferences(
       .then(savedPreferences =>
         commit(UPDATE_PREFERENCE, {
           collection,
-          preferences: savedPreferences
+          preference: savedPreferences
         })
       )
   );
