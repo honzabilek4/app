@@ -6,6 +6,10 @@ import Notifications from "vue-notification";
 import VueDraggable from "vuedraggable";
 import VTooltip from "v-tooltip";
 
+import VueTimeago from "vue-timeago";
+import en from "date-fns/locale/en/";
+import nl from "date-fns/locale/nl/";
+
 import "./assets/global.scss";
 import "./assets/tooltip.scss";
 import "./globals";
@@ -55,6 +59,15 @@ Vue.component("draggable", VueDraggable);
 Vue.use(VTooltip, {
   defaultDelay: 500,
   defaultOffset: 2
+});
+
+Vue.use(VueTimeago, {
+  name: "v-timeago",
+  locale: "en-US",
+  locales: {
+    en,
+    nl
+  }
 });
 
 /* eslint-disable no-new */
