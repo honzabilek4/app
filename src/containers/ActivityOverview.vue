@@ -25,12 +25,14 @@
           class="indicator" />
 
         <div class="content">
-          <details v-if="activity.action !== 'external'">
-            <summary>{{ activity.name }}<span>•</span><timeago
+          <details v-if="activity.action !== 'external' && activity.changes && activity.name">
+            <summary class="title">{{ activity.name }}<span v-if="activity.date">•</span><v-timeago
+              v-if="activity.date"
               :auto-update="1"
               :since="activity.date"
               :locale="$i18n.locale"
-              class="date" /></summary>
+              class="date" />
+            <i class="material-icons chevron">chevron_left</i></summary>
             <div v-if="activity.changes">
               <div
                 v-for="({ field, before, after }) in activity.changes"
@@ -52,6 +54,12 @@
                 @click="previewing = activity">{{ $t("revert") }}</button>
             </div>
           </details>
+          <div class="title" v-else-if="activity.name">{{ activity.name }}<span v-if="activity.date">•</span><v-timeago
+            v-if="activity.date"
+            :auto-update="1"
+            :since="activity.date"
+            :locale="$i18n.locale"
+            class="date" /></div>
           <p v-if="activity.message">{{ activity.message }}</p>
         </div>
       </article>
@@ -119,7 +127,13 @@ export default {
       }
     },
     activityWithChanges() {
-      if (!this.activity || this.activity.length === 0) return [];
+      if (!this.activity || this.activity.length === 0)
+        return [
+          {
+            action: "external",
+            message: this.$t("activity_outside_directus")
+          }
+        ];
 
       const activityWithChanges = this.activity.map((activity, i) => ({
         ...activity,
@@ -140,10 +154,7 @@ export default {
     }
   },
   watch: {
-    collection() {
-      this.hydrate();
-    },
-    primaryKey() {
+    $route() {
       this.hydrate();
     }
   },
@@ -342,8 +353,7 @@ export default {
     margin-left: 10px;
     flex-grow: 1;
 
-    summary {
-      cursor: pointer;
+    .title {
       list-style-type: none;
 
       &::-webkit-details-marker {
@@ -360,12 +370,23 @@ export default {
       }
     }
 
+    summary {
+      cursor: pointer;
+
+      .chevron {
+        float: right;
+        color: var(--lighter-gray);
+        transition: transform var(--fast) var(--transition);
+      }
+    }
+
     > *:not(:first-child) {
       margin-top: 10px;
     }
 
     .change {
       width: 100%;
+      margin-top: 20px;
 
       p {
         margin-bottom: 10px;
@@ -402,6 +423,10 @@ export default {
       color: var(--action);
       margin-top: 20px;
     }
+  }
+
+  details[open] .chevron {
+    transform: rotate(-90deg);
   }
 }
 </style>
