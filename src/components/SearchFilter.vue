@@ -163,7 +163,7 @@ export default {
       return false;
     },
     full() {
-      return this.$mq === "extraLarge";
+      return this.$mq === "large" || this.$mq === "extraLarge";
     }
   },
   created() {
@@ -429,7 +429,7 @@ export default {
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1000px) {
   .search-filter {
     width: 240px;
 
