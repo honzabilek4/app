@@ -97,6 +97,8 @@
 </template>
 
 <script>
+import sdk from "directus-sdk-javascript/remote";
+
 export default {
   name: "login-form",
   data() {
@@ -141,6 +143,9 @@ export default {
       if (newVal === true && newVal !== oldVal) {
         this.getThirdPartyAuthProviders();
       }
+    },
+    $route() {
+      this.trySSOLogin();
     }
   },
   created() {
@@ -149,6 +154,8 @@ export default {
     if (this.url) {
       this.checkUrl();
     }
+
+    this.trySSOLogin();
   },
   methods: {
     login() {
@@ -156,17 +163,18 @@ export default {
       const credentials = { email, password, url };
 
       this.loading = true;
-      this.$store
-        .dispatch("login", credentials)
-        .then(() => {
-          this.$emit("login");
-        })
-        .then(() => {
-          if (this.$route.params.redirect) {
-            this.$router.push(this.$route.params.redirect);
-          }
-        })
-        .then(() => this.$api.getMe({ fields: "last_page" }))
+      this.$store.dispatch("login", credentials).then(() => {
+        this.enterApp();
+      });
+    },
+    enterApp() {
+      if (this.$route.query.redirect) {
+        this.loading = false;
+        return this.$router.push(this.$route.query.redirect);
+      }
+
+      this.$api
+        .getMe({ fields: "last_page" })
         .then(res => res.data.last_page)
         .then(lastPage => {
           this.loading = false;
@@ -185,8 +193,11 @@ export default {
       this.exists = false;
       this.thirdPartyAuthProviders = [];
 
-      this.$api.url = this.url;
-      this.$api
+      const scopedAPI = new sdk();
+
+      scopedAPI.url = this.url;
+
+      scopedAPI
         .ping()
         .then(() => {
           this.exists = true;
@@ -195,7 +206,6 @@ export default {
           this.exists = false;
         })
         .finally(() => {
-          this.$api.url = null;
           this.checkingExistence = false;
         });
     },
@@ -203,7 +213,11 @@ export default {
       this.gettingThirdPartyAuthProviders = true;
       this.thirdPartyAuthProviders = [];
 
-      this.$api
+      const scopedAPI = new sdk();
+
+      scopedAPI.url = this.url;
+
+      scopedAPI
         .getThirdPartyAuthProviders()
         .then(res => res.data)
         .then(thirdPartyAuthProviders => {
@@ -232,6 +246,34 @@ export default {
         .catch(err => {
           alert(JSON.stringify(err, "    ", false));
         });
+    },
+    trySSOLogin() {
+      /**
+       * NOTE: The only reason this was implemented this way is due to the fact that the API doesn't return
+       *   error codes yet for SSO errors. As soon as issue directus/api#126 has been fixed, we can
+       *   use the "pretty" error notice instead
+       */
+      if (this.$route.query.error) {
+        alert(this.$route.query.error);
+
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+          var clean_uri = uri.substring(0, uri.indexOf("?"));
+          window.history.replaceState({}, document.title, clean_uri);
+        }
+
+        return null;
+      }
+
+      if (
+        this.$route.query.request_token &&
+        this.$route.query.request_token.length > 0
+      ) {
+        this.$store
+          .dispatch("loginSSO", this.$route.query.request_token)
+          .then(() => this.enterApp())
+          .catch(console.error);
+      }
     }
   }
 };

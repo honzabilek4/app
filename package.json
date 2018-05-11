@@ -26,7 +26,7 @@
   "dependencies": {
     "@directus/format-title": "^1.1.1",
     "@rijk/gravatar": "^1.0.0",
-    "base-64": "^0.1.0",
+    "@rijk/jwt-payload": "^1.0.0",
     "body-scroll-lock": "^2.3.3",
     "convert-range": "^1.1.0",
     "date-fns": "^1.29.0",
