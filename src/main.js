@@ -53,7 +53,8 @@ Vue.use(VueMQ, {
 Vue.use(Notifications);
 Vue.component("draggable", VueDraggable);
 Vue.use(VTooltip, {
-  defaultDelay: 500
+  defaultDelay: 500,
+  defaultOffset: 2
 });
 
 /* eslint-disable no-new */
