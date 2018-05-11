@@ -1,103 +1,105 @@
 <template>
-  <div
-    :class="{ full, open }"
-    class="search-filter">
-    <header-button
-      v-if="!full"
-      :seek-attention="hasFilters"
-      icon="filter_list"
-      @click="open = !open">Filter</header-button>
-
+  <transition name="fade">
     <div
-      v-if="full"
-      class="wrapper">
-      <i class="material-icons">search</i>
-      <input
-        ref="searchInput"
-        :placeholder="placeholder"
-        :value="searchQuery"
-        :class="{ 'has-filters': hasFilters }"
-        class="search"
-        type="search"
-        @input="search($event.target.value)">
-      <transition name="fade">
-        <button
-          v-show="hasFilters"
-          :class="{ 'has-filters': hasFilters }"
-          class="clear-filters"
-          @click="clearFilters">
-          <i class="material-icons">close</i>
-        </button>
-      </transition>
-      <button
-        :class="{ 'has-filters': hasFilters }"
-        class="toggle"
-        @click="open = !open"><i class="material-icons">filter_list</i></button>
-    </div>
+      :class="{ full, open }"
+      class="search-filter">
+      <header-button
+        v-if="!full"
+        :seek-attention="hasFilters"
+        icon="filter_list"
+        @click="open = !open">Filter</header-button>
 
-    <transition name="slide">
       <div
-        v-show="open"
-        class="dropdown">
-        <div
-          v-if="!full"
-          class="field">
-          <v-input
-            :placeholder="placeholder"
-            :value="searchQuery"
-            type="search"
-            icon-left="search"
-            @input="search" />
-        </div>
-
-        <div
-          v-for="(filter, i) in filters"
-          :key="i"
-          class="field">
-          <invisible-label :html-for="`filter-${i}`">
-            {{ fields[filter.field] }} {{ operators[filter.operator] }}
-          </invisible-label>
-          <div class="name">
-            <p>{{ fields[filter.field] }}</p>
-            <span>
-              {{ $t(operators[filter.operator]) }}
-              <i class="material-icons">arrow_drop_down</i>
-              <select @change="updateFilter(i, 'operator', $event.target.value)">
-                <option
-                  v-for="(name, operator) in operators"
-                  :key="operator"
-                  :value="operator">{{ $t(name) }}</option>
-              </select>
-            </span>
-            <button
-              class="remove"
-              @click="deleteFilter(i)">{{ $t('remove') }}</button>
-          </div>
-          <v-input
-            :id="`filter-${i}`"
-            :value="filter.value"
-            type="text"
-            @input="updateFilter(i, 'value', $event)" />
-        </div>
-
-        <div class="field">
-          <invisible-label html-for="add">{{ $t('add_field_filter') }}</invisible-label>
-          <v-select
-            id="add"
-            :placeholder="$t('add_field_filter')"
-            :options="fields"
-            default-value
-            @input="addFilter" />
-        </div>
+        v-if="full"
+        class="wrapper">
+        <i class="material-icons">search</i>
+        <input
+          ref="searchInput"
+          :placeholder="placeholder"
+          :value="searchQuery"
+          :class="{ 'has-filters': hasFilters }"
+          class="search"
+          type="search"
+          @input="search($event.target.value)">
+        <transition name="fade">
+          <button
+            v-show="hasFilters"
+            :class="{ 'has-filters': hasFilters }"
+            class="clear-filters"
+            @click="clearFilters">
+            <i class="material-icons">close</i>
+          </button>
+        </transition>
+        <button
+          :class="{ 'has-filters': hasFilters }"
+          class="toggle"
+          @click="open = !open"><i class="material-icons">filter_list</i></button>
       </div>
-    </transition>
 
-    <v-blocker
-      v-if="!full && open"
-      :z-index="18"
-      class="blocker"
-      @click="open = !open" />
-  </div>
+      <transition name="slide">
+        <div
+          v-show="open"
+          class="dropdown">
+          <div
+            v-if="!full"
+            class="field">
+            <v-input
+              :placeholder="placeholder"
+              :value="searchQuery"
+              type="search"
+              icon-left="search"
+              @input="search" />
+          </div>
+
+          <div
+            v-for="(filter, i) in filters"
+            :key="i"
+            class="field">
+            <invisible-label :html-for="`filter-${i}`">
+              {{ fields[filter.field] }} {{ operators[filter.operator] }}
+            </invisible-label>
+            <div class="name">
+              <p>{{ fields[filter.field] }}</p>
+              <span>
+                {{ $t(operators[filter.operator]) }}
+                <i class="material-icons">arrow_drop_down</i>
+                <select @change="updateFilter(i, 'operator', $event.target.value)">
+                  <option
+                    v-for="(name, operator) in operators"
+                    :key="operator"
+                    :value="operator">{{ $t(name) }}</option>
+                </select>
+              </span>
+              <button
+                class="remove"
+                @click="deleteFilter(i)">{{ $t('remove') }}</button>
+            </div>
+            <v-input
+              :id="`filter-${i}`"
+              :value="filter.value"
+              type="text"
+              @input="updateFilter(i, 'value', $event)" />
+          </div>
+
+          <div class="field">
+            <invisible-label html-for="add">{{ $t('add_field_filter') }}</invisible-label>
+            <v-select
+              id="add"
+              :placeholder="$t('add_field_filter')"
+              :options="fields"
+              default-value
+              @input="addFilter" />
+          </div>
+        </div>
+      </transition>
+
+      <v-blocker
+        v-if="!full && open"
+        :z-index="18"
+        class="blocker"
+        @click="open = !open" />
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -167,15 +169,6 @@ export default {
   created() {
     this.search = this.$lodash.debounce(this.search, 300);
     this.updateFilter = this.$lodash.debounce(this.updateFilter, 300);
-  },
-  mounted() {
-    this.$refs.searchInput.focus();
-  },
-  watch: {
-    $route() {
-      this.$refs.searchInput.focus();
-      this.open = false;
-    }
   },
   methods: {
     search(value) {

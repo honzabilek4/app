@@ -24,6 +24,7 @@
     <portal to="header-custom">
       <search-filter
         v-if="selection.length === 0"
+        v-show="!emptyCollection"
         :filters="preferences.filters || []"
         :search-query="preferences.search_query || ''"
         :fields="fieldNames"
