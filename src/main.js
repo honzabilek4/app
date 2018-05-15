@@ -13,7 +13,7 @@ import nl from "date-fns/locale/nl/";
 import "./assets/global.scss";
 import "./assets/tooltip.scss";
 import "./globals";
-import "./registerServiceWorker";
+// import "./registerServiceWorker";
 import App from "./App.vue";
 
 import router from "./router";
