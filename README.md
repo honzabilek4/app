@@ -1,24 +1,39 @@
 # Directus 7
 
-> DON'T USE THIS IN PRODUCTION (yet)
+Live demos:
+* [Last Release](https://directus.app)  
+   
+  [![Build Status](https://semaphoreci.com/api/v1/directus/app/branches/build/badge.svg)](https://semaphoreci.com/directus/app)
+* [Last Commit](https://next.directus.app)  
+   
+  [![Build Status](https://semaphoreci.com/api/v1/directus/next/branches/master/badge.svg)](https://semaphoreci.com/directus/next)
+
 
 ## Description
-This is the work in progress repo of the next major version of the Directus platform (v7.0).
+This is the alpha version of the next major version of the Directus CMS admin application.
 
-This version is in active development. Do not use this project until it's released later this year.
+Directus 7 is in active development and is scheduled for a release candidate end of June / early July. Keep an eye on [the project boards](https://github.com/directus/app/projects) to keep up to date with releases and what we're working on.
+
 
 ## Installation
-Download or clone this repo and install the npm dependencies.
 
-The application will be distributed in a pre-built state, but has to be compiled from source for the time being.
+### Using Git
+1. Clone the build branch of this repo
+   
+  ```bash
+  git clone -b my-branch https://git@github.com/username/myproject.git
+  ```
+2. Rename `config_example.js` to `config.js` and change the required information.
 
-## Usage
-To create a ready-to-host bundle, run `npm run build`. To run the project in development mode, run `npm run dev`.
+### Using FTP / other
+1. [Download the latest release](https://github.com/directus/app/releases) from the [releases page](https://github.com/directus/app/releases).
+2. Rename `config_example.js` to `config.js` and change the required information.
+3. Upload the folder to your (static file) server.
 
-In order to actually use the application, you need to have a running instance of [the Directus API](https://github.com/directus/api). Head over to the [`directus/api`](https://github.com/directus/api) and install the API.
 
 ## Contributing
-If you're interested in the current state of the next version of the platform, feel free to clone the project and mess around with it. If you feel like being awesome and want to help out, let us know in an issue on over [on Slack](https://slack.getdirectus.com)!
+If you're interested in the current state of the next version of the platform, feel free to clone the project and mess around with it. If you feel like being awesome and want to help out, let us know in an issue or over [on Slack](https://slack.getdirectus.com)!
+
 
 ## Copyright, License, and Trademarks
 * Directus Core codebase released under the [GPLv3](http://www.gnu.org/copyleft/gpl.html) license.
