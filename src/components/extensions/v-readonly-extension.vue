@@ -9,18 +9,18 @@
     :required="required"
     :loading="loading"
     :options="optionsWithDefaults"
-    class="readonly-extension" />
+    class="v-v-readonly-extension" />
 </template>
 
 <script>
 import Vue from "vue";
 import loadExtension from "../../helpers/load-extension";
 import componentExists from "../../helpers/component-exists";
-import ReadonlyFallback from "./ReadonlyFallback.vue";
-import ReadonlyLoading from "./ReadonlyLoading.vue";
+import VReadonlyFallback from "./v-readonly-fallback.vue";
+import VReadonlyLoading from "./v-readonly-loading.vue";
 
 export default {
-  name: "readonly-extension",
+  name: "v-readonly-extension",
   props: {
     id: {
       type: String,
@@ -102,7 +102,7 @@ export default {
       // If the extension isn't known by the API (e.g. it's not in the store), register it with the
       //   fallback immediately
       if (!this.interface) {
-        Vue.component(this.componentName, ReadonlyFallback);
+        Vue.component(this.componentName, VReadonlyFallback);
         return;
       }
 
@@ -113,8 +113,8 @@ export default {
 
       Vue.component(this.componentName, () => ({
         component: loadExtension(filePath),
-        error: ReadonlyFallback,
-        loading: ReadonlyLoading
+        error: VReadonlyFallback,
+        loading: VReadonlyLoading
       }));
     }
   }

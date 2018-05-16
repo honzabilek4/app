@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import VError from "../components/VError.vue";
+import VError from "../components/v-error.vue";
 
 export default {
   name: "not-found",

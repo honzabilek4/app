@@ -1,10 +1,10 @@
 <template>
-  <div class="readonly-fallback">{{ value }}</div>
+  <div class="v-readonly-fallback">{{ value }}</div>
 </template>
 
 <script>
 export default {
-  name: "readonly-fallback",
+  name: "v-readonly-fallback",
   props: {
     value: {
       type: null,

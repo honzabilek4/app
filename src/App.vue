@@ -67,9 +67,9 @@
 import { Wormhole } from "portal-vue";
 import HeaderBar from "./containers/HeaderBar.vue";
 import NavSidebar from "./containers/NavSidebar.vue";
-import InfoSidebar from "./components/InfoSidebar.vue";
-import VBlocker from "./components/VBlocker.vue";
-import VError from "./components/VError.vue";
+import InfoSidebar from "./components/v-info-sidebar.vue";
+import VBlocker from "./components/v-blocker.vue";
+import VError from "./components/v-error.vue";
 
 export default {
   name: "directus",

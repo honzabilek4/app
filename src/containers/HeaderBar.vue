@@ -6,7 +6,7 @@
 
     <portal-target
       class="title"
-      name="header-title"><h1 class="style-1"><breadcrumb /></h1></portal-target>
+      name="header-title"><h1 class="style-1"><v-breadcrumb /></h1></portal-target>
 
     <portal-target
       name="header-custom"

@@ -1,13 +1,13 @@
 <template>
   <div class="interface-debugger">
     <portal to="header-title">
-      <h1 class="style-1"><breadcrumb :links="links" /></h1>
+      <h1 class="style-1"><v-breadcrumb :links="links" /></h1>
     </portal>
 
     <div
       :style="{ width: width + 'px' }"
       class="interface">
-      <interface-extension
+      <v-interface-extension
         v-model="value"
         :id="id"
         :name="id"
@@ -33,7 +33,7 @@
 
         <label>Listing</label>
         <div class="listing">
-          <readonly-extension
+          <v-readonly-extension
             v-model="value"
             :id="id"
             :name="id"
@@ -106,7 +106,7 @@
           :key="optionID">
           <label :for="optionID">{{ option.name }}</label>
           <p>{{ option.comment }}</p>
-          <interface-extension
+          <v-interface-extension
             v-model="options[optionID]"
             :id="option.interface"
             :name="optionID"

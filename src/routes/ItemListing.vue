@@ -6,7 +6,7 @@
     <loader v-if="loading || hydrating" area="content" transparent :z-index="9" />
 
     <portal to="header-title">
-      <h1 class="style-1"><breadcrumb :links="links" /></h1>
+      <h1 class="style-1"><v-breadcrumb :links="links" /></h1>
       <button
         :class="currentBookmark ? 'active' : null"
         :disabled="currentBookmark"
@@ -69,7 +69,7 @@
 
     <portal to="info-sidebar">
       <div class="sidebar-content">
-        <listing-options-extension
+        <v-listing-options-extension
           v-if="hydrating === false"
           :id="viewType"
           :collection="collection"
@@ -104,7 +104,7 @@
       :body="$t('empty_collection_body')"
       icon="web_asset" />
 
-    <listing-extension
+    <v-listing-extension
       v-else-if="!hydrating && !noResults && items.length > 0"
       :id="viewType"
       :primary-key-field="primaryKeyField"
@@ -136,8 +136,8 @@
 
 <script>
 import formatFilters from "../helpers/format-filters";
-import SearchFilter from "../components/SearchFilter.vue";
-import VError from "../components/VError.vue";
+import SearchFilter from "../components/v-search-filter.vue";
+import VError from "../components/v-error.vue";
 
 export default {
   name: "item-listing",

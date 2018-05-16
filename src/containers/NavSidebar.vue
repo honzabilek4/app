@@ -157,7 +157,7 @@
 
 <script>
 import FocusLock from "vue-focus-lock";
-import VSignal from "../components/VSignal.vue";
+import VSignal from "../components/v-signal.vue";
 
 export default {
   name: "nav-sidebar",

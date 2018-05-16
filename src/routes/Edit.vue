@@ -5,7 +5,7 @@
       area="content" />
 
     <portal to="header-title">
-      <h1 class="style-1"><breadcrumb :links="breadcrumb" /></h1>
+      <h1 class="style-1"><v-breadcrumb :links="breadcrumb" /></h1>
     </portal>
 
     <portal to="header-buttons">

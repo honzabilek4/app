@@ -1,7 +1,7 @@
 <template>
   <div class="collections">
     <portal to="header-title">
-      <h1 class="style-1"><breadcrumb
+      <h1 class="style-1"><v-breadcrumb
         :links="[{
           name: $t('collections'),
           path: '/collections'

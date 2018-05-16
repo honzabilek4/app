@@ -4,7 +4,7 @@
       <div>
         <legend>{{ $t(`fields-${field.collection}-${field.field}`) }}</legend>
         <small v-if="!readonly && field.comment">{{ field.comment }}</small>
-        <interface-extension
+        <v-interface-extension
           :id="field.interface"
           :name="field.field"
           :required="Boolean(field.required)"
@@ -25,7 +25,7 @@
     <p v-else>
       <label :for="field.field">{{ $t(`fields-${field.collection}-${field.field}`) }}</label>
       <small v-if="!readonly && field.comment">{{ field.comment }}</small>
-      <interface-extension
+      <v-interface-extension
         :id="field.interface"
         :name="field.field"
         :required="Boolean(field.required)"

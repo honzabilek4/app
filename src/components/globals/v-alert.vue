@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import VModalBase from "../VModalBase.vue";
+import VModalBase from "../v-modal-base.vue";
 
 export default {
   name: "v-alert",

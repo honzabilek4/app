@@ -84,7 +84,7 @@
             <div
               v-if="$lodash.isNil(row[field])"
               class="empty">--</div>
-            <readonly-extension
+            <v-readonly-extension
               v-else-if="useInterfaces && !$lodash.isNil(row[field])"
               :id="fieldInfo.interface"
               :name="field"

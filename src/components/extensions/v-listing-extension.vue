@@ -9,7 +9,7 @@
     :query="query"
     :selection="selection"
     :link="link"
-    class="listing-extension"
+    class="v-interface-extension"
     @query="$emit('query', $event)"
     @select="$emit('select', $event)"
     @input="$emit('input', $event)" />
@@ -19,11 +19,11 @@
 import Vue from "vue";
 import loadExtension from "../../helpers/load-extension";
 import componentExists from "../../helpers/component-exists";
-import ListingFallback from "./ListingFallback.vue";
-import ListingLoading from "./ListingLoading.vue";
+import VListingFallback from "./v-listing-fallback.vue";
+import VListingLoading from "./v-listing-loading.vue";
 
 export default {
-  name: "listing-extension",
+  name: "v-interface-extension",
   props: {
     id: {
       type: String,
@@ -92,7 +92,7 @@ export default {
       // If the extension isn't known by the API (e.g. it's not in the store), register it with the
       //   fallback immediately
       if (!this.listing) {
-        Vue.component(this.componentName, ListingFallback);
+        Vue.component(this.componentName, VListingFallback);
         return;
       }
 
@@ -103,8 +103,8 @@ export default {
 
       Vue.component(this.componentName, () => ({
         component: loadExtension(filePath),
-        error: ListingFallback,
-        loading: ListingLoading
+        error: VListingFallback,
+        loading: VListingLoading
       }));
     }
   }
