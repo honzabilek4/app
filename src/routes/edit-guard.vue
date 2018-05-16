@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import Edit from "./Edit.vue";
-import NotFound from "./NotFound.vue";
+import Edit from "./edit.vue";
+import NotFound from "./not-found.vue";
 
 export default {
   name: "edit-guard",

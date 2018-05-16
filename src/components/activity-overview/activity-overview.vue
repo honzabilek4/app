@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-overview">
+  <div class="v-activity-overview">
     <div class="tabs">
       <button
         :class="{active: show === 'both'}"
@@ -80,10 +80,10 @@
 </template>
 
 <script>
-import EditForm from "./EditForm.vue";
+import EditForm from "../edit-form/edit-form.vue";
 
 export default {
-  name: "activity-overview",
+  name: "v-activity-overview",
   components: {
     EditForm
   },

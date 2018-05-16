@@ -16,10 +16,10 @@
 
 <script>
 import Vue from "vue";
-import loadExtension from "../../helpers/load-extension";
-import componentExists from "../../helpers/component-exists";
-import ListingOptionsFallback from "./v-listing-options-fallback.vue";
-import ListingOptionsLoading from "./v-listing-options-loading.vue";
+import loadExtension from "../../../helpers/load-extension";
+import componentExists from "../../../helpers/component-exists";
+import ListingOptionsFallback from "./listing-options-fallback.vue";
+import ListingOptionsLoading from "./listing-options-loading.vue";
 
 export default {
   name: "listing-options-extension",

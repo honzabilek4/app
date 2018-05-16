@@ -19,7 +19,7 @@
 
 <script>
 import { version } from "../../package.json";
-import LoginForm from "../containers/LoginForm.vue";
+import LoginForm from "../components/login-form/login-form.vue";
 
 export default {
   name: "login",

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import VModalBase from "../v-modal-base.vue";
+import VModalBase from "./modal-base.vue";
 
 export default {
   name: "v-confirm",

@@ -7,7 +7,7 @@
     <div
       :style="{ width: width + 'px' }"
       class="interface">
-      <v-interface-extension
+      <v-interface
         v-model="value"
         :id="id"
         :name="id"
@@ -33,7 +33,7 @@
 
         <label>Listing</label>
         <div class="listing">
-          <v-readonly-extension
+          <v-readonly
             v-model="value"
             :id="id"
             :name="id"
@@ -106,7 +106,7 @@
           :key="optionID">
           <label :for="optionID">{{ option.name }}</label>
           <p>{{ option.comment }}</p>
-          <v-interface-extension
+          <v-interface
             v-model="options[optionID]"
             :id="option.interface"
             :name="optionID"

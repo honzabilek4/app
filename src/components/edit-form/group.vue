@@ -1,5 +1,5 @@
 <template>
-  <v-interface-extension
+  <v-interface
     :id="field.field"
     :name="field.field"
     :options="field.options"
@@ -26,11 +26,11 @@
           @stageValue="$emit('stageValue', $event)" />
       </div>
     </div>
-  </v-interface-extension>
+  </v-interface>
 </template>
 
 <script>
-import VField from "./v-field.vue";
+import VField from "./field.vue";
 
 export default {
   name: "v-group",

@@ -91,7 +91,7 @@
 
 <script>
 import { version } from "../../package.json";
-import VSignal from "../components/v-signal.vue";
+import VSignal from "../components/signal.vue";
 
 export default {
   name: "settings",

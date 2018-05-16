@@ -29,7 +29,7 @@
     </portal>
 
     <portal to="info-sidebar">
-      <activity-overview
+      <v-activity-overview
         v-if="fields && collection && primaryKey"
         :collection="collection"
         :primary-key="primaryKey"
@@ -55,14 +55,14 @@
 </template>
 
 <script>
-import EditForm from "../containers/EditForm.vue";
-import ActivityOverview from "../containers/ActivityOverview.vue";
+import EditForm from "../components/edit-form/edit-form.vue";
+import VActivityOverview from "../components/activity-overview/activity-overview.vue";
 
 export default {
   name: "edit",
   components: {
     EditForm,
-    ActivityOverview
+    VActivityOverview
   },
   props: {
     collection: {

@@ -2,20 +2,20 @@ import Vue from "vue";
 import Router from "vue-router";
 import api from "./api";
 import store from "./store";
-import Collections from "./routes/Collections.vue";
-import ItemListing from "./routes/ItemListing.vue";
-import ItemListingGuard from "./routes/ItemListingGuard.vue";
-import Edit from "./routes/Edit.vue";
-import EditGuard from "./routes/EditGuard.vue";
-import Login from "./routes/Login.vue";
-import NotFound from "./routes/NotFound.vue";
-import Interfaces from "./routes/Interfaces.vue";
-import InterfaceDebugger from "./routes/InterfaceDebugger.vue";
-import Debug from "./routes/Debug.vue";
-import Settings from "./routes/Settings.vue";
-import SettingsGlobal from "./routes/SettingsGlobal.vue";
+import Collections from "./routes/collections.vue";
+import ItemListing from "./routes/item-listing.vue";
+import ItemListingGuard from "./routes/item-listing-guard.vue";
+import Edit from "./routes/edit.vue";
+import EditGuard from "./routes/edit-guard.vue";
+import Login from "./routes/login.vue";
+import NotFound from "./routes/not-found.vue";
+import Interfaces from "./routes/interfaces.vue";
+import InterfaceDebugger from "./routes/interface-debugger.vue";
+import Debug from "./routes/debug.vue";
+import Settings from "./routes/settings.vue";
+import SettingsGlobal from "./routes/settings-global.vue";
 
-import ModalDebug from "./routes/ModalDebug.vue";
+import ModalDebug from "./routes/modal-debug.vue";
 
 Vue.use(Router);
 

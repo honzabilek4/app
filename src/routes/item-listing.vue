@@ -69,7 +69,7 @@
 
     <portal to="info-sidebar">
       <div class="sidebar-content">
-        <v-listing-options-extension
+        <v-listing-options
           v-if="hydrating === false"
           :id="viewType"
           :collection="collection"
@@ -104,7 +104,7 @@
       :body="$t('empty_collection_body')"
       icon="web_asset" />
 
-    <v-listing-extension
+    <v-listing
       v-else-if="!hydrating && !noResults && items.length > 0"
       :id="viewType"
       :primary-key-field="primaryKeyField"
@@ -136,8 +136,8 @@
 
 <script>
 import formatFilters from "../helpers/format-filters";
-import SearchFilter from "../components/v-search-filter.vue";
-import VError from "../components/v-error.vue";
+import SearchFilter from "../components/search-filter/search-filter.vue";
+import VError from "../components/error.vue";
 
 export default {
   name: "item-listing",

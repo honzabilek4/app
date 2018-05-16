@@ -3,24 +3,29 @@
     :is="componentName"
     :name="name"
     :value="value"
-    :type="type"
-    :length="length"
+    :type="typeOrDefault"
+    :length="lengthOrDefault"
     :readonly="readonly"
     :required="required"
     :loading="loading"
     :options="optionsWithDefaults"
-    class="v-v-readonly-extension" />
+    :new-item="newItem"
+    class="v-interface-extension"
+    @input="$emit('input', $event)"
+    @setfield="$emit('setfield', $event)">
+    <slot />
+  </component>
 </template>
 
 <script>
 import Vue from "vue";
-import loadExtension from "../../helpers/load-extension";
-import componentExists from "../../helpers/component-exists";
-import VReadonlyFallback from "./v-readonly-fallback.vue";
-import VReadonlyLoading from "./v-readonly-loading.vue";
+import loadExtension from "../../../helpers/load-extension";
+import componentExists from "../../../helpers/component-exists";
+import InterfaceFallback from "./interface-fallback.vue";
+import InterfaceLoading from "./interface-loading.vue";
 
 export default {
-  name: "v-readonly-extension",
+  name: "v-interface-extension",
   props: {
     id: {
       type: String,
@@ -36,7 +41,7 @@ export default {
     },
     type: {
       type: String,
-      required: true
+      default: null
     },
     length: {
       type: [String, Number],
@@ -57,6 +62,10 @@ export default {
     options: {
       type: Object,
       default: () => ({})
+    },
+    newItem: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -67,7 +76,17 @@ export default {
       return this.interfaces && this.interfaces[this.id];
     },
     componentName() {
-      return `readonly-${this.id}`;
+      return `interface-${this.id}`;
+    },
+    typeOrDefault() {
+      if (!this.interface) return null;
+      return this.type ? this.type : Object.keys(this.interface.dataTypes)[0];
+    },
+    lengthOrDefault() {
+      if (!this.interface) return null;
+      return this.length
+        ? this.length
+        : this.interface.dataTypes[this.typeOrDefault];
     },
     optionsWithDefaults() {
       if (!this.interface) return {};
@@ -85,36 +104,36 @@ export default {
   },
   watch: {
     id() {
-      this.registerReadonly();
+      this.registerInterface();
     }
   },
   created() {
-    this.registerReadonly();
+    this.registerInterface();
   },
   methods: {
     /**
      * Register the extension as component (if it hasn't been registered before yet)
      */
-    registerReadonly() {
+    registerInterface() {
       // If component already exists, do nothing
       if (componentExists(this.componentName)) return;
 
       // If the extension isn't known by the API (e.g. it's not in the store), register it with the
       //   fallback immediately
       if (!this.interface) {
-        Vue.component(this.componentName, VReadonlyFallback);
+        Vue.component(this.componentName, InterfaceFallback);
         return;
       }
 
       const filePath = `${this.$api.url}/${this.interface.path.replace(
         "meta.json",
-        "Readonly.js"
+        "Interface.js"
       )}`;
 
       Vue.component(this.componentName, () => ({
         component: loadExtension(filePath),
-        error: VReadonlyFallback,
-        loading: VReadonlyLoading
+        error: InterfaceFallback,
+        loading: InterfaceLoading
       }));
     }
   }

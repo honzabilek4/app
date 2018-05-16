@@ -17,10 +17,10 @@
 
 <script>
 import Vue from "vue";
-import loadExtension from "../../helpers/load-extension";
-import componentExists from "../../helpers/component-exists";
-import VListingFallback from "./v-listing-fallback.vue";
-import VListingLoading from "./v-listing-loading.vue";
+import loadExtension from "../../../helpers/load-extension";
+import componentExists from "../../../helpers/component-exists";
+import VListingFallback from "./listing-fallback.vue";
+import VListingLoading from "./listing-loading.vue";
 
 export default {
   name: "v-interface-extension",

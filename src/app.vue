@@ -65,11 +65,11 @@
 
 <script>
 import { Wormhole } from "portal-vue";
-import HeaderBar from "./containers/HeaderBar.vue";
-import NavSidebar from "./containers/NavSidebar.vue";
-import InfoSidebar from "./components/v-info-sidebar.vue";
-import VBlocker from "./components/v-blocker.vue";
-import VError from "./components/v-error.vue";
+import HeaderBar from "./components/header-bar/header-bar.vue";
+import NavSidebar from "./components/sidebars/nav-sidebar.vue";
+import InfoSidebar from "./components/sidebars/info-sidebar.vue";
+import VBlocker from "./components/blocker.vue";
+import VError from "./components/error.vue";
 
 export default {
   name: "directus",

@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import VBlocker from "./v-blocker.vue";
+import VBlocker from "../blocker.vue";
 
 export default {
   name: "search-filter",

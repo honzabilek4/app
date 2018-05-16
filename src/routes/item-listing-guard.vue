@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import ItemListing from "./ItemListing.vue";
-import Edit from "./Edit.vue";
-import NotFound from "./NotFound.vue";
+import ItemListing from "./item-listing.vue";
+import Edit from "./edit.vue";
+import NotFound from "./not-found.vue";
 
 export default {
   name: "item-listing-guard",

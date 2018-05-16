@@ -32,7 +32,7 @@
             <img
               v-show="logoLoaded && !customLogoExists"
               @load="logoLoaded = true"
-              src="../assets/logo.svg"
+              src="../../assets/logo.svg"
               alt="Directus Logo">
           </transition>
         </section>
@@ -157,7 +157,7 @@
 
 <script>
 import FocusLock from "vue-focus-lock";
-import VSignal from "../components/v-signal.vue";
+import VSignal from "../../components/signal.vue";
 
 export default {
   name: "nav-sidebar",
