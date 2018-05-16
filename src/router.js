@@ -17,6 +17,8 @@ import SettingsGlobal from "./routes/settings-global.vue";
 
 import ModalDebug from "./routes/modal-debug.vue";
 
+import NProgress from "nprogress";
+
 Vue.use(Router);
 
 const router = new Router({
@@ -152,6 +154,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  NProgress.start();
+
   const { loggedIn } = api;
   const publicRoute = to.matched.some(record => record.meta.publicRoute);
 
@@ -194,6 +198,8 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from) => {
+  NProgress.done();
+
   if (store.state.hydrating === false && from.path !== "/logout") {
     store.dispatch("track", { page: to.path });
   }

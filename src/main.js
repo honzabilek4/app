@@ -5,6 +5,7 @@ import lodash from "lodash";
 import Notifications from "vue-notification";
 import VueDraggable from "vuedraggable";
 import VTooltip from "v-tooltip";
+import NProgress from "nprogress";
 
 import VueTimeago from "vue-timeago";
 import en from "date-fns/locale/en/";
@@ -12,6 +13,7 @@ import nl from "date-fns/locale/nl/";
 
 import "./assets/global.scss";
 import "./assets/tooltip.scss";
+import "./assets/progressbar.scss";
 import "./globals";
 // import "./registerServiceWorker";
 import App from "./app.vue";
@@ -44,6 +46,10 @@ Vue.config.productionTip = false;
 
 Object.defineProperty(Vue.prototype, "$lodash", { value: lodash });
 Object.defineProperty(Vue.prototype, "$api", { value: api });
+
+NProgress.configure({ showSpinner: false });
+
+Object.defineProperty(Vue.prototype, "$progress", { value: NProgress });
 
 Vue.use(PortalVue);
 Vue.use(VueMQ, {
