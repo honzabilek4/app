@@ -24,6 +24,7 @@ import store from "./store/";
 import api from "./api";
 import helpers from "./helpers";
 import hydrateStore from "./store/hydrate";
+import EventBus from "./events";
 
 import "./helpers/handle-focus";
 
@@ -51,6 +52,7 @@ NProgress.configure({ showSpinner: false });
 
 Object.defineProperty(Vue.prototype, "$progress", { value: NProgress });
 
+Vue.use(EventBus);
 Vue.use(PortalVue);
 Vue.use(VueMQ, {
   breakpoints: {
