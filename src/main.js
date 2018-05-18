@@ -1,5 +1,4 @@
 import Vue from "vue";
-import VueMQ from "vue-mq";
 import lodash from "lodash";
 import Notifications from "vue-notification";
 import VueDraggable from "vuedraggable";
@@ -52,14 +51,6 @@ NProgress.configure({ showSpinner: false });
 Object.defineProperty(Vue.prototype, "$progress", { value: NProgress });
 
 Vue.use(EventBus);
-Vue.use(VueMQ, {
-  breakpoints: {
-    small: 800,
-    medium: 1000,
-    large: 1200,
-    extraLarge: Infinity
-  }
-});
 Vue.use(Notifications);
 Vue.component("draggable", VueDraggable);
 Vue.use(VTooltip, {

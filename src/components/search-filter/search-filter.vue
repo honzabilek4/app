@@ -1,18 +1,17 @@
 <template>
   <transition name="fade">
     <div
-      :class="{ full, open }"
+      :class="{ open }"
       class="search-filter">
+
       <v-header-button
-        v-if="!full"
+        class="toggle"
         :alert="hasFilters"
         icon="filter_list"
         no-background
         @click="open = !open">Filter</v-header-button>
 
-      <div
-        v-if="full"
-        class="wrapper">
+      <div class="wrapper">
         <i class="material-icons">search</i>
         <input
           ref="searchInput"
@@ -41,9 +40,7 @@
         <div
           v-show="open"
           class="dropdown">
-          <div
-            v-if="!full"
-            class="field">
+          <div class="search field">
             <v-input
               :placeholder="placeholder"
               :value="searchQuery"
@@ -95,7 +92,7 @@
       </transition>
 
       <v-blocker
-        v-if="!full && open"
+        v-if="open"
         :z-index="18"
         class="blocker"
         @click="open = !open" />
@@ -164,9 +161,6 @@ export default {
         return true;
 
       return false;
-    },
-    full() {
-      return this.$mq === "large" || this.$mq === "extraLarge";
     }
   },
   created() {
@@ -223,6 +217,10 @@ export default {
 
 .blocker {
   top: var(--header-height) !important;
+
+  @media (min-width: 1000px) {
+    display: none;
+  }
 }
 
 .field:not(:last-child) {
@@ -302,132 +300,150 @@ export default {
   opacity: 0;
 }
 
-.search-filter.full {
-  margin-right: 10px;
-  position: relative;
+.wrapper {
+  display: none;
+}
 
-  .search {
-    width: 100%;
-    height: var(--input-height);
-    border-radius: var(--border-radius);
-    display: block;
-    border: 0;
-    color: var(--gray);
-    padding: 10px;
-    line-height: 1.5;
-    transition: var(--fast) var(--transition);
-    transition-property: color, border-color, padding;
-    height: var(--input-height);
-    padding-left: 40px;
-    padding-right: 40px;
-
-    &::placeholder {
-      color: var(--light-gray);
-    }
-
-    &:focus {
-      color: var(--darker-gray);
-      border-color: var(--accent);
-      outline: 0;
-    }
-
-    &:focus + i {
-      color: var(--accent);
-    }
-
-    &:-webkit-autofill {
-      color: var(--dark-gray) !important;
-      -webkit-text-fill-color: var(--dark-gray) !important;
-    }
-
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus {
-      background-color: var(--white);
-      box-shadow: inset 0 0 0 2000px var(--white);
-    }
-
-    &.has-filters {
-      padding-right: 73px;
-    }
+@media (min-width: 1000px) {
+  .search-filter > .toggle {
+    display: none !important; /* 😭 */
   }
 
   .wrapper {
+    display: block;
+  }
+
+  .dropdown .search.field {
+    display: none;
+  }
+
+  .search-filter {
+    margin-right: 10px;
     position: relative;
 
-    > i,
-    > button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      user-select: none;
-    }
-
-    > i {
-      color: var(--lighter-gray);
-      left: 10px;
-    }
-
-    button i {
-      transition: color var(--fast) var(--transition);
-    }
-
-    .toggle {
-      right: 10px;
+    .search {
+      width: 100%;
+      height: var(--input-height);
+      border-radius: var(--border-radius);
+      display: block;
+      border: 0;
       color: var(--gray);
+      padding: 10px;
+      line-height: 1.5;
+      transition: var(--fast) var(--transition);
+      transition-property: color, border-color, padding;
+      height: var(--input-height);
+      padding-left: 40px;
+      padding-right: 40px;
 
-      &:hover,
-      .user-is-tabbing &:focus {
+      &::placeholder {
+        color: var(--light-gray);
+      }
+
+      &:focus {
+        color: var(--darker-gray);
+        border-color: var(--accent);
+        outline: 0;
+      }
+
+      &:focus + i {
         color: var(--accent);
       }
 
-      &::after {
-        content: "";
-        display: block;
-        width: 8px;
-        height: 8px;
-        background-color: var(--warning);
-        border-radius: 50%;
-        position: absolute;
-        top: 5%;
-        right: 5%;
-        border: 1px solid var(--white);
-        transform: scale(0);
-        transition: transform var(--fast) var(--transition-out);
+      &:-webkit-autofill {
+        color: var(--dark-gray) !important;
+        -webkit-text-fill-color: var(--dark-gray) !important;
+      }
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        background-color: var(--white);
+        box-shadow: inset 0 0 0 2000px var(--white);
       }
 
       &.has-filters {
+        padding-right: 73px;
+      }
+    }
+
+    .wrapper {
+      position: relative;
+
+      > i,
+      > button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        user-select: none;
+      }
+
+      > i {
+        color: var(--lighter-gray);
+        left: 10px;
+      }
+
+      button i {
+        transition: color var(--fast) var(--transition);
+      }
+
+      .toggle {
+        right: 10px;
+        color: var(--gray);
+
+        &:hover,
+        .user-is-tabbing &:focus {
+          color: var(--accent);
+        }
+
         &::after {
-          transform: scale(1);
+          content: "";
+          display: block;
+          width: 8px;
+          height: 8px;
+          background-color: var(--warning);
+          border-radius: 50%;
+          position: absolute;
+          top: 5%;
+          right: 5%;
+          border: 1px solid var(--white);
+          transform: scale(0);
+          transition: transform var(--fast) var(--transition-out);
+        }
+
+        &.has-filters {
+          &::after {
+            transform: scale(1);
+          }
+        }
+      }
+
+      .clear-filters {
+        right: 40px;
+        color: var(--gray);
+
+        &:hover,
+        .user-is-tabbing &:focus {
+          color: var(--danger);
         }
       }
     }
 
-    .clear-filters {
-      right: 40px;
-      color: var(--gray);
-
-      &:hover,
-      .user-is-tabbing &:focus {
-        color: var(--danger);
-      }
-    }
-  }
-
-  .dropdown {
-    top: auto;
-  }
-
-  &.open {
-    .toggle {
-      i {
-        color: var(--accent);
-      }
+    .dropdown {
+      top: auto;
     }
 
-    .search {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    &.open {
+      .toggle {
+        i {
+          color: var(--accent);
+        }
+      }
+
+      .search {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
   }
 }
