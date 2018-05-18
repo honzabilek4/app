@@ -98,6 +98,9 @@ export default {
   not_contains: "Does't contain",
   no_results: "No Results",
   no_results_body: "The current filters do not match any collection items",
+  no_fields: "No Fields Setup",
+  no_fields_body:
+    "It seems like this collection doesn't have any fields setup yet",
   page_not_found: "Page Not Found",
   page_not_found_body: "The page you are looking for doesn't seem to exist.",
   name_bookmark: "What would you like to name this bookmark?",

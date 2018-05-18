@@ -1,5 +1,10 @@
 <template>
-  <form class="edit-form flex-group">
+  <v-error
+    v-if="fieldsGrouped.length === 0"
+    :title="$t('no_fields')"
+    :body="$t('no_fields_body')"
+    icon="error_outline" />
+  <form v-else class="edit-form flex-group">
     <div
       v-for="field in fieldsGrouped"
       :class="[
@@ -26,12 +31,14 @@
 <script>
 import VField from "./field.vue";
 import VGroup from "./group.vue";
+import VError from "../error.vue";
 
 export default {
   name: "edit-form",
   components: {
     VField,
-    VGroup
+    VGroup,
+    VError
   },
   props: {
     fields: {
