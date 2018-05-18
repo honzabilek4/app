@@ -52,7 +52,12 @@ const initialStateCopy = JSON.parse(JSON.stringify(store.state));
 /* Delete the persisted data from the initial state, so the app won't reset back to the persisted
      data */
 persistedPaths.forEach(path => {
-  set(initialStateCopy, path, null);
+  /**
+   * NOTE: The last used URL is the only thing we want to keep, seeing it can auto-populate the API select dropdown on the login form.
+   */
+  if (path !== "auth.url") {
+    set(initialStateCopy, path, null);
+  }
 });
 
 export function resetState() {

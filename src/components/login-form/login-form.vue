@@ -98,6 +98,9 @@
 
 <script>
 import sdk from "directus-sdk-javascript/remote";
+import store from "../../store/";
+
+const lastUsedURL = store.state.auth.url;
 
 export default {
   name: "login-form",
@@ -111,7 +114,7 @@ export default {
 
       email: "",
       password: "",
-      url: Object.keys(window.__DirectusConfig__.api)[0] || "", // eslint-disable-line
+      url: lastUsedURL || Object.keys(window.__DirectusConfig__.api)[0] || "", // eslint-disable-line
 
       reset: false,
       resetLoading: false
