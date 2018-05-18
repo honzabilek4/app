@@ -86,7 +86,7 @@
               class="empty">--</div>
             <v-readonly
               v-else-if="useInterfaces && !$lodash.isNil(row[field])"
-              :id="fieldInfo.interface"
+              :interface="fieldInfo.interface"
               :name="field"
               :type="fieldInfo.type"
               :options="fieldInfo.options"

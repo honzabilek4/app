@@ -22,7 +22,7 @@ import VReadonlyLoading from "./readonly-loading.vue";
 export default {
   name: "v-readonly",
   props: {
-    id: {
+    interface: {
       type: String,
       required: true
     },
@@ -63,17 +63,17 @@ export default {
     interfaces() {
       return this.$store.state.extensions.interfaces;
     },
-    interface() {
-      return this.interfaces && this.interfaces[this.id];
+    interfaceInfo() {
+      return this.interfaces && this.interfaces[this.interface];
     },
     componentName() {
-      return `readonly-${this.id}`;
+      return `readonly-${this.interface}`;
     },
     optionsWithDefaults() {
-      if (!this.interface) return {};
+      if (!this.interfaceInfo) return {};
 
       const defaults = this.$lodash.mapValues(
-        this.interface.options,
+        this.interfaceInfo.options,
         settings => settings.default || null
       );
 
@@ -101,12 +101,12 @@ export default {
 
       // If the extension isn't known by the API (e.g. it's not in the store), register it with the
       //   fallback immediately
-      if (!this.interface) {
+      if (!this.interfaceInfo) {
         Vue.component(this.componentName, VReadonlyFallback);
         return;
       }
 
-      const filePath = `${this.$api.url}/${this.interface.path.replace(
+      const filePath = `${this.$api.url}/${this.interfaceInfo.path.replace(
         "meta.json",
         "Readonly.js"
       )}`;
