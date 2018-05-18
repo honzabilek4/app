@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueMQ from "vue-mq";
-import PortalVue from "portal-vue";
 import lodash from "lodash";
 import Notifications from "vue-notification";
 import VueDraggable from "vuedraggable";
@@ -53,7 +52,6 @@ NProgress.configure({ showSpinner: false });
 Object.defineProperty(Vue.prototype, "$progress", { value: NProgress });
 
 Vue.use(EventBus);
-Vue.use(PortalVue);
 Vue.use(VueMQ, {
   breakpoints: {
     small: 800,
