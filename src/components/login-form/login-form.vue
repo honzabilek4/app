@@ -163,9 +163,14 @@ export default {
       const credentials = { email, password, url };
 
       this.loading = true;
-      this.$store.dispatch("login", credentials).then(() => {
-        this.enterApp();
-      });
+      this.$store
+        .dispatch("login", credentials)
+        .then(() => {
+          this.enterApp();
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     enterApp() {
       if (this.$route.query.redirect) {
