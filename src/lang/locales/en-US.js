@@ -98,6 +98,8 @@ export default {
   not_contains: "Does't contain",
   no_results: "No Results",
   no_results_body: "The current filters do not match any collection items",
+  no_collections: "No Collections Setup",
+  no_collections_body: "It seems like there aren't any collections setup yet",
   no_fields: "No Fields Setup",
   no_fields_body:
     "It seems like this collection doesn't have any fields setup yet",

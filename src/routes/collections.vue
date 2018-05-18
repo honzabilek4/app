@@ -4,7 +4,13 @@
       name: $t('collections'),
       path: '/collections'
     }]" />
+    <v-error
+      v-if="items.length === 0"
+      :title="$t('no_collections')"
+      :body="$t('no_collections_body')"
+      icon="error_outline" />
     <v-table
+      v-else
       :items="items"
       :columns="fields"
       primary-key-field="collection"
@@ -14,8 +20,13 @@
 </template>
 
 <script>
+import VError from "../components/error.vue";
+
 export default {
   name: "collections",
+  components: {
+    VError
+  },
   computed: {
     items() {
       const collections = this.$store.state.collections || {};
