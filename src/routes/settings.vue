@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <portal to="header-title"><h1 class="style-1"><v-breadcrumb :links="links" /></h1></portal>
+    <v-header-bar :breadcrumb="links" />
 
     <v-details
       :title="$t('settings_interface')"

@@ -8,5 +8,9 @@ export default {
   fields: {},
   collections: {},
   bookmarks: [],
-  listingPreferences: {}
+  listingPreferences: {},
+  sidebars: {
+    nav: false,
+    info: false
+  }
 };

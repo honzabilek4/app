@@ -14,7 +14,8 @@ import {
   DELETE_BOOKMARK,
   UPDATE_PREFERENCE,
   SET_PREFERENCES,
-  SET_PREFERENCE
+  SET_PREFERENCE,
+  TOGGLE_NAV
 } from "./mutation-types";
 
 const mutations = {
@@ -94,6 +95,10 @@ const mutations = {
     }
 
     Vue.set(state, collection, preference);
+  },
+
+  [TOGGLE_NAV](state, active) {
+    state.sidebars.nav = active;
   }
 };
 

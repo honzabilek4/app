@@ -3,11 +3,12 @@
     <div
       :class="{ full, open }"
       class="search-filter">
-      <header-button
+      <v-header-button
         v-if="!full"
-        :seek-attention="hasFilters"
+        :alert="hasFilters"
         icon="filter_list"
-        @click="open = !open">Filter</header-button>
+        no-background
+        @click="open = !open">Filter</v-header-button>
 
       <div
         v-if="full"
@@ -104,11 +105,13 @@
 
 <script>
 import VBlocker from "../blocker.vue";
+import VHeaderButton from "../header-bar/header-button.vue";
 
 export default {
   name: "search-filter",
   components: {
-    VBlocker
+    VBlocker,
+    VHeaderButton
   },
   props: {
     fields: {

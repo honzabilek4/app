@@ -2,26 +2,7 @@
   <div
     :class="{ 'no-results': noResults || emptyCollection }"
     class="item-listing">
-
-    <loader v-if="loading || hydrating" area="content" transparent :z-index="9" />
-
-    <portal to="header-title">
-      <h1 class="style-1"><v-breadcrumb :links="links" /></h1>
-      <button
-        :class="currentBookmark ? 'active' : null"
-        :disabled="currentBookmark"
-        class="bookmark"
-        @click="bookmarkModal = true">
-        <i class="material-icons">
-          {{ currentBookmark ? 'bookmark' : 'bookmark_border' }}
-        </i>
-      </button>
-      <div
-        v-if="currentBookmark"
-        class="bookmark-name no-wrap">({{ currentBookmark.title }})</div>
-    </portal>
-
-    <portal to="header-custom">
+    <v-header-bar :breadcrumb="links">
       <search-filter
         v-if="selection.length === 0"
         v-show="!emptyCollection"
@@ -33,28 +14,35 @@
         @search="updateListingPreferences('search_query', $event)"
         @clearFilters="clearFilters"
       />
-    </portal>
+      <template slot="buttons">
+        <v-header-button
+          v-if="selection.length > 1"
+          key="edit"
+          icon="mode_edit"
+          color="warning"
+          :label="$t('batch_edit')"
+          @click="batchEdit" />
+        <v-header-button
+          v-if="selection.length"
+          key="delete"
+          icon="close"
+          color="danger"
+          :label="$t('delete')"
+          @click="remove" />
+        <v-header-button
+          icon="add"
+          key="add"
+          color="action"
+          :label="$t('new')"
+          @click="add" />
+      </template>
+    </v-header-bar>
+
+    <loader v-if="loading || hydrating" area="content" transparent :z-index="9" />
 
     <portal
       v-if="!readonly"
       to="header-buttons">
-      <header-button
-        v-if="selection.length > 1"
-        icon="mode_edit"
-        bg="warning"
-        @click="batchEdit">{{ $t('batch_edit') }}</header-button>
-      <header-button
-        v-if="selection.length"
-        icon="close"
-        bg="danger"
-        @click="remove">
-        {{ $t('delete') }}
-      </header-button>
-      <header-button
-        icon="add"
-        bg="action"
-        @click="add"
-      >{{ $t('new') }}</header-button>
     </portal>
 
     <portal to="info-sidebar-system">

@@ -2,7 +2,6 @@ import Vue from "vue";
 import Spinner from "vue-simple-spinner";
 
 import VBreadcrumb from "./components/breadcrumb.vue";
-import HeaderButton from "./components/header-button.vue";
 import InvisibleLabel from "./components/invisible-label.vue";
 import Loader from "./components/loader.vue";
 import VAvatar from "./components/avatar.vue";
@@ -31,6 +30,10 @@ import VConfirm from "./components/modals/confirm.vue";
 import VModal from "./components/modals/modal.vue";
 import VPrompt from "./components/modals/prompt.vue";
 
+// Page Chrome
+import VHeaderBar from "./components/header-bar/header-bar.vue";
+import VHeaderButton from "./components/header-bar/header-button.vue";
+
 // Extensions
 Vue.component("v-interface", VInterface);
 Vue.component("v-readonly", VReadonly);
@@ -52,8 +55,11 @@ Vue.component("v-confirm", VConfirm);
 Vue.component("v-modal", VModal);
 Vue.component("v-prompt", VPrompt);
 
+// Page Chrome
+Vue.component("v-header-bar", VHeaderBar);
+Vue.component("v-header-button", VHeaderButton);
+
 Vue.component("v-breadcrumb", VBreadcrumb);
-Vue.component("header-button", HeaderButton);
 Vue.component("invisible-label", InvisibleLabel);
 Vue.component("loader", Loader);
 Vue.component("spinner", Spinner);

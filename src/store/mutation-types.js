@@ -44,5 +44,8 @@ export const UPDATE_CURRENT_USER = "👨🏻‍💻 Current User Updated";
 // Settings
 export const SET_SETTINGS = "⚙️ Set Global Settings";
 
+// Sidebars
+export const TOGGLE_NAV = "🎨 Toggle Nav Sidebar";
+
 // Latency Check
 export const LATENCY = "⏱ Latency Check";

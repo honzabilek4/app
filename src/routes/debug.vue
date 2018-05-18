@@ -4,5 +4,7 @@
 </docs>
 
 <template>
-  <div class="debug" />
+  <div class="debug">
+    <v-header-bar title="Debug whatever yo" />
+  </div>
 </template>

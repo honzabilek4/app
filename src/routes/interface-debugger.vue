@@ -1,8 +1,6 @@
 <template>
   <div class="interface-debugger">
-    <portal to="header-title">
-      <h1 class="style-1"><v-breadcrumb :links="links" /></h1>
-    </portal>
+    <v-header-bar :breadcrumb="links" />
 
     <div
       :style="{ width: width + 'px' }"

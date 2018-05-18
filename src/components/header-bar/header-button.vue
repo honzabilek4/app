@@ -1,5 +1,5 @@
 <template>
-  <div class="header-button">
+  <div class="v-header-button">
     <div
       v-if="Object.keys(options).length > 0"
       class="options">
@@ -23,10 +23,8 @@
       <i class="material-icons">more_horiz</i>
     </div>
     <button
-      :style="{
-        color: `var(--${color})`,
-      }"
-      :class="[bg || 'no-bg', { 'attention': seekAttention }]"
+      :style="{ backgroundColor: (noBackground || disabled) ? null : `var(--${color})`, color: `var(--${color})` }"
+      :class="{ 'attention': alert, 'no-bg': noBackground }"
       :disabled="disabled"
       @click="$emit('click', $event)">
       <i
@@ -37,14 +35,14 @@
         :size="24"
         line-fg-color="white"
         line-bg-color="transparent"/>
-      <span class="style-btn"><slot /></span>
+      <span class="style-btn" v-if="label">{{ label }}</span>
     </button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "header-button",
+  name: "v-header-button",
   props: {
     icon: {
       type: String,
@@ -52,16 +50,15 @@ export default {
     },
     color: {
       type: String,
-      default: "white",
-      validator: value => ["white", "black"].includes(value)
+      default: "accent",
+      validator: value =>
+        getComputedStyle(document.body)
+          .getPropertyValue(`--${value}`)
+          .trim() !== ""
     },
-    bg: {
-      type: [String, Boolean],
-      default: false,
-      validator: value => {
-        if (value === false) return true;
-        return ["action", "success", "warning", "danger"].includes(value);
-      }
+    label: {
+      type: String,
+      default: null
     },
     disabled: {
       type: Boolean,
@@ -75,7 +72,11 @@ export default {
       type: Object,
       default: () => ({})
     },
-    seekAttention: {
+    alert: {
+      type: Boolean,
+      default: false
+    },
+    noBackground: {
       type: Boolean,
       default: false
     }
@@ -95,10 +96,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header-button {
+.v-header-button {
   position: relative;
   height: var(--header-height);
   width: var(--header-height);
+  display: inline-block;
 }
 
 button {
@@ -117,6 +119,7 @@ button {
 
   i {
     transition: 100ms var(--transition);
+    color: var(--white);
   }
 
   span {
@@ -150,7 +153,7 @@ button {
     position: absolute;
     top: 27%;
     right: 27%;
-    border: 2px solid var(--darkest-gray);
+    border: 2px solid currentColor;
     transform: scale(0);
     transition: transform var(--fast) var(--transition-out);
   }
@@ -161,24 +164,9 @@ button {
   }
 }
 
-button.action {
-  background-color: var(--action);
-}
-
-button.success {
-  background-color: var(--success);
-}
-
-button.warning {
-  background-color: var(--warning);
-}
-
-button.danger {
-  background-color: var(--danger);
-}
-
 button.no-bg {
   border-left: 1px solid #444444;
+  background-color: transparent;
 }
 
 button[disabled] {

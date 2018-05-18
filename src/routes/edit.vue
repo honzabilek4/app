@@ -4,29 +4,29 @@
       v-if="hydrating"
       area="content" />
 
-    <portal to="header-title">
-      <h1 class="style-1"><v-breadcrumb :links="breadcrumb" /></h1>
-    </portal>
-
-    <portal to="header-buttons">
-      <header-button
-        v-if="!newItem"
-        icon="close"
-        bg="danger"
-        @click="removeModalActive = true">{{ $t('delete') }}</header-button>
-      <header-button
-        :disabled="!editing"
-        :loading="saving"
-        :options="{
-          saveAndStay: $t('save_and_stay'),
-          saveAndAdd: $t('save_and_add'),
-          saveAsCopy: $t('save_as_copy'),
-        }"
-        icon="check"
-        bg="action"
-        @click="saveAndLeave"
-        @input="saveSpecial">{{ $t('save') }}</header-button>
-    </portal>
+    <v-header-bar :breadcrumb="breadcrumb">
+      <template slot="buttons">
+        <v-header-button
+          v-if="!newItem"
+          icon="close"
+          color="danger"
+          :label="$t('delete')"
+          @click="removeModalActive = true" />
+        <v-header-button
+          :disabled="!editing"
+          :loading="saving"
+          :label="$t('save')"
+          :options="{
+            saveAndStay: $t('save_and_stay'),
+            saveAndAdd: $t('save_and_add'),
+            saveAsCopy: $t('save_as_copy'),
+          }"
+          icon="check"
+          color="action"
+          @click="saveAndLeave"
+          @input="saveSpecial" />
+      </template>
+    </v-header-bar>
 
     <portal to="info-sidebar">
       <v-activity-overview

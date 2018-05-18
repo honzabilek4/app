@@ -1,5 +1,7 @@
 <template>
   <div class="modal-debug">
+    <v-header-bar title="Debug yo modals" />
+
     <label>
       Title
       <v-input v-model="title" />
