@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Spinner from "vue-simple-spinner";
 
-import VBreadcrumb from "./components/breadcrumb.vue";
 import InvisibleLabel from "./components/invisible-label.vue";
 import Loader from "./components/loader.vue";
 import VAvatar from "./components/avatar.vue";
@@ -61,7 +60,6 @@ Vue.component("v-header-bar", VHeaderBar);
 Vue.component("v-header-button", VHeaderButton);
 Vue.component("v-info-sidebar", VInfoSidebar);
 
-Vue.component("v-breadcrumb", VBreadcrumb);
 Vue.component("invisible-label", InvisibleLabel);
 Vue.component("loader", Loader);
 Vue.component("spinner", Spinner);
