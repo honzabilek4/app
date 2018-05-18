@@ -20,14 +20,7 @@
       area="full-page" />
 
     <div v-else>
-      <v-blocker
-        v-if="navActive && $mq === 'small'"
-        :z-index="25"
-        @click="toggleNav" />
-      <nav-sidebar
-        v-show="navActive || $mq !== 'small'"
-        @toggleNav="toggleNav" />
-
+      <v-nav-sidebar />
       <router-view class="page-root" />
 
       <v-confirm
@@ -46,29 +39,19 @@
 </template>
 
 <script>
-import HeaderBar from "./components/header-bar/header-bar.vue";
-import NavSidebar from "./components/sidebars/nav-sidebar.vue";
 import VBlocker from "./components/blocker.vue";
 import VError from "./components/error.vue";
 import { TOGGLE_NAV } from "./store/mutation-types";
+import VNavSidebar from "./components/sidebars/nav-sidebar/nav-sidebar.vue";
 
 export default {
   name: "directus",
   components: {
-    HeaderBar,
-    NavSidebar,
     VBlocker,
-    VError
-  },
-  data() {
-    return {
-      infoActive: false
-    };
+    VError,
+    VNavSidebar
   },
   computed: {
-    navActive() {
-      return this.$store.state.sidebars.nav;
-    },
     publicRoute() {
       return this.$route.meta.publicRoute || false;
     },
@@ -118,12 +101,6 @@ export default {
         document.body.classList.remove("no-padding");
       }
     },
-    toggleNav(visible = !this.navActive) {
-      this.$store.commit(TOGGLE_NAV, visible);
-    },
-    toggleInfo(visible = !this.infoActive) {
-      this.infoActive = visible;
-    },
     keepEditing() {
       this.$router.push(
         `/collections/${this.$route.query.collection}/${
@@ -138,17 +115,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-body:not(.no-padding) {
-  @media (min-width: 50em) {
-    padding-left: calc(
-      var(--nav-sidebar-width) + 1px
-    ); /* +1px = sidebar shadow */
-  }
-
-  @media (min-width: 62.5em) {
-    transition: padding-right var(--medium) var(--transition-out);
-  }
-}
-</style>
