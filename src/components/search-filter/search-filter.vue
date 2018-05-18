@@ -73,6 +73,7 @@
                 @click="deleteFilter(i)">{{ $t('remove') }}</button>
             </div>
             <v-input
+              autofocus
               :id="`filter-${i}`"
               :value="filter.value"
               type="text"

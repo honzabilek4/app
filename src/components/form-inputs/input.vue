@@ -44,6 +44,10 @@ export default {
       type: String,
       default: "on"
     },
+    autofocus: {
+      type: Boolean,
+      default: false
+    },
     max: {
       type: [Number, Boolean],
       default: false
@@ -127,6 +131,11 @@ export default {
   computed: {
     charsRemaining() {
       return this.maxlength - this.value.length;
+    }
+  },
+  mounted() {
+    if (this.autofocus) {
+      this.$refs.input.focus();
     }
   }
 };
