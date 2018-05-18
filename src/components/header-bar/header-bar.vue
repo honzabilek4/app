@@ -19,12 +19,13 @@
       </li>
     </ol>
     <slot />
+    <v-header-button v-if="infoToggle" :label="$t('info')" icon="info" no-background @click="toggleInfo" />
     <slot name="buttons" />
   </header>
 </template>
 
 <script>
-import { TOGGLE_NAV } from "../../store/mutation-types";
+import { TOGGLE_NAV, TOGGLE_INFO } from "../../store/mutation-types";
 
 export default {
   name: "v-header-bar",
@@ -36,6 +37,10 @@ export default {
     breadcrumb: {
       type: Array,
       default: null
+    },
+    infoToggle: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -60,6 +65,9 @@ export default {
   methods: {
     activateNav() {
       this.$store.commit(TOGGLE_NAV, true);
+    },
+    toggleInfo() {
+      this.$store.commit(TOGGLE_INFO);
     }
   }
 };

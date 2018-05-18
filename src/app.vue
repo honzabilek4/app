@@ -27,20 +27,8 @@
       <nav-sidebar
         v-show="navActive || $mq !== 'small'"
         @toggleNav="toggleNav" />
-      <main :class="{ 'info-active': infoActive }">
-        <router-view class="page-root" />
-        <v-blocker
-          v-if="infoSidebarHasContent &&
-            ((infoActive && $mq === 'small') || (infoActive && $mq === 'medium'))
-          "
-          :z-index="5"
-          @click="toggleInfo(false)" />
-        <info-sidebar
-          v-show="infoSidebarHasContent && infoActive"
-          :class="$route.meta && $route.meta.infoSidebarWidth"
-          class="info-sidebar"
-          @close="toggleInfo(false)" />
-      </main>
+
+      <router-view class="page-root" />
 
       <v-confirm
         v-if="unsavedChanges"
@@ -49,21 +37,17 @@
         :cancel-text="$t('discard_changes')"
         @confirm="keepEditing"
         @cancel="discardChanges" />
-
     </div>
 
     <notifications
       position="bottom right"
       classes="directus-notification" />
-
   </div>
 </template>
 
 <script>
-import { Wormhole } from "portal-vue";
 import HeaderBar from "./components/header-bar/header-bar.vue";
 import NavSidebar from "./components/sidebars/nav-sidebar.vue";
-import InfoSidebar from "./components/sidebars/info-sidebar.vue";
 import VBlocker from "./components/blocker.vue";
 import VError from "./components/error.vue";
 import { TOGGLE_NAV } from "./store/mutation-types";
@@ -73,7 +57,6 @@ export default {
   components: {
     HeaderBar,
     NavSidebar,
-    InfoSidebar,
     VBlocker,
     VError
   },
@@ -88,15 +71,6 @@ export default {
     },
     publicRoute() {
       return this.$route.meta.publicRoute || false;
-    },
-    infoSidebarHasContent() {
-      return (
-        Wormhole.hasContentFor("info-sidebar") ||
-        Wormhole.hasContentFor("info-sidebar-system")
-      );
-    },
-    subHeaderHasContent() {
-      return Wormhole.hasContentFor("sub-header");
     },
     hydrating() {
       return this.$store.state.hydrating;
@@ -175,32 +149,6 @@ body:not(.no-padding) {
 
   @media (min-width: 62.5em) {
     transition: padding-right var(--medium) var(--transition-out);
-
-    &.info-active {
-      transition: padding-right var(--slow) var(--transition-in);
-      padding-right: var(--nav-sidebar-width);
-    }
-
-    &.info-wide-active {
-      transition: padding-right var(--slow) var(--transition-in);
-      padding-right: var(--info-sidebar-width);
-    }
   }
-}
-</style>
-
-<style lang="scss" scoped>
-main {
-  width: 100%;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.info-sidebar {
-  max-width: var(--nav-sidebar-width);
-}
-
-.info-sidebar.wide {
-  max-width: var(--info-sidebar-width);
 }
 </style>

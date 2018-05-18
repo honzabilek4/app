@@ -46,6 +46,7 @@ export const SET_SETTINGS = "⚙️ Set Global Settings";
 
 // Sidebars
 export const TOGGLE_NAV = "🎨 Toggle Nav Sidebar";
+export const TOGGLE_INFO = "🎨 Toggle Info Sidebar";
 
 // Latency Check
 export const LATENCY = "⏱ Latency Check";

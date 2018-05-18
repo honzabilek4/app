@@ -4,7 +4,7 @@
       v-if="hydrating"
       area="content" />
 
-    <v-header-bar :breadcrumb="breadcrumb">
+    <v-header-bar :breadcrumb="breadcrumb" info-toggle>
       <template slot="buttons">
         <v-header-button
           v-if="!newItem"
@@ -28,15 +28,14 @@
       </template>
     </v-header-bar>
 
-    <portal to="info-sidebar">
+    <v-info-sidebar wide>
       <v-activity-overview
         v-if="fields && collection && primaryKey"
         :collection="collection"
         :primary-key="primaryKey"
         :fields="fields"
-        @reload="hydrate"
-      />
-    </portal>
+        @reload="hydrate" />
+    </v-info-sidebar>
 
     <v-confirm
       v-if="removeModalActive"

@@ -2,7 +2,7 @@
   <div
     :class="{ 'no-results': noResults || emptyCollection }"
     class="item-listing">
-    <v-header-bar :breadcrumb="links">
+    <v-header-bar :breadcrumb="links" info-toggle>
       <search-filter
         v-if="selection.length === 0"
         v-show="!emptyCollection"
@@ -12,8 +12,7 @@
         :placeholder="resultCopy"
         @filter="updateListingPreferences('filters', $event)"
         @search="updateListingPreferences('search_query', $event)"
-        @clearFilters="clearFilters"
-      />
+        @clearFilters="clearFilters" />
       <template slot="buttons">
         <v-header-button
           v-if="selection.length > 1"
@@ -40,22 +39,17 @@
 
     <loader v-if="loading || hydrating" area="content" transparent :z-index="9" />
 
-    <portal
-      v-if="!readonly"
-      to="header-buttons">
-    </portal>
+    <v-info-sidebar>
+      <template slot="system">
+        <label for="listing">{{ $t('view_type') }}</label>
+        <v-select
+          id="listing"
+          :options="listingNames"
+          :value="viewType"
+          name="listing"
+          @input="updateListingPreferences('view_type', $event)" />
+      </template>
 
-    <portal to="info-sidebar-system">
-      <label for="listing">{{ $t('view_type') }}</label>
-      <v-select
-        id="listing"
-        :options="listingNames"
-        :value="viewType"
-        name="listing"
-        @input="updateListingPreferences('view_type', $event)" />
-    </portal>
-
-    <portal to="info-sidebar">
       <div class="sidebar-content">
         <v-listing-options
           v-if="hydrating === false"
@@ -78,7 +72,7 @@
           class="reset-preferences"
           @click="resetPreferences">{{ $t('reset_preferences') }}</button>
       </div>
-    </portal>
+    </v-info-sidebar>
 
     <v-error
       v-if="!hydrating && noResults"

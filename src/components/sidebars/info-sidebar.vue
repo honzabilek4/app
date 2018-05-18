@@ -1,34 +1,40 @@
 <template>
-  <transition name="info">
-    <aside class="info-sidebar">
-      <portal-target
-        v-if="hasSystemContent"
-        name="info-sidebar-system"
-        class="system" />
-      <portal-target name="info-sidebar" />
-    </aside>
-  </transition>
+  <div>
+    <v-blocker :z-index="9" v-show="active" @click="disableSidebar" />
+    <transition name="info">
+      <aside class="info-sidebar" :class="{ wide }" v-show="active">
+        <div class="system">
+          <slot name="system" />
+        </div>
+        <slot />
+      </aside>
+    </transition>
+  </div>
 </template>
 
 <script>
-import { Wormhole } from "portal-vue";
-import FocusLock from "vue-focus-lock";
+import VBlocker from "../blocker.vue";
+import { TOGGLE_INFO } from "../../store/mutation-types";
 
 export default {
   name: "info-sidebar",
-  components: { FocusLock },
+  components: {
+    VBlocker
+  },
   props: {
-    active: {
+    wide: {
       type: Boolean,
       default: false
     }
   },
   computed: {
-    hasSystemContent() {
-      return Wormhole.hasContentFor("info-sidebar-system");
-    },
-    overlay() {
-      return this.$mq === "small" || this.$mq === "medium";
+    active() {
+      return this.$store.state.sidebars.info;
+    }
+  },
+  methods: {
+    disableSidebar() {
+      this.$store.commit(TOGGLE_INFO, false);
     }
   }
 };
@@ -49,10 +55,18 @@ export default {
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
 
-  & .system {
+  & .system:not(:empty) {
     padding-bottom: 30px;
     border-bottom: 1px solid var(--lightest-gray);
     margin-bottom: 30px;
+  }
+
+  @media (min-width: 800px) {
+    max-width: var(--nav-sidebar-width);
+
+    &.wide {
+      max-width: var(--info-sidebar-width);
+    }
   }
 }
 

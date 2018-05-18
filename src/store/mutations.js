@@ -15,7 +15,8 @@ import {
   UPDATE_PREFERENCE,
   SET_PREFERENCES,
   SET_PREFERENCE,
-  TOGGLE_NAV
+  TOGGLE_NAV,
+  TOGGLE_INFO
 } from "./mutation-types";
 
 const mutations = {
@@ -97,8 +98,12 @@ const mutations = {
     Vue.set(state, collection, preference);
   },
 
-  [TOGGLE_NAV](state, active) {
+  [TOGGLE_NAV](state, active = !state.sidebars.nav) {
     state.sidebars.nav = active;
+  },
+
+  [TOGGLE_INFO](state, active = !state.sidebars.info) {
+    state.sidebars.info = active;
   }
 };
 

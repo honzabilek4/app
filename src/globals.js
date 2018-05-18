@@ -33,6 +33,7 @@ import VPrompt from "./components/modals/prompt.vue";
 // Page Chrome
 import VHeaderBar from "./components/header-bar/header-bar.vue";
 import VHeaderButton from "./components/header-bar/header-button.vue";
+import VInfoSidebar from "./components/sidebars/info-sidebar.vue";
 
 // Extensions
 Vue.component("v-interface", VInterface);
@@ -58,6 +59,7 @@ Vue.component("v-prompt", VPrompt);
 // Page Chrome
 Vue.component("v-header-bar", VHeaderBar);
 Vue.component("v-header-button", VHeaderButton);
+Vue.component("v-info-sidebar", VInfoSidebar);
 
 Vue.component("v-breadcrumb", VBreadcrumb);
 Vue.component("invisible-label", InvisibleLabel);
