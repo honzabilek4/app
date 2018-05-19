@@ -36,6 +36,7 @@
     "lodash": "^4.17.5",
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.2.0",
+    "snarkdown": "^1.2.2",
     "v-tooltip": "^2.0.0-rc.31",
     "vue": "^2.5.16",
     "vue-focus-lock": "^1.0.5",

@@ -86,6 +86,7 @@ export default {
   item_count_filter:
     "No Filtered Items | One Filtered Item | {count} Filtered Items",
   learn_more: "Learn More",
+  leave_comment: "Leave a comment...",
   less_than_equal: "Less than or equal to",
   less_than: "Less than",
   loading: "Loading...",

@@ -12,57 +12,66 @@
         @click="show = 'activity'">{{ $t('activity') }}</button>
     </div>
     <div class="activity">
-      <article
-        v-for="(activity, index) in activityWithChanges"
-        :key="activity.id">
-        <i
-          v-if="activity.message && activity.type === 'message'"
-          class="material-icons">message</i>
-        <span
-          v-else
-          :title="activity.action"
-          :class="activity.action"
-          class="indicator" />
+      <form class="new-comment"
+       v-show="show !== 'activity'"
+       @submit.prevent="addComment">
+        <v-textarea v-model="message" class="textarea" :rows="5" required :placeholder="$t('leave_comment')" />
+        <button type="submit">{{ $t('submit') }}</button>
+      </form>
+      <transition-group name="activity-items" tag="div">
+        <article
+          v-for="(activity, index) in activityWithChanges"
+          class="activity-item"
+          :key="activity.id">
+          <i
+            v-if="activity.type === 'message'"
+            class="material-icons">message</i>
+          <span
+            v-else
+            :title="activity.action"
+            :class="activity.action"
+            class="indicator" />
 
-        <div class="content">
-          <details v-if="activity.action !== 'external' && activity.changes && activity.name">
-            <summary class="title">{{ activity.name }}<span v-if="activity.date">•</span><v-timeago
+          <div class="content">
+            <details v-if="activity.action !== 'external' && activity.changes && activity.name">
+              <summary class="title">{{ activity.name }}<span v-if="activity.date">•</span><v-timeago
+                v-if="activity.date"
+                :auto-update="1"
+                :since="activity.date"
+                :locale="$i18n.locale"
+                class="date" />
+              <i class="material-icons chevron">chevron_left</i></summary>
+              <div v-if="activity.changes">
+                <div
+                  v-for="({ field, before, after }) in activity.changes"
+                  class="change"
+                  :key="field.field">
+                  <p>{{ field.name }}</p>
+                  <div class="diff">
+                    <div
+                      :class="{ empty: !before }"
+                      class="before">{{ before || '--' }}</div>
+                    <div
+                      :class="{ empty: !after }"
+                      class="after">{{ after || '--' }}</div>
+                  </div>
+                </div>
+                <button
+                  v-if="index !== 0"
+                  class="revert"
+                  @click="previewing = activity">{{ $t("revert") }}</button>
+              </div>
+            </details>
+            <div class="title" v-else-if="activity.name">{{ activity.name }}<span v-if="activity.date">•</span><v-timeago
               v-if="activity.date"
               :auto-update="1"
               :since="activity.date"
               :locale="$i18n.locale"
-              class="date" />
-            <i class="material-icons chevron">chevron_left</i></summary>
-            <div v-if="activity.changes">
-              <div
-                v-for="({ field, before, after }) in activity.changes"
-                class="change"
-                :key="field.field">
-                <p>{{ field.name }}</p>
-                <div class="diff">
-                  <div
-                    :class="{ empty: !before }"
-                    class="before">{{ before || '--' }}</div>
-                  <div
-                    :class="{ empty: !after }"
-                    class="after">{{ after || '--' }}</div>
-                </div>
-              </div>
-              <button
-                v-if="index !== 0"
-                class="revert"
-                @click="previewing = activity">{{ $t("revert") }}</button>
-            </div>
-          </details>
-          <div class="title" v-else-if="activity.name">{{ activity.name }}<span v-if="activity.date">•</span><v-timeago
-            v-if="activity.date"
-            :auto-update="1"
-            :since="activity.date"
-            :locale="$i18n.locale"
-            class="date" /></div>
-          <p v-if="activity.message">{{ activity.message }}</p>
-        </div>
-      </article>
+              class="date" /></div>
+            <p v-if="activity.htmlMessage" v-html="activity.htmlMessage"></p>
+          </div>
+        </article>
+      </transition-group>
     </div>
     <v-modal
       v-if="previewing !== null"
@@ -80,6 +89,7 @@
 </template>
 
 <script>
+import snarkdown from "snarkdown";
 import EditForm from "../edit-form/edit-form.vue";
 
 export default {
@@ -109,7 +119,8 @@ export default {
       loading: false,
       revisions: {},
       revisionsLoading: true,
-      previewing: null
+      previewing: null,
+      message: ""
     };
   },
   computed: {
@@ -127,30 +138,33 @@ export default {
       }
     },
     activityWithChanges() {
-      if (!this.activity || this.activity.length === 0)
-        return [
-          {
-            action: "external",
-            message: this.$t("activity_outside_directus")
-          }
-        ];
-
       const activityWithChanges = this.activity.map((activity, i) => ({
         ...activity,
         changes: this.getChanges(activity.id, i),
         revision: this.revisions[activity.id]
       }));
 
-      const lastItem = activityWithChanges[activityWithChanges.length - 1];
+      const lastItem =
+        activityWithChanges &&
+        activityWithChanges[activityWithChanges.length - 1];
 
-      if (lastItem.action.toLowerCase() !== "add") {
+      if (
+        !lastItem ||
+        ((lastItem.type.toLowerCase !== "entry" ||
+          lastItem.action.toLowerCase() !== "add") &&
+          this.show !== "comments")
+      ) {
         activityWithChanges.push({
           action: "external",
-          message: this.$t("activity_outside_directus")
+          message: this.$t("activity_outside_directus"),
+          id: -1
         });
       }
 
-      return activityWithChanges;
+      return activityWithChanges.map(activity => ({
+        ...activity,
+        htmlMessage: snarkdown(activity.message.replace(/#/g, "") || "")
+      }));
     }
   },
   watch: {
@@ -250,6 +264,30 @@ export default {
           this.hydrate();
         })
         .catch(console.error);
+    },
+    addComment() {
+      this.data = [
+        {
+          action: "add",
+          date: new Date(),
+          message: this.message,
+          name:
+            this.$store.state.currentUser.first_name +
+            " " +
+            this.$store.state.currentUser.last_name,
+          type: "message",
+          id: (this.data && this.data[0] && this.data[0].id + 1) || 1
+        },
+        ...this.data
+      ];
+      this.$api
+        .post("/activity/message", {
+          collection: this.collection,
+          item: this.primaryKey,
+          message: this.message
+        })
+        .catch(console.error);
+      this.message = "";
     }
   }
 };
@@ -428,5 +466,67 @@ export default {
   details[open] .chevron {
     transform: rotate(-90deg);
   }
+}
+
+.new-comment {
+  position: relative;
+  height: var(--input-height);
+  transition: height var(--slow) var(--transition);
+  margin-bottom: 30px;
+
+  .textarea {
+    height: 100%;
+    resize: none;
+  }
+
+  button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: var(--light-gray);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: var(--fast) var(--transition);
+    transition-property: color, opacity;
+    opacity: 0;
+  }
+
+  &:valid button {
+    color: var(--accent);
+  }
+
+  &:focus,
+  &:focus-within {
+    height: calc(3 * var(--input-height));
+
+    button {
+      opacity: 1;
+    }
+  }
+}
+
+.activity-item {
+  display: inline-block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.activity-items-move {
+  transition: var(--slow) var(--transition-in);
+}
+
+.activity-items-enter-active {
+  transition: var(--slow) var(--transition-in);
+}
+
+.activity-items-leave-active {
+  transition: var(--slow) var(--transition-out);
+}
+
+.activity-items-enter,
+.activity-items-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 </style>
