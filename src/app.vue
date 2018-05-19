@@ -115,3 +115,10 @@ export default {
   }
 };
 </script>
+
+<style>
+body.no-padding {
+  padding: 0 !important;
+}
+</style>
+
