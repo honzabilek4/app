@@ -1,21 +1,18 @@
-$red-notyf : #ed3d3d;
-$green-notyf : #3dc763;
-
 @keyframes fadeinup{
   0%{
     opacity: 0;
-    bottom: -15px;
+    transform: translateY(15px);
     max-height: 0;
     max-width: 0;
     margin-top: 0;
   }
   30%{
     opacity: 0.8;
-    bottom: -3px;
+    transform: translateY(3px);
   }
   100%{
     opacity: 1;
-    bottom: 0;
+    transform: translateY(0);
     max-height: 200px;
     margin-top: 12px;
     max-width: 400px;
@@ -25,15 +22,15 @@ $green-notyf : #3dc763;
 @keyframes fadeoutdown{
   0%{
     opacity: 1;
-    bottom: 0;
+    transform: translateY(0);
   }
   30%{
     opacity: 0.2;
-    bottom: -3px;
+    transform: translateY(3px);
   }
   100%{
     opacity: 0;
-    bottom: -15px;
+    transform: translateY(15px);
   }
 }
 
@@ -74,11 +71,11 @@ $green-notyf : #3dc763;
 .notyf__icon--alert{
     &:after, &:before{
       content: "";
-      background: $red-notyf;
+      background: var(--danger);
       display: block;
       position: absolute;
       width: 3px;
-      border-radius: 3px;
+      border-radius: var(--border-radius);
       left: 9px;
     }
 
@@ -95,11 +92,11 @@ $green-notyf : #3dc763;
 .notyf__icon--confirm{
     &:after, &:before{
       content: "";
-      background: $green-notyf;
+      background: var(--success);
       display: block;
       position: absolute;
       width: 3px;
-      border-radius: 3px;
+      border-radius: var(--border-radius);
     }
     &:after{
       height: 6px;
@@ -119,16 +116,14 @@ $green-notyf : #3dc763;
     display: block;
     overflow: hidden;
     animation: fadeinup 0.3s forwards;
-    -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
     box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
     position: relative;
     padding-right: 13px;
     &.notyf--alert{
-      background: $red-notyf;
+      background: var(--danger);
     }
     &.notyf--confirm{
-      background: $green-notyf;
+      background: var(--success);
     }
     &.notyf--disappear{
       animation: fadeoutdown 0.3s 1 forwards;
@@ -151,7 +146,7 @@ $green-notyf : #3dc763;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-right: 15px;
-    border-radius: 3px;
+    border-radius: var(--border-radius);
 }
 
 .notyf__icon{
