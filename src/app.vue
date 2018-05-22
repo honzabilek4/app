@@ -16,7 +16,7 @@
     class="directus">
 
     <loader
-      v-if="hydrating"
+      v-if="!hydrated"
       area="full-page" />
 
     <div v-else>
@@ -55,8 +55,8 @@ export default {
     publicRoute() {
       return this.$route.meta.publicRoute || false;
     },
-    hydrating() {
-      return this.$store.state.hydrating;
+    hydrated() {
+      return this.$store.state.hydrated;
     },
     hydratingError() {
       return this.$store.state.hydratingError;
@@ -121,4 +121,3 @@ body.no-padding {
   padding: 0 !important;
 }
 </style>
-

@@ -2,9 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 import api from "./api";
 import store from "./store";
+import hydrateStore from "./hydrate";
 import Collections from "./routes/collections.vue";
 import ItemListing from "./routes/item-listing.vue";
-import ItemListingGuard from "./routes/item-listing-guard.vue";
 import Edit from "./routes/edit.vue";
 import EditGuard from "./routes/edit-guard.vue";
 import Login from "./routes/login.vue";
@@ -39,7 +39,7 @@ const router = new Router({
     {
       path: "/collections/:collection",
       props: true,
-      component: ItemListingGuard
+      component: ItemListing
     },
     {
       path: "/collections/:collection/:primaryKey",
@@ -156,10 +156,14 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   NProgress.start();
 
-  const { loggedIn } = api;
+  const { loggedIn } = store.getters;
   const publicRoute = to.matched.some(record => record.meta.publicRoute);
 
-  if (loggedIn === false && publicRoute === false) {
+  if (loggedIn === false) {
+    if (publicRoute) {
+      return next();
+    }
+
     if (from.fullPath === "/") {
       return next({ path: "/login" });
     }
@@ -170,28 +174,40 @@ router.beforeEach((to, from, next) => {
     });
   }
 
-  const editing = store.getters.editing;
+  if (store.state.hydrated === false) {
+    return hydrateStore().then(() => {
+      /**
+       * TODO: Clean this up.
+       *
+       * I'm not too happy about the way it checks for the editing state now..
+       *
+       * Maybe it should just be a confirm that fires from the main app.vue instead. Lets wait for #320
+       */
+      const editing = store.getters.editing;
 
-  if (editing && publicRoute === false) {
-    const { collection, primaryKey } = store.state.edits;
-    const path = `/collections/${collection}/${primaryKey}`;
+      if (editing && publicRoute === false) {
+        const { collection, primaryKey } = store.state.edits;
+        const path = `/collections/${collection}/${primaryKey}`;
 
-    if (path !== to.fullPath) {
-      if (
-        to.query.collection !== collection ||
-        to.query.primaryKey !== primaryKey ||
-        to.query.editing !== true
-      ) {
-        next({
-          path: to.path,
-          query: {
-            collection,
-            primaryKey,
-            editing: true
+        if (path !== to.fullPath) {
+          if (
+            to.query.collection !== collection ||
+            to.query.primaryKey !== primaryKey ||
+            to.query.editing !== true
+          ) {
+            return next({
+              path: to.path,
+              query: {
+                collection,
+                primaryKey,
+                editing: true
+              }
+            });
           }
-        });
+        }
       }
-    }
+      return next();
+    });
   }
 
   return next();

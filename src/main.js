@@ -17,11 +17,10 @@ import "./globals";
 import App from "./app.vue";
 
 import router from "./router";
-import { i18n, loadLanguageAsync } from "./lang/";
+import { i18n } from "./lang/";
 import store from "./store/";
 import api from "./api";
 import helpers from "./helpers";
-import hydrateStore from "./store/hydrate";
 import EventBus from "./events";
 
 import "./helpers/handle-focus";
@@ -76,9 +75,3 @@ new Vue({
   api,
   helpers
 }).$mount("#app");
-
-if (api.loggedIn) {
-  hydrateStore().then(() => {
-    loadLanguageAsync(store.state.currentUser.locale);
-  });
-}

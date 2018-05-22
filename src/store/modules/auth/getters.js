@@ -11,3 +11,17 @@ export function tokenPayload(state) {
 
   return null;
 }
+
+export function loggedIn(state) {
+  if (
+    state.token &&
+    state.token.length > 0 &&
+    state.url &&
+    state.url.length > 0 &&
+    tokenPayload(state).exp > new Date()
+  ) {
+    return true;
+  }
+
+  return false;
+}

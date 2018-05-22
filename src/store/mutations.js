@@ -20,12 +20,12 @@ import {
 } from "./mutation-types";
 
 const mutations = {
-  [STORE_HYDRATED](state) {
-    state.hydrating = false;
+  [STORE_HYDRATED](state, date) {
+    state.hydrated = date;
   },
 
   [HYDRATING_FAILED](state, error) {
-    state.hydrating = false;
+    state.hydrated = false;
     state.hydratingError = error;
   },
 

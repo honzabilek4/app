@@ -1,6 +1,6 @@
 // Default state
 export default {
-  hydrating: true,
+  hydrated: false,
   hydratingError: null,
   latency: [],
   settings: {},

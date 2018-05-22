@@ -1,5 +1,5 @@
-import store from "./index";
-import router from "../router";
+import store from "./store/";
+import router from "./router";
 
 let fastInterval = null;
 
