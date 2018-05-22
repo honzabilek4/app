@@ -25,9 +25,7 @@ Object.defineProperties(EventBus, {
   }
 });
 
-EventBus.on("error", error => {
-  handleError(error);
-});
+EventBus.on("error", handleError);
 
 EventBus.install = vue => {
   Object.defineProperty(vue.prototype, "$events", { value: EventBus });
