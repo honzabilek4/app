@@ -31,10 +31,6 @@
         @confirm="keepEditing"
         @cancel="discardChanges" />
     </div>
-
-    <notifications
-      position="bottom right"
-      classes="directus-notification" />
   </div>
 </template>
 

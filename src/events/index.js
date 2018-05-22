@@ -1,4 +1,5 @@
 import Vue from "vue";
+import handleError from "./error";
 const EventBus = new Vue();
 
 Object.defineProperties(EventBus, {
@@ -22,6 +23,10 @@ Object.defineProperties(EventBus, {
       return EventBus.$once;
     }
   }
+});
+
+EventBus.on("error", error => {
+  handleError(error);
 });
 
 EventBus.install = vue => {
